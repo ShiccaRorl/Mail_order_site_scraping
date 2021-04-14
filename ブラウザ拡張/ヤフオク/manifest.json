@@ -1,0 +1,15 @@
+{
+    "name": "スレイプニング拡張ヤフオク",
+    "version": "1.0.0",
+    "manifest_version": 2,
+    "description": "スレイプニング拡張",
+    "content_scripts": [{
+            "matches": [
+                "https://onavi.auctions.yahoo.co.jp/onavi/show/*"
+            ],
+            "js": [
+                "content_auctions_yahoo.js"
+            ]
+        }
+    ]
+}

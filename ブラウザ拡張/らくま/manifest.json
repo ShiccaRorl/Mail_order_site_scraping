@@ -1,0 +1,16 @@
+{
+	"name": "スレイプニング拡張ラクマ",
+	"version": "1.0.0",
+	"manifest_version": 2,
+	"description": "スレイプニング拡張",
+	"content_scripts": [
+		{
+			"matches": [
+				"https://web.fril.jp/v2/sale/shipping/*"
+			],
+			"js": [
+				"content_rakuten_rakuma.js"
+			]
+		}
+	]
+}
