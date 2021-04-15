@@ -23,7 +23,7 @@ class Core():
         # 個人情報の塊なのでGITの外に設置
 
         # reflect the tables
-        Base.prepare(engine, reflect=True)
+        Base.prepare(self.engine, reflect=True)
 
         # mapped classes are now created with names by default
         # matching that of the table name.
