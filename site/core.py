@@ -28,7 +28,18 @@ class Core():
 
         session = Session(engine)
         
-        def save(self):
+        def save(self, seed):
+        
+            i = 0
+            while i <= 5:
+                try:
+                    time.sleep(1)
+                    session.commit()
+                    time.sleep(1)
+                    i = 6 + 1
+                except:
+                    time.sleep(5)
+                    i = i + 1
         
         def load(self):
         
