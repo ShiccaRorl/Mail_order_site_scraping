@@ -42,10 +42,11 @@ class Store_Core():
         os.remove(code)
     
     def seed_save_add():
-        for dir in glob.glob(f"{self.dir}{self.name}*.html"):
-            if dir != None:
-                print(dir)
-                self.seed1 = self.load(dir)
+        for d in glob.glob(dir):
+            print(d)
+            if d != None:
+                print(d)
+                self.seed1 = self.load(d)
                 #dmm = Analysis_MGS(self.seed1)
                 session = Session(self.engine)
 
@@ -56,10 +57,9 @@ class Store_Core():
                 
                 self.save(session)
             
-                self.削除する(dir)
+                self.削除する(d)
 
     def save(self, session):
-        
         i = 0
         while i <= 5:
             try:
@@ -81,16 +81,17 @@ class Store_Core():
         
 if __name__ == '__main__':
     
+    config = Config()
     amazon = Store_Core()
-    amazon.self.name = "amazon"
-    amazon.dir = f'{self.config.download_path}amazon*.html'
+    amazon.name = "amazon"
+    amazon.dir = f'{config.download_path}{amazon.name}*.html'
     amazon.siteID = 0
     amazon.seed_save_add()
     
     #core.seed_save_amazon()
     
     stores = Store_Core()
-    stores.self.name = "stores"
+    stores.name = "stores"
     stores.dir = f'{self.config.download_path}stores*.html'
     stores.siteID = 4
     stores.seed_save_add()
@@ -98,7 +99,7 @@ if __name__ == '__main__':
     #core.seed_save_stores()
     
     rakuten_rakuma = Store_Core()
-    rakuten_rakuma.self.name = "rakuten_rakuma"
+    rakuten_rakuma.name = "rakuten_rakuma"
     rakuten_rakuma.dir = f'{self.config.download_path}rakuten_rakuma*.html'
     rakuten_rakuma.siteID = 3
     rakuten_rakuma.seed_save_add()
@@ -114,7 +115,7 @@ if __name__ == '__main__':
     #core.seed_save_rakuten()
     
     auctions_yahoo = Store_Core()
-    auctions_yahoo.self.name = "auctions_yahoo"
+    auctions_yahoo.name = "auctions_yahoo"
     auctions_yahoo.dir = f'{self.config.download_path}auctions_yahoo*.html'
     auctions_yahoo.siteID = 2
     auctions_yahoo.seed_save_add()
