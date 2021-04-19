@@ -13,7 +13,7 @@ from sqlalchemy import create_engine
 
 from config import Config
 
-class Core():
+class Store_Core():
     def __init__(self):
         self.config = Config()
         Base = automap_base()
@@ -57,91 +57,6 @@ class Core():
                 self.save(session)
             
                 self.削除する(dir)
-    
-    def seed_save_amazon(self):
-        for dir in glob.glob(f'{self.config.download_path}amazon*.html'):
-            if dir != None:
-                print(dir)
-                self.seed1 = self.load(dir)
-                #dmm = Analysis_MGS(self.seed1)
-                session = Session(self.engine)
-
-                self.seed = session.query(self.seed)
-                session.add(self.seed(siteID=0,
-                                      seed=self.seed1,
-                                      create_at=datetime.datetime.now(),))
-                
-                self.save(session)
-            
-                self.削除する(dir)
-                
-    def seed_save_stores(self):
-        for dir in glob.glob(f'{self.config.download_path}stores*.html'):
-            if dir != None:
-                print(dir)
-                self.seed1 = self.load(dir)
-                #dmm = Analysis_MGS(self.seed1)
-                session = Session(self.engine)
-
-                self.seed = session.query(self.seed)
-                session.add(self.seed(siteID=4,
-                                      seed=self.seed1,
-                                      create_at=datetime.datetime.now(),))
-                
-                self.save(session)
-            
-                self.削除する(dir)
-                
-    def seed_save_rakuten_rakuma(self):
-        for dir in glob.glob(f'{self.config.download_path}rakuten_rakuma*.html'):
-            if dir != None:
-                print(dir)
-                self.seed1 = self.load(dir)
-                #dmm = Analysis_MGS(self.seed1)
-                session = Session(self.engine)
-
-                self.seed = session.query(self.seed)
-                session.add(self.seed(siteID=3,
-                                      seed=self.seed1,
-                                      create_at=datetime.datetime.now(),))
-                
-                self.save(session)
-            
-                self.削除する(dir)
-
-    def seed_save_rakuten(self):
-        for dir in glob.glob(f'{self.config.download_path}rakuten*.html'):
-            if dir != None:
-                print(dir)
-                self.seed1 = self.load(dir)
-                #dmm = Analysis_MGS(self.seed1)
-                session = Session(self.engine)
-
-                self.seed = session.query(self.seed)
-                session.add(self.seed(siteID=1,
-                                      seed=self.seed1,
-                                      create_at=datetime.datetime.now(),))
-                
-                self.save(session)
-            
-                self.削除する(dir)
-             
-    def seed_save_auctions_yahoo(self):
-        for dir in glob.glob(f'{self.config.download_path}auctions_yahoo*.html'):
-            if dir != None:
-                print(dir)
-                self.seed1 = self.load(dir)
-                #dmm = Analysis_MGS(self.seed1)
-                session = Session(self.engine)
-
-                self.seed = session.query(self.seed)
-                session.add(self.seed(siteID=2,
-                                      seed=self.seed1,
-                                      create_at=datetime.datetime.now(),))
-                
-                self.save(session)
-            
-                self.削除する(dir)  
 
     def save(self, session):
         
@@ -166,10 +81,43 @@ class Core():
         
 if __name__ == '__main__':
     
-    core = Core()
-    core.seed_save_amazon()
-    core.seed_save_stores()
-    core.seed_save_rakuten_rakuma()
-    core.seed_save_rakuten()
-    core.seed_save_auctions_yahoo()
-    print(core)
+    amazon = Store_Core()
+    amazon.self.name = "amazon"
+    amazon.dir = f'{self.config.download_path}amazon*.html'
+    amazon.siteID = 0
+    amazon.seed_save_add()
+    
+    #core.seed_save_amazon()
+    
+    stores = Store_Core()
+    stores.self.name = "stores"
+    stores.dir = f'{self.config.download_path}stores*.html'
+    stores.siteID = 4
+    stores.seed_save_add()
+    
+    #core.seed_save_stores()
+    
+    rakuten_rakuma = Store_Core()
+    rakuten_rakuma.self.name = "rakuten_rakuma"
+    rakuten_rakuma.dir = f'{self.config.download_path}rakuten_rakuma*.html'
+    rakuten_rakuma.siteID = 3
+    rakuten_rakuma.seed_save_add()
+    
+    #core.seed_save_rakuten_rakuma()
+    
+    rakuten = Store_Core()
+    rakuten.self.name = "rakuten"
+    rakuten.dir = f'{self.config.download_path}rakuten*.html'
+    rakuten.siteID = 1
+    rakuten.seed_save_add()
+    
+    #core.seed_save_rakuten()
+    
+    auctions_yahoo = Store_Core()
+    auctions_yahoo.self.name = "auctions_yahoo"
+    auctions_yahoo.dir = f'{self.config.download_path}auctions_yahoo*.html'
+    auctions_yahoo.siteID = 2
+    auctions_yahoo.seed_save_add()
+    
+    #core.seed_save_auctions_yahoo()
+    #print(core)
