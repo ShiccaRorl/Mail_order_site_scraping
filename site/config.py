@@ -7,4 +7,4 @@ class Config():
         
         # download
         self.download_path = "C:/Users/ban/Downloads/"
-        
+        #self.download_path = "C:/Users/user/Downloads"

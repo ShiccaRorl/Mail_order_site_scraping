@@ -45,9 +45,8 @@ class Store_Core():
         for d in glob.glob(dir):
             print(d)
             if d != None:
-                print(d)
                 self.seed1 = self.load(d)
-                #dmm = Analysis_MGS(self.seed1)
+
                 session = Session(self.engine)
 
                 self.seed = session.query(self.seed)
@@ -92,7 +91,7 @@ if __name__ == '__main__':
     
     stores = Store_Core()
     stores.name = "stores"
-    stores.dir = f'{self.config.download_path}stores*.html'
+    stores.dir = f'{self.config.download_path}{stores.name}*.html'
     stores.siteID = 4
     stores.seed_save_add()
     
@@ -100,7 +99,7 @@ if __name__ == '__main__':
     
     rakuten_rakuma = Store_Core()
     rakuten_rakuma.name = "rakuten_rakuma"
-    rakuten_rakuma.dir = f'{self.config.download_path}rakuten_rakuma*.html'
+    rakuten_rakuma.dir = f'{self.config.download_path}{rakuten_rakuma.name}*.html'
     rakuten_rakuma.siteID = 3
     rakuten_rakuma.seed_save_add()
     
@@ -108,7 +107,7 @@ if __name__ == '__main__':
     
     rakuten = Store_Core()
     rakuten.self.name = "rakuten"
-    rakuten.dir = f'{self.config.download_path}rakuten*.html'
+    rakuten.dir = f'{self.config.download_path}{rakuten.self.name}*.html'
     rakuten.siteID = 1
     rakuten.seed_save_add()
     
@@ -116,7 +115,7 @@ if __name__ == '__main__':
     
     auctions_yahoo = Store_Core()
     auctions_yahoo.name = "auctions_yahoo"
-    auctions_yahoo.dir = f'{self.config.download_path}auctions_yahoo*.html'
+    auctions_yahoo.dir = f'{self.config.download_path}{auctions_yahoo.name}*.html'
     auctions_yahoo.siteID = 2
     auctions_yahoo.seed_save_add()
     
