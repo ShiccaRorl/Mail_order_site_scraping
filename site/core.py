@@ -13,6 +13,7 @@ from sqlalchemy import create_engine
 
 from config import Config
 
+
 class Store_Core():
     def __init__(self):
         self.config = Config()
@@ -37,22 +38,22 @@ class Store_Core():
         self.dir = ""
         self.siteID = 0
         
-    def 削除する(self, code):
-        print(f"{code} MGS 削除します")
-        os.remove(code)
+    def 削除する(self, dir):
+        print(f"{dir} 削除します")
+        os.remove(dir)
     
-    def seed_save_add():
-        for d in glob.glob(dir):
+    def seed_save_add(self):
+        for d in glob.glob(self.dir):
             print(d)
             if d != None:
                 self.seed1 = self.load(d)
 
                 session = Session(self.engine)
 
-                self.seed = session.query(self.seed)
+                #seeds = session.query(self.seed)
                 session.add(self.seed(siteID=self.siteID,
-                                      seed=self.seed1,
-                                      create_at=datetime.datetime.now(),))
+                                    seed=self.seed1,
+                                    create_at=datetime.datetime.now(),))
                 
                 self.save(session)
             
@@ -91,7 +92,7 @@ if __name__ == '__main__':
     
     stores = Store_Core()
     stores.name = "stores"
-    stores.dir = f'{self.config.download_path}{stores.name}*.html'
+    stores.dir = f'{config.download_path}{stores.name}*.html'
     stores.siteID = 4
     stores.seed_save_add()
     
@@ -99,15 +100,15 @@ if __name__ == '__main__':
     
     rakuten_rakuma = Store_Core()
     rakuten_rakuma.name = "rakuten_rakuma"
-    rakuten_rakuma.dir = f'{self.config.download_path}{rakuten_rakuma.name}*.html'
+    rakuten_rakuma.dir = f'{config.download_path}{rakuten_rakuma.name}*.html'
     rakuten_rakuma.siteID = 3
     rakuten_rakuma.seed_save_add()
     
     #core.seed_save_rakuten_rakuma()
     
     rakuten = Store_Core()
-    rakuten.self.name = "rakuten"
-    rakuten.dir = f'{self.config.download_path}{rakuten.self.name}*.html'
+    rakuten.name = "rakuten"
+    rakuten.dir = f'{config.download_path}{rakuten.name}*.html'
     rakuten.siteID = 1
     rakuten.seed_save_add()
     
@@ -115,7 +116,7 @@ if __name__ == '__main__':
     
     auctions_yahoo = Store_Core()
     auctions_yahoo.name = "auctions_yahoo"
-    auctions_yahoo.dir = f'{self.config.download_path}{auctions_yahoo.name}*.html'
+    auctions_yahoo.dir = f'{config.download_path}{auctions_yahoo.name}*.html'
     auctions_yahoo.siteID = 2
     auctions_yahoo.seed_save_add()
     
