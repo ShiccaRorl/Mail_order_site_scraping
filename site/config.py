@@ -6,5 +6,5 @@ class Config():
         self.db_path = "sqlite:///./../../db.sqlite3"
         
         # download
-        self.download_path = "C:/Users/ban/Downloads/"
-        #self.download_path = "C:/Users/user/Downloads"
+        #self.download_path = "C:/Users/ban/Downloads/"
+        self.download_path = "C:/Users/user/Downloads"
