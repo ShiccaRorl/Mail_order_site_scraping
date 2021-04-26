@@ -55,10 +55,10 @@ class Directory_seed1():
         #print(code2)
         session = Session(engine)
         # print(session.query(self.affiliate_video).filter(
-        #    self.affiliate_video.code == str(code2)).first()) #.order_by(self.affiliate_video.published_date))
+        #    self.affiliate_video.code == str(code2)).first) #.order_by(self.affiliate_video.published_date))
         dmm = Analysis_MGS(self.seed1)
         # .order_by(self.affiliate_video.published_date):
-        if (session.query(self.affiliate_video).filter(self.affiliate_video.code == str(code2)).first()) == None:
+        if (session.query(self.affiliate_video).filter(self.affiliate_video.code == str(code2)).first) == None:
             session.add(self.affiliate_video(code=dmm.code,
                                              seed_yes=True,
                                              seed_error=0,
@@ -96,9 +96,9 @@ class Directory_seed1():
                     i = i + 1
 
         # update
-        elif (session.query(self.affiliate_video).filter(self.affiliate_video.code == str(code2)).first()) != None:
+        elif (session.query(self.affiliate_video).filter(self.affiliate_video.code == str(code2)).first) != None:
             video = session.query(self.affiliate_video).filter(
-                self.affiliate_video.code == str(code2)).first()
+                self.affiliate_video.code == str(code2)).first
             """
             video.file_path = f"./www/MGS/{code2}/seed1.txt"
             print(video.file_path)
@@ -197,7 +197,7 @@ class Directory_seed1():
         session = Session(engine)
         s = 0
         for url in dmm.thumbnail2:
-            if (session.query(self.affiliate_video_pic).filter(self.affiliate_video_pic.code == str(code2), self.affiliate_video_pic.url == url).first()) == None:
+            if (session.query(self.affiliate_video_pic).filter(self.affiliate_video_pic.code == str(code2), self.affiliate_video_pic.url == url).first) == None:
                 #try:
                 #    if self.comment[s] == None:
                 #        self.comment.append("")
@@ -239,9 +239,9 @@ class Directory_seed1():
         try:
             for comment in self.comments:
                 # update
-                if (session.query(self.affiliate_video_pic).filter(self.affiliate_video_pic.code == str(code2) and self.affiliate_video_pic.url == url).first()) != None:
+                if (session.query(self.affiliate_video_pic).filter(self.affiliate_video_pic.code == str(code2) and self.affiliate_video_pic.url == url).first) != None:
                     pic = session.query(self.affiliate_video_pic).filter(
-                        self.affiliate_video_pic.code == str(code2) and self.affiliate_video_pic.url == url).first()
+                        self.affiliate_video_pic.code == str(code2) and self.affiliate_video_pic.url == url).first
                     if pic.comment == "":
                         pic.comment = comment
 
@@ -279,7 +279,7 @@ class Directory_seed1():
         # その他のページ読み込み
         session = Session(engine)
         for url in mgs.他のid:
-            if (session.query(self.affiliate_video).filter(self.affiliate_video.code == str(code2)).first()) == None:
+            if (session.query(self.affiliate_video).filter(self.affiliate_video.code == str(code2)).first) == None:
                 session.add(self.affiliate_video(code=code2,
                                                  seed_yes=False,
                                                  seed_error=0,
@@ -317,7 +317,7 @@ class Directory_seed1():
                         i = i + 1
             else:
                 """
-                reference = session.query(self.affiliate_video).filter(self.affiliate_video.code == str(code2)).first()
+                reference = session.query(self.affiliate_video).filter(self.affiliate_video.code == str(code2)).first
                 print(reference)
                 print(reference.reference)
                 reference.reference = reference.reference + 1
@@ -336,7 +336,7 @@ class Directory_seed1():
     def データベースに保存する計算する(self, code2):
         session = Session(engine)
         video = session.query(self.affiliate_video).filter(
-            self.affiliate_video.code == str(code2)).first()
+            self.affiliate_video.code == str(code2)).first
         file_path = f"./www/MGS/{code2}/seed1.txt"
         #print(file_path)
         try:
@@ -398,7 +398,7 @@ class Directory_seed1():
     def アップデータ可能か調べる(self, code):
         session = Session(engine)
         videos = session.query(self.affiliate_video).filter(
-            self.affiliate_video.code == str(code)).all()
+            self.affiliate_video.code == str(code)).all
         file_path = f"./www/MGS/{code}/seed1.txt"
         #print(file_path)
         try:

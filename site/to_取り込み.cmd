@@ -1,7 +1,1 @@
-rem python directory_seed_アマゾン.py
-rem python directory_seed_ストアーズ.py
-rem python directory_seed_ヤフオク.py
-rem python directory_seed_ラクマ.py
-rem python directory_seed_楽天.py
-
-python core.py
+powershell -NoProfile -ExecutionPolicy Unrestricted .\to_蜿悶ｊ霎ｼ縺ｿ.ps1

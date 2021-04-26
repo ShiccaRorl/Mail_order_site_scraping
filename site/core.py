@@ -54,7 +54,7 @@ class Store_Core():
                 session.add(self.seed(siteID=self.siteID,
                                     seed=self.seed1,
                                     create_at=datetime.datetime.now(),))
-                
+                                    解析完了 = False
                 self.save(session)
             
                 self.削除する(d)
