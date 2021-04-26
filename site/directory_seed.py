@@ -68,14 +68,91 @@ class Mail_order_site():
 
     def get_data(self):
         session = Session(self.engine)
-        self.data = session.query(self.seeds).filter(self.seeds.siteID == self.siteID).filter(self.seeds.analysis_completed == False).first
+        self.data = session.query(self.seeds).filter(self.seeds.siteID == self.siteID and self.seeds.analysis_completed == False).first()
         return self.data
+    
+    def get_seed(self):
+        session = Session(self.engine)
+        self.data = session.query(self.seeds).filter(self.seeds.siteID == self.siteID and self.seeds.analysis_completed == False).first()
+        return self.data.seed
 
 
 
+    def get_id(self):
+        return
+        
+    def get_送り主_名前(self):
+        return
+    
+    def get_送り主_ペンネーム(self):
+        return
+    
+    def get_送り主_郵便番号(self):
+        return
 
+    def get_送り主_住所(self):
+        return
+    
+    def get_送り主_電話番号(self):
+        return
+    
+    def get_送り主_メールアドレス(self):
+        return
+
+
+
+    def get_送り先_郵便番号(self):
+        return
+    
+    def get_送り先_名前(self):
+        return
+    
+    def get_送り先_ペンネーム(self):
+        return
+    
+    def get_送り先_住所(self):
+        return
+        
+    def get_送り先_電話番号(self):
+        return
+    
+    def get_送り先_メールアドレス(self):
+        return
+        
+    def get_送り先_住所(self):
+        return
+
+
+    def get_日付
+
+    def get_商品コード(self):
+        
+    def get_商品名
+    
+    def get_数量
+    
+    def get_下代_消費税抜き
+    
+    def get_下代_消費税あり
+    
+    def get_下代_消費税
+    
+    def get_売上単価
+
+    def get_上代_消費税抜き
+    
+    def get_上代_消費税あり
+
+    def get_上代_消費税
+    
+    def get_販売先_id
+    
+    def get_販売先名
+    
+    def get_備考
 
 if __name__ == '__main__':
     mail_order_site = Mail_order_site()
     data = mail_order_site.get_data()
-    print(data.id)
+    #print(mail_order_site.siteID)
+    #print(mail_order_site.get_seed())

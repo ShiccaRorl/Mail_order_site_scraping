@@ -65,11 +65,11 @@ class Yahoo_auction():
         return self.data
         
     def test(self):
-        print(self.data.seed)
         with open("./../../mail_order_site2.html", 'w', encoding="utf-8") as f:
-            f.write(str(self.get_data()))
+            f.write(str(self.get_data().seed))
 
 
+        
 
 
 if __name__ == '__main__':
