@@ -79,24 +79,31 @@ class Mail_order_site():
 
 
     def get_id(self):
+        #td3_0 > table > tbody > tr:nth-child(1) > td:nth-child(2) > small
+        #td3_1 > table > tbody > tr:nth-child(1) > td:nth-child(2) > small
         return
         
-    def get_送り主_名前(self):
+    def get_買い主_名前(self):
+        #td4_0 > table > tbody > tr:nth-child(5) > td:nth-child(2)
+
         return
     
-    def get_送り主_ペンネーム(self):
+    def get_買い主_ペンネーム(self):
         return
     
-    def get_送り主_郵便番号(self):
+    def get_買い主_郵便番号(self):
         return
 
-    def get_送り主_住所(self):
+    def get_買い主_住所(self):
+        
         return
     
-    def get_送り主_電話番号(self):
+    def get_買い主_電話番号(self):
+        
         return
     
-    def get_送り主_メールアドレス(self):
+    def get_買い主_メールアドレス(self):
+        #td4_0 > table > tbody > tr:nth-child(6) > td:nth-child(2) > small
         return
 
 
@@ -105,15 +112,19 @@ class Mail_order_site():
         return
     
     def get_送り先_名前(self):
+                #td4_0 > table > tbody > tr:nth-child(2) > td:nth-child(2) > small
+        #td4_1 > table > tbody > tr:nth-child(2) > td:nth-child(2) > small
         return
     
     def get_送り先_ペンネーム(self):
         return
     
     def get_送り先_住所(self):
+        #td4_0 > table > tbody > tr:nth-child(3) > td:nth-child(2) > small
         return
         
     def get_送り先_電話番号(self):
+        #td4_0 > table > tbody > tr:nth-child(4) > td:nth-child(2) > small
         return
     
     def get_送り先_メールアドレス(self):
@@ -124,13 +135,20 @@ class Mail_order_site():
 
 
     def get_日付
+    #td3_0 > table > tbody > tr:nth-child(5) > td:nth-child(2) > small
+    #td3_1 > table > tbody > tr:nth-child(5) > td:nth-child(2) > small
 
     def get_商品コード(self):
+    #td3_0 > table > tbody > tr:nth-child(4) > td:nth-child(2) > small > a
+    #td3_1 > table > tbody > tr:nth-child(4) > td:nth-child(2) > small > a
         
     def get_商品名
-    
+    #td3_0 > table > tbody > tr:nth-child(4) > td:nth-child(2) > small > a
+    #td3_1 > table > tbody > tr:nth-child(4) > td:nth-child(2) > small > a
+
     def get_数量
-    
+    #td3_1 > table > tbody > tr:nth-child(6) > td:nth-child(2) > small
+
     def get_下代_消費税抜き
     
     def get_下代_消費税あり

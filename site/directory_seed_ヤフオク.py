@@ -68,7 +68,25 @@ class Yahoo_auction():
         with open("./../../mail_order_site2.html", 'w', encoding="utf-8") as f:
             f.write(str(self.get_data().seed))
 
+    def get_id(self):
+        #td3_0 > table > tbody > tr:nth-child(1) > td:nth-child(2) > small
+        #td3_1 > table > tbody > tr:nth-child(1) > td:nth-child(2) > small
+        return
 
+    def get_日付
+    #td3_0 > table > tbody > tr:nth-child(5) > td:nth-child(2) > small
+    #td3_1 > table > tbody > tr:nth-child(5) > td:nth-child(2) > small
+
+    def get_商品コード(self):
+    #td3_0 > table > tbody > tr:nth-child(4) > td:nth-child(2) > small > a
+    #td3_1 > table > tbody > tr:nth-child(4) > td:nth-child(2) > small > a
+        
+    def get_商品名
+    #td3_0 > table > tbody > tr:nth-child(4) > td:nth-child(2) > small > a
+    #td3_1 > table > tbody > tr:nth-child(4) > td:nth-child(2) > small > a
+
+    def get_数量
+    #td3_1 > table > tbody > tr:nth-child(6) > td:nth-child(2) > small
         
 
 
