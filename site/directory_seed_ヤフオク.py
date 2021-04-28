@@ -148,7 +148,7 @@ class Yahoo_auction():
         self.test()
         
         i = 0
-        tdss = TDss()
+        self.tdss = TDss()
         while i <= 30:
 
             soup3 = self.soup.find('td', {'id': f'td3_{i}'})
@@ -160,30 +160,10 @@ class Yahoo_auction():
             soup5 = self.soup.find('td', {'id': f'td5_{i}'})
             td5 = Td5(soup5)
 
-            tdss.add_td([td3, td4, td5])
+            self.tdss.add_td([td3, td4, td5])
             i = i + 1
         
-        #print(tdss.tds[0][0].test())
-        print(tdss.tds[0][0].get_id())
-        print(tdss.tds[0][0].get_日付())
-        print(tdss.tds[0][0].get_商品コード())
-        print(tdss.tds[0][0].get_商品名())
-        print(tdss.tds[0][0].get_数量())
-        
-        print(tdss.tds[1][1].test())
-        print(tdss.tds[1][1].get_落札者_名前())
-        print(tdss.tds[1][1].get_落札者_ペンネーム())
-        print(tdss.tds[1][1].get_落札者_郵便番号())
-        print(tdss.tds[1][1].get_落札者_住所())
-        print(tdss.tds[1][1].get_落札者_電話番号())
-        print(tdss.tds[1][1].get_落札者_メールアドレス())
-        print(tdss.tds[1][1].get_送り先_郵便番号())
-        print(tdss.tds[1][1].get_送り先_名前())
-        print(tdss.tds[1][1].get_送り先_ペンネーム())
-        print(tdss.tds[1][1].get_送り先_住所())
-        print(tdss.tds[1][1].get_送り先_電話番号())
-        print(tdss.tds[1][1].get_送り先_メールアドレス())
-        print(tdss.tds[1][1].get_送り先_住所())
+        self.tdss.test()
 
         
 class TDss():
@@ -193,6 +173,10 @@ class TDss():
     def add_td(self, td):
         self.tds.append(td)
 
+    def test(self):
+        print(self.tds[0][0].test()) # Td3 test
+        print(self.tds[1][1].test()) # Td4 test
+        print(self.tds[1][2].test()) # Td5 test
 
 class Td3():
     def __init__(self, soup):
@@ -209,6 +193,24 @@ class Td3():
             print(i)
             print("")
             s = s + 1
+
+        print("get_id")
+        print(self.get_id())
+        print("")
+        print("get_日付")
+        print(self.get_日付())
+        print("")
+        print("get_商品コード")
+        print(self.get_商品コード())
+        print("")
+        print("get_商品名")
+        print(self.get_商品名())
+        print("")
+        print("get_数量")
+        print(self.get_数量())
+        print("")
+
+
 
     def get_id(self):
         return self.soup.find_all("small")[1].text.replace(" （商品ページ）", "").strip()
@@ -245,6 +247,45 @@ class Td4():
             print(i)
             print("")
             s = s + 1
+
+        print("")
+        print("落札者_名前")
+        print(self.get_落札者_名前())
+        print("")
+        print("落札者_ペンネーム")
+        print(self.get_落札者_ペンネーム())
+        print("")
+        print("落札者_郵便番号")
+        print(self.get_落札者_郵便番号())
+        print("")
+        print("落札者_住所")
+        print(self.get_落札者_住所())
+        print("")
+        print("電話番号")
+        print(self.get_落札者_電話番号())
+        print("")
+        print("落札者_メールアドレス")
+        print(self.get_落札者_メールアドレス())
+        print("")
+        print("送り先_郵便番号")
+        print(self.get_送り先_郵便番号())
+        print("")
+        print("送り先_住所")
+        print(self.get_送り先_住所())
+        print("")
+        print("送り先_名前")
+        print(self.get_送り先_名前())
+        print("")
+        print("送り先_ペンネーム")
+        print(self.get_送り先_ペンネーム())
+        print("")
+        print("送り先_電話番号")
+        print(self.get_送り先_電話番号())
+        print("")
+        print("送り先_メールアドレス")
+        print(self.get_送り先_メールアドレス())
+        print("")
+
 
     def get_落札者_名前(self):
         return self.soup.find_all("small")[9].text.strip()
@@ -286,9 +327,6 @@ class Td4():
         return
 
 
-
-
-
 class Td5():
     def __init__(self, soup):
         self.soup = soup
@@ -304,11 +342,37 @@ class Td5():
             print(i)
             print("")
             s = s + 1
+
+        print("落札金額")
+        print(self.get_落札金額())
+        print("")
+        print("送料")
+        print(self.get_送料())
+        print("")
+        print("合計金額")
+        print(self.get_合計金額())
+        print("")
+
+    def get_落札金額(self):
+        temp = self.soup.find_all("small")[1].text.strip().replace(",", "")
+        temp = temp.replace("円", "")
+        return int(temp)
+
+    def get_送料(self):
+        temp = self.soup.find_all("small")[3].text.strip().replace(",", "")
+        temp = temp.replace("円", "")
+        return int(temp)
+
+    def get_合計金額(self):
+        temp = self.soup.find_all("small")[5].text.strip().replace(",", "")
+        temp = temp.replace("円", "")
+        return int(temp)
             
 
 if __name__ == '__main__':
     yahoo_auction = Yahoo_auction()
     yahoo_auction.main()
+    """
     print(yahoo_auction.get_id())
     print(yahoo_auction.get_日付())
     print(yahoo_auction.get_商品コード())
@@ -327,3 +391,4 @@ if __name__ == '__main__':
     print(yahoo_auction.get_送り先_電話番号())
     print(yahoo_auction.get_送り先_メールアドレス())
     print(yahoo_auction.get_送り先_住所())
+    """
