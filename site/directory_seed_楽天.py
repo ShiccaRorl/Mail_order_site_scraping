@@ -73,39 +73,45 @@ class Rakuten():
     def get_日付(self):
         return
 
+
+    def get_商品明細(self):
+        soup = self.soup.find('div', {'class': f'rms-row-wrapper'})
+        return soup
+
     def get_商品コード(self):
-        soup = self.soup.find('a', {'class': f'rms-span-open-in-new'})
+        soup = self.get_商品明細().find('a', {'class': f'rms-span-open-in-new'})
         return soup.text.strip()
 
     def get_商品名(self):
-        soup = self.soup.find('a', {'class': f'rms-span-open-in-new'})
+        soup = self.get_商品明細().find('a', {'class': f'rms-span-open-in-new'})
         return soup.text.strip()
 
     def get_数量(self):
-        soup = self.soup.find('a', {'class': f'rms-table-column-line'})
+        soup = self.get_商品明細().find('div', {'class': f'rms-table-column-line'})
         return soup.text.strip()
 
+
     def get_注文者_名前(self):
-        soup = self.soup.find('a', {'class': f'fullname'})
+        soup = self.soup.find('span', {'class': f'fullname'})
         return soup.text.strip()
 
     def get_注文者_ペンネーム(self):
         return
 
     def get_注文者_郵便番号(self):
-        soup = self.soup.find('a', {'class': f'address'})
-        temp = soup.text.sprit(" ")[0]
+        soup = self.soup.find('span', {'class': f'address'})
+        temp = str(soup.text).split(" ")[0]
         temp = temp.replace("〒", "")
         return temp.strip()
 
     def get_注文者_住所(self):
-        soup = self.soup.find('a', {'class': f'address'})
-        temp = soup.text.sprit(" ")[1]
+        soup = self.soup.find('span', {'class': f'address'})
+        temp = soup.text.split(" ")[1]
         return temp.strip()
 
 
     def get_注文者_電話番号(self):
-        soup = self.soup.find('a', {'class': f'phone'})
+        soup = self.soup.find('span', {'class': f'phone'})
         return soup.text.strip()
 
     def get_注文者_メールアドレス(self):
@@ -115,33 +121,33 @@ class Rakuten():
 
 
     def get_送り先_名前(self):
-        soup = self.soup.find('a', {'class': f'fullname'})
+        soup = self.soup.find('span', {'class': f'fullname'})
         return soup.text.strip()
 
     def get_送り先_ペンネーム(self):
         return
 
     def get_送り先_郵便番号(self):
-        soup = self.soup.find('a', {'class': f'address'})
-        temp = soup.text.sprit(" ")[0]
+        soup = self.soup.find('span', {'class': f'address'})
+        temp = soup.text.split(" ")[0]
         temp = temp.replace("〒", "")
         return temp.strip()
 
     def get_送り先_住所(self):
-        soup = self.soup.find('a', {'class': f'address'})
-        temp = soup.text.sprit(" ")[0]
+        soup = self.soup.find('span', {'class': f'address'})
+        temp = soup.text.split(" ")[0]
         temp = temp.replace("〒", "")
         return temp.strip()
 
     def get_送り先_電話番号(self):
-        soup = self.soup.find('a', {'class': f'phone'})
+        soup = self.soup.find('span', {'class': f'phone'})
         return soup.text.strip()
 
     def get_送り先_メールアドレス(self):
         return
 
     def get_購買額(self):
-        soup = self.soup.find('a', {'class': f'footer-price'})
+        soup = self.soup.find('span', {'class': f'footer-price'})
         return soup.text.strip()
 
     def main(self):
@@ -161,6 +167,9 @@ class Rakuten():
         print("")
         print("日付")
         print(self.get_日付())
+        print("")
+        print("商品明細")
+        print(self.get_商品明細())
         print("")
         print("商品コード")
         print(self.get_商品コード())
