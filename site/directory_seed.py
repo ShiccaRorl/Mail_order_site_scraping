@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-# 2021/04/25
+# 2021/05/04
 # python -m pip install --upgrade pip
 # pip install -U sqlalchemy
 # pip install -U flake8
@@ -75,12 +75,12 @@ class Mail_order_site():
         #self.seed = self.get
 
     def get_data(self):
-        session = Session(self.engine)
+        session = Session(bind = self.engine, autocommit = True, autoflush = True)
         self.data = session.query(self.seeds).filter(self.seeds.siteID == self.siteID and self.seeds.analysis_completed == False).first()
         return self.data
     
     def get_seed(self):
-        session = Session(self.engine)
+        session = Session(bind = self.engine, autocommit = True, autoflush = True)
         self.data = session.query(self.seeds).filter(self.seeds.siteID == self.siteID and self.seeds.analysis_completed == False).first()
         return self.data.seed
 
@@ -253,7 +253,7 @@ class Mail_order_site():
             print(f"アップデート失敗")
 
     def update_analysis_completed(self):
-        session = Session(self.engine)
+        session = Session(bind = self.engine, autocommit = True, autoflush = True)
         print("self.siteID")
         print(self.siteID)
         seeds = session.query(self.seeds).filter(self.seeds.siteID == self.siteID and self.seeds.analysis_completed == False).first()
@@ -265,7 +265,7 @@ class Mail_order_site():
         seeds.analysis_completed = True
         seeds.update_at = datetime.datetime.now()
         print("回収")
-        session.commit()
+        #session.commit()
         self.save(session)
         
 
@@ -275,7 +275,7 @@ class Mail_order_site():
         while i <= 5:
             try:
                 time.sleep(1)
-                session.commit()
+                #session.commit()
                 time.sleep(1)
                 i = 6 + 1
             except:

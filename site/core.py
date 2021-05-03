@@ -66,7 +66,7 @@ class Store_Core():
         while i <= 5:
             try:
                 time.sleep(1)
-                session.commit()
+                #session.commit()
                 time.sleep(1)
                 i = 6 + 1
             except:
