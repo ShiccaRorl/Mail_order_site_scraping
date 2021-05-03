@@ -55,8 +55,8 @@ class Store_Core():
                 #seeds = session.query(self.seed)
                 session.add(self.seed(siteID=self.siteID,
                                     seed=self.seed1,
-                                    create_at=datetime.datetime.now(),))
-                                    解析完了 = False
+                                    create_at=datetime.datetime.now(),
+                                    analysis_completed = False))
                 self.save(session)
             
                 self.削除する(d)

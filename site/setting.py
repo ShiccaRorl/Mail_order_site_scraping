@@ -2,6 +2,7 @@
 from sqlalchemy import *
 from sqlalchemy.orm import *
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
 from config import Config
 
@@ -27,7 +28,7 @@ ENGINE = create_engine(
 # Sessionの作成
 session = scoped_session(
   # ORM実行時の設定。自動コミットするか、自動反映するなど。
-　　　　session.maker(
+　　　　sessionmaker(
 　　　　　　　　autocommit = True,
 　　　　　　　　autoflush = True,
 　　　　　　　　bind = ENGINE

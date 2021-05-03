@@ -1,1 +1,1 @@
-powershell -NoProfile -ExecutionPolicy Unrestricted .\to_å–ã‚Šè¾¼ã¿.ps1
+powershell -NoProfile -ExecutionPolicy Unrestricted .\to_æ‚è‚İ.ps1

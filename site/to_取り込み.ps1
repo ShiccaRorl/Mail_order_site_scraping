@@ -1,5 +1,7 @@
+PowerShell -Command python models.py
+
 PowerShell -Command python core.py
 
-PowerShell -Command python directory_seed_ãƒ¤ãƒ•ã‚ªã‚¯.py
+PowerShell -Command python directory_seed_ƒ„ƒtƒIƒN.py
 
 PowerShell -Command python excel_db.py

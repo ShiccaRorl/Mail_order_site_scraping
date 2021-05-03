@@ -120,21 +120,7 @@ class Excel_db():
             ws[f"S{s}"] = i.total_fee
             
             s = s + 1
-        """
-        i = 2
-        t = 0
-        while i <= (int(len(data)) + 1):
-            ws[f"B{i}"] = self.日付
-            ws[f"C{i}"] = self.商品コード
-            ws[f"D{i}"] = self.商品名
-            ws[f"F{i}"] = self.合計金額
-            ws[f"H{i}"] = self.siteID
-            ws[f"I{i}"] = self.購入者_名前
-            ws[f"J{i}"] = self.code
 
-            i = i + 1
-            t = t + 1
-        """
         wb.save(self.config.excel_db_path)
 
 if __name__ == '__main__':
