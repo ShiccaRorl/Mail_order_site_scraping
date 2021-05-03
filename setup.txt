@@ -1,0 +1,12 @@
+pip install -U django
+
+django-admin startproject config
+
+python manage.py runserver
+
+python manage.py startapp stock
+python manage.py startapp product
+python manage.py startapp sale
+python manage.py startapp accounting
+python manage.py startapp customer
+

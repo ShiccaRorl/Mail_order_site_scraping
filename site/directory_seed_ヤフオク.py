@@ -34,7 +34,7 @@ Base = automap_base()
 #session = Session(engine)
 
 
-class Yahoo_auction():
+class Yahoo_auction(Mail_order_site):
     def __init__(self):
         self.config = Config()
         Base = automap_base()
@@ -54,12 +54,12 @@ class Yahoo_auction():
 
         self.siteID = 2
 
-    def get_data(self):
-        self.data = self.mail_order_site.get_data()
+    def get_data2(self):
+        self.data = self.get_data()
         return str(self.data.seed)
 
-    def get_seed(self):
-        self.data = self.get_data()
+    def get_seed2(self):
+        self.data = self.get_data2()
         return self.data.replace("charset=euc-jp", 'charset="UTF-8"')
 
     def test(self):
@@ -133,163 +133,208 @@ class Yahoo_auction():
     def get_送り先_住所(self):
         return
 
+
     def main(self):
-        self.mail_order_site = Mail_order_site()
-        self.mail_order_site.siteID = 2
-        self.get_data()
-        self.soup = BeautifulSoup(self.get_seed(), "html.parser")
-        self.test()
+        all = []
+        session = Session(self.engine)
+        all = session.query(self.seeds).filter(
+            self.seeds.siteID == self.siteID and self.seeds.analysis_completed == False).all()
+        for t in all:
+            # print(i)
 
-        i = 0
-        self.tdss = TDss()
-        while i <= self.config.yahoo_auction_page:
 
-            soup3 = self.soup.find('td', {'id': f'td3_{i}'})
-            td3 = Td3(soup3)
+            self.setup()
+            self.siteID = 2
+            # self.get_seed()
+            self.soup = BeautifulSoup(t.seed, "html.parser")
+            self.test()
 
-            soup4 = self.soup.find('td', {'id': f'td4_{i}'})
-            td4 = Td4(soup4)
+            i = 0
+            self.tdss = TDss()
+            while i <= self.config.yahoo_auction_page:
 
-            soup5 = self.soup.find('td', {'id': f'td5_{i}'})
-            td5 = Td5(soup5)
+                soup3 = self.soup.find('td', {'id': f'td3_{i}'})
+                td3 = Td3(soup3)
 
-            self.tdss.add_td([td3, td4, td5])
-            i = i + 1
+                soup4 = self.soup.find('td', {'id': f'td4_{i}'})
+                td4 = Td4(soup4)
 
-        # self.tdss.test() # test mode
-        self.db()
+                soup5 = self.soup.find('td', {'id': f'td5_{i}'})
+                td5 = Td5(soup5)
+
+                self.tdss.add_td([td3, td4, td5])
+                i = i + 1
+                print(i)
+
+            # self.tdss.test() # test mode
+            self.db()
+            self.update_analysis_completed()
+            
 
     def db(self):
 
-        session = Session(self.engine)
         i = 0
         while i <= self.config.yahoo_auction_page:
-            if (session.query(self.seeds).filter(self.seeds.id == self.tdss.tds[i][0].get_id()).first()) == None:
+            session = Session(self.engine)
+            if session.query(self.seed).filter(self.seed.code == self.tdss.tds[i][0].get_id()).first() == None:
                 # 新規追加
 
-                if self.tdss.tds[i][1].get_落札者_名前() == "":
-                    print(f"{i} まだ早い")
+                if self.tdss.tds[i][1].get_落札者_名前() == "" or self.tdss.tds[i][1].get_落札者_名前() == "落札者データの表示期間が終了しました。":
+                    print(f"{i} データ無視")
 
                     i = i + 1
                 else:
+                    print("")
                     print(f"{i} 新規追加")
+                    print(self.tdss.tds[i][0].get_id())
                     try:
-                        session.add(self.seeds(id=self.tdss.tds[i][0].get_id(),
-                                            siteID=self.siteID,
-                                            create_at=datetime.datetime.now(),
-                                            update_at=datetime.datetime.now(),
+                        self.code = self.tdss.tds[i][0].get_id()
+                        self.siteID = self.siteID
+                        self.create_at = datetime.datetime.now()
+                        self.update_at = datetime.datetime.now()
 
-                                            購入日付=self.tdss.tds[i][0].get_日付(),
-                                            商品コード=self.tdss.tds[i][0].get_商品コード(),
-                                            商品名=self.tdss.tds[i][0].get_商品名(),
-                                            数量=self.tdss.tds[i][0].get_数量(),
+                        self.日付 = self.tdss.tds[i][0].get_日付()
+                        self.商品コード = self.tdss.tds[i][0].get_商品コード()
+                        self.商品名 = self.tdss.tds[i][0].get_商品名()
+                        self.数量 = self.tdss.tds[i][0].get_数量()
 
-                                            購入者_名前=self.tdss.tds[i][1].get_落札者_名前(),
-                                            購入者_ペンネーム=self.tdss.tds[i][1].get_落札者_ペンネーム(),
-                                            購入者_郵便番号=self.tdss.tds[i][1].get_落札者_郵便番号(),
-                                            購入者_住所=self.tdss.tds[i][1].get_落札者_住所(),
-                                            購入者_電話番号=self.tdss.tds[i][1].get_落札者_電話番号(),
-                                            購入者_落札者_メールアドレス=self.tdss.tds[i][1].get_落札者_メールアドレス(),
+                        self.購入者_名前 = self.tdss.tds[i][1].get_落札者_名前()
+                        self.購入者_ペンネーム = self.tdss.tds[i][1].get_落札者_ペンネーム()
+                        self.購入者_郵便番号 = self.tdss.tds[i][1].get_落札者_郵便番号()
+                        self.購入者_住所 = self.tdss.tds[i][1].get_落札者_住所()
+                        self.購入者_電話番号 = self.tdss.tds[i][1].get_落札者_電話番号()
+                        self.購入者_メールアドレス = self.tdss.tds[i][1].get_落札者_メールアドレス(
+                        )
 
-                                            送り先_名前=self.tdss.tds[i][1].get_送り先_名前(),
-                                            送り先_ペンネーム=self.tdss.tds[i][1].get_送り先_ペンネーム(),
-                                            送り先_郵便番号=self.tdss.tds[i][1].get_送り先_郵便番号(),
-                                            送り先_住所=self.tdss.tds[i][1].get_送り先_住所(),
-                                            送り先_電話番号=self.tdss.tds[i][1].get_送り先_電話番号(),
-                                            送り先_メールアドレス=self.tdss.tds[i][1].get_送り先_メールアドレス(),
+                        self.送り先_名前 = self.tdss.tds[i][1].get_送り先_名前()
+                        self.送り先_ペンネーム = self.tdss.tds[i][1].get_送り先_ペンネーム()
+                        self.送り先_郵便番号 = self.tdss.tds[i][1].get_送り先_郵便番号()
+                        self.送り先_住所 = self.tdss.tds[i][1].get_送り先_住所()
+                        self.送り先_電話番号 = self.tdss.tds[i][1].get_送り先_電話番号()
+                        self.送り先_メールアドレス = self.tdss.tds[i][1].get_送り先_メールアドレス(
+                        )
 
-                                            売上金額=self.tdss.tds[i][2].get_落札金額(),
-                                            送料=self.tdss.tds[i][2].get_送料(),
-                                            合計金額=self.tdss.tds[i][2].get_合計金額(), ))
+                        self.購入金額 = self.tdss.tds[i][2].get_落札金額()
+                        self.送料 = self.tdss.tds[i][2].get_送料()
+                        self.合計金額 = self.tdss.tds[i][2].get_合計金額()
+
+                        self.insert_add(session)
 
                         i = i + 1
 
-                        s = 0
-                        while s <= 5:
-                            try:
-                                time.sleep(1)
-                                session.commit()
-                                time.sleep(1)
-                                s = 6 + 1
-                            except:
-                                time.sleep(5)
-                                s = s + 1
-                                print(s)
                     except:
                         print(f"{i} 新規失敗")
+                        i = i + 1
 
-
-
-
-
-            elif (session.query(self.seeds).filter(self.seeds.id == self.tdss.tds[i][0].get_id()).first()) != None:
+            elif session.query(self.seed).filter(self.seed.code == self.tdss.tds[i][0].get_id()).first() != None:
                 # アップデート
+                        self.code = self.tdss.tds[i][0].get_id()
+                        #self.update1(i)
+                        self.update2(i)
+                        i = i + 1
+
+
+            else:
+                print("エラーです")
+
+    def update1(self, i):
+                print("")
                 print(i)
                 session = Session(self.engine)
-                seeds = session.query(self.seeds).filter(
-                    self.seeds.id == self.tdss.tds[i][0].get_id()).first()
-                if "落札者データの表示期間が終了しました。 " == self.tdss.tds[i][1].get_落札者_名前():
-                    print("落札者データの表示期間が終了しました。 ")
+                #seed = session.query(self.seed).filter(self.seed.code == self.tdss.tds[i][0].get_id()).first()
+                if self.tdss.tds[i][1].get_落札者_名前() == "" or self.tdss.tds[i][1].get_落札者_名前() == "落札者データの表示期間が終了しました。":
+                    print(f"{i} 落札者データの表示期間が終了しました。")
+
+                    i = i + 1
                 else:
                     print("アップデート")
 
                     try:
-                        seeds.siteID = self.siteID
-
+                        self.code = self.tdss.tds[i][0].get_id()
+                        self.siteID = self.siteID
+                        print(self.code)
                         # create_at=datetime.datetime.now()
-                        seeds.update_at = datetime.datetime.now()
+                        self.update_at = datetime.datetime.now()
 
-                        seeds.購入日付 = self.tdss.tds[i][0].get_日付()
-                        seeds.商品コード = self.tdss.tds[i][0].get_商品コード()
-                        seeds.商品名 = self.tdss.tds[i][0].get_商品名()
-                        seeds.数量 = self.tdss.tds[i][0].get_数量()
+                        self.日付 = self.tdss.tds[i][0].get_日付()
+                        self.商品コード = self.tdss.tds[i][0].get_商品コード()
+                        self.商品名 = self.tdss.tds[i][0].get_商品名()
+                        self.数量 = self.tdss.tds[i][0].get_数量()
 
-                        if seeds.購入者_名前 == "":
-                            seeds.購入者_名前 = self.tdss.tds[i][1].get_落札者_名前()
-                        if seeds.購入者_ペンネーム == "":
-                            seeds.購入者_ペンネーム = self.tdss.tds[i][1].get_落札者_ペンネーム()
-                        if seeds.購入者_郵便番号 == "":
-                            seeds.購入者_郵便番号 = self.tdss.tds[i][1].get_落札者_郵便番号()
-                        if seeds.購入者_住所 == "":
-                            seeds.購入者_住所 = self.tdss.tds[i][1].get_落札者_住所()
-                        if seeds.購入者_電話番号 == "":
-                            seeds.購入者_電話番号 = self.tdss.tds[i][1].get_落札者_電話番号()
-                        if seeds.購入者_落札者_メールアドレス == "":
-                            seeds.購入者_落札者_メールアドレス = self.tdss.tds[i][1].get_落札者_メールアドレス()
+                        self.購入者_名前 = self.tdss.tds[i][1].get_落札者_名前()
+                        self.購入者_ペンネーム = self.tdss.tds[i][1].get_落札者_ペンネーム()
+                        self.購入者_郵便番号 = self.tdss.tds[i][1].get_落札者_郵便番号()
+                        self.購入者_住所 = self.tdss.tds[i][1].get_落札者_住所()
+                        self.購入者_電話番号 = self.tdss.tds[i][1].get_落札者_電話番号()
+                        self.購入者_メールアドレス = self.tdss.tds[i][1].get_落札者_メールアドレス(
+                        )
 
-                        if seeds.送り先_名前 == "":
-                            seeds.送り先_名前 = self.tdss.tds[i][1].get_送り先_名前()
-                        if seeds.送り先_ペンネーム == "":
-                            seeds.送り先_ペンネーム = self.tdss.tds[i][1].get_送り先_ペンネーム()
-                        if seeds.送り先_郵便番号 == "":
-                            seeds.送り先_郵便番号 = self.tdss.tds[i][1].get_送り先_郵便番号()
-                        if seeds.送り先_住所 == "":
-                            seeds.送り先_住所 = self.tdss.tds[i][1].get_送り先_住所()
-                        if seeds.送り先_電話番号 == "":
-                            seeds.送り先_電話番号 = self.tdss.tds[i][1].get_送り先_電話番号()
-                        if seeds.送り先_メールアドレス == "":
-                            seeds.送り先_メールアドレス = self.tdss.tds[i][1].get_送り先_メールアドレス()
-                        if seeds.売上金額 == "":
-                            seeds.売上金額 = self.tdss.tds[i][2].get_落札金額()
-                        if seeds.送料 == "":
-                            seeds.送料 = self.tdss.tds[i][2].get_送料()
-                        if seeds.合計金額 == "":
-                            seeds.合計金額 = self.tdss.tds[i][2].get_合計金額()
+                        self.送り先_名前 = self.tdss.tds[i][1].get_送り先_名前()
+                        self.送り先_ペンネーム = self.tdss.tds[i][1].get_送り先_ペンネーム()
+                        self.送り先_郵便番号 = self.tdss.tds[i][1].get_送り先_郵便番号()
+                        self.送り先_住所 = self.tdss.tds[i][1].get_送り先_住所()
+                        self.送り先_電話番号 = self.tdss.tds[i][1].get_送り先_電話番号()
+                        self.送り先_メールアドレス = self.tdss.tds[i][1].get_送り先_メールアドレス(
+                        )
 
-                        i = i + 1
+                        self.購入金額 = self.tdss.tds[i][2].get_落札金額()
+                        self.送料 = self.tdss.tds[i][2].get_送料()
+                        self.合計金額 = self.tdss.tds[i][2].get_合計金額()
 
-                        s = 0
-                        while s <= 5:
-                            try:
-                                time.sleep(1)
-                                session.commit()
-                                time.sleep(1)
-                                s = 6 + 1
-                            except:
-                                time.sleep(5)
-                                s = s + 1
+                        self.update(session)
                     except:
                         print(f"{i} アップデート失敗")
+                        
+        
+    def update2(self, i): 
+                print("")
+                print(i)
+                session = Session(self.engine)
+                seed = session.query(self.seed).filter(self.seed.code == self.tdss.tds[i][0].get_id()).first()
+                if self.tdss.tds[i][1].get_落札者_名前() == "" or self.tdss.tds[i][1].get_落札者_名前() == "落札者データの表示期間が終了しました。":
+                    print(f"{i} 落札者データの表示期間が終了しました。")
+
+                    i = i + 1
+                else:
+                    print("アップデート")
+
+                    try:
+                        seed.code = self.tdss.tds[i][0].get_id()
+                        seed.siteID = self.siteID
+                        print(seed.code)
+                        # create_at=datetime.datetime.now()
+                        seed.update_at = datetime.datetime.now()
+
+                        seed.日付 = self.tdss.tds[i][0].get_日付()
+                        seed.商品コード = self.tdss.tds[i][0].get_商品コード()
+                        seed.商品名 = self.tdss.tds[i][0].get_商品名()
+                        seed.数量 = self.tdss.tds[i][0].get_数量()
+
+                        seed.購入者_名前 = self.tdss.tds[i][1].get_落札者_名前()
+                        seed.購入者_ペンネーム = self.tdss.tds[i][1].get_落札者_ペンネーム()
+                        seed.購入者_郵便番号 = self.tdss.tds[i][1].get_落札者_郵便番号()
+                        seed.購入者_住所 = self.tdss.tds[i][1].get_落札者_住所()
+                        seed.購入者_電話番号 = self.tdss.tds[i][1].get_落札者_電話番号()
+                        seed.購入者_メールアドレス = self.tdss.tds[i][1].get_落札者_メールアドレス(
+                        )
+
+                        seed.送り先_名前 = self.tdss.tds[i][1].get_送り先_名前()
+                        seed.送り先_ペンネーム = self.tdss.tds[i][1].get_送り先_ペンネーム()
+                        seed.送り先_郵便番号 = self.tdss.tds[i][1].get_送り先_郵便番号()
+                        seed.送り先_住所 = self.tdss.tds[i][1].get_送り先_住所()
+                        seed.送り先_電話番号 = self.tdss.tds[i][1].get_送り先_電話番号()
+                        seed.送り先_メールアドレス = self.tdss.tds[i][1].get_送り先_メールアドレス(
+                        )
+
+                        seed.購入金額 = self.tdss.tds[i][2].get_落札金額()
+                        seed.送料 = self.tdss.tds[i][2].get_送料()
+                        seed.合計金額 = self.tdss.tds[i][2].get_合計金額()
+
+                        session.commit()
+                        self.save(session)
+                    except:
+                        print(f"{i} アップデート失敗")
+        
 
 class TDss():
     def __init__(self):
@@ -337,25 +382,52 @@ class Td3():
         print("")
 
     def get_id(self):
-        return self.soup.find_all("small")[1].text.replace(" （商品ページ）", "").strip()
+        temp = ""
+        try:
+            temp = self.soup.find_all("small")[1].text.replace(
+                " （商品ページ）", "").strip()
+        except:
+            temp = ""
+        return temp
 
     def get_日付(self):
-        temp = self.soup.find_all("small")[9].text.replace("月", "/")
-        temp = temp.replace("日", "/")
-        temp = temp.replace("時", ":")
-        temp = temp.replace("分", "")
-        return temp.strip()
+        temp = ""
+        try:
+            temp = self.soup.find_all("small")[9].text.replace("月", "/")
+            temp = temp.replace("日", "/")
+            temp = temp.replace("時", ":")
+            temp = temp.replace("分", "")
+            temp = temp.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_商品名(self):
-        return self.soup.find_all("small")[7].text.strip()
+        temp = ""
+        try:
+            temp = self.soup.find_all("small")[7].text.strip()
+        except:
+            temp = ""
+        return temp
 
-    def get_商品コード(self):
-        temp = self.soup.find_all("small")[7].text.split('　')
-        temp = temp[len(temp) - 1]
-        return temp.strip()
+    def get_商品コード(self):  # re.split('\d+', sample)
+        temp = ""
+        try:
+            temp = re.split("\s", self.soup.find_all("small")[7].text)
+            temp = temp[len(temp)-1]
+            temp.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_数量(self):
-        return int(self.soup.find_all("small")[11].text.replace("個", "").strip())
+        temp = ""
+        try:
+            temp = int(self.soup.find_all("small")[
+                       11].text.replace("個", "").strip())
+        except:
+            temp = 1
+        return temp
 
 
 class Td4():
@@ -413,42 +485,102 @@ class Td4():
         print("")
 
     def get_落札者_名前(self):
-        return self.soup.find_all("small")[9].text.strip()
+        temp = ""
+        try:
+            temp = self.soup.find_all("small")[9].text.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_落札者_ペンネーム(self):
-        return
+        temp = ""
+        try:
+            return temp
+        except:
+            temp = ""
+        return temp
 
     def get_落札者_郵便番号(self):
-        return
+        temp = ""
+        try:
+            return temp
+        except:
+            temp = ""
+        return temp
 
     def get_落札者_住所(self):
-        return
+        temp = ""
+        try:
+            return temp
+        except:
+            temp = ""
+        return temp
 
     def get_落札者_電話番号(self):
-        return
+        temp = ""
+        try:
+            return temp
+        except:
+            temp = ""
+        return temp
 
     def get_落札者_メールアドレス(self):
-        return self.soup.find_all("small")[11].text.strip()
+        temp = ""
+        try:
+            temp = self.soup.find_all("small")[11].text.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_送り先_名前(self):
-        return self.soup.find_all("small")[3].text.strip()
+        temp = ""
+        try:
+            temp = self.soup.find_all("small")[3].text.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_送り先_ペンネーム(self):
-        return
+        temp = ""
+        try:
+            return temp
+        except:
+            temp = ""
+        return temp
 
-    def get_送り先_郵便番号(self):
-        temp = self.soup.find_all("small")[5].text.split(" ")[0]
-        return temp.strip()
+    def get_送り先_郵便番号(self):  # re.split('\d+', sample)
+        temp = ""
+        try:
+            temp = re.split("\s", self.soup.find_all("small")[5].text)[0]
+            temp.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_送り先_住所(self):
-        temp = self.soup.find_all("small")[5].text.split(" ")[1]
-        return temp.strip()
+        temp = ""
+        try:
+            temp = re.split("\s", self.soup.find_all("small")[5].text)[1]
+            temp.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_送り先_電話番号(self):
-        return self.soup.find_all("small")[7].text.strip()
+        temp = ""
+        try:
+            temp = self.soup.find_all("small")[7].text.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_送り先_メールアドレス(self):
-        return
+        temp = ""
+        try:
+            print("")
+        except:
+            temp = ""
+        return temp
 
 
 class Td5():
@@ -478,19 +610,34 @@ class Td5():
         print("")
 
     def get_落札金額(self):
-        temp = self.soup.find_all("small")[1].text.strip().replace(",", "")
-        temp = temp.replace("円", "")
-        return int(temp)
+        temp = ""
+        try:
+            temp = self.soup.find_all("small")[1].text.strip().replace(",", "")
+            temp = temp.replace("円", "")
+            temp = int(temp)
+        except:
+            temp = 0
+        return temp
 
     def get_送料(self):
-        temp = self.soup.find_all("small")[3].text.strip().replace(",", "")
-        temp = temp.replace("円", "")
-        return int(temp)
+        temp = ""
+        try:
+            temp = self.soup.find_all("small")[3].text.strip().replace(",", "")
+            temp = temp.replace("円", "")
+            temp = int(temp)
+        except:
+            temp = 0
+        return temp
 
     def get_合計金額(self):
-        temp = self.soup.find_all("small")[5].text.strip().replace(",", "")
-        temp = temp.replace("円", "")
-        return int(temp)
+        temp = ""
+        try:
+            temp = self.soup.find_all("small")[5].text.strip().replace(",", "")
+            temp = temp.replace("円", "")
+            temp = int(temp)
+        except:
+            temp = 0
+        return temp
 
 
 if __name__ == '__main__':
