@@ -180,7 +180,7 @@ class Yahoo_auction(Mail_order_site):
                 # 新規追加
 
                 if self.tdss.tds[i][1].get_落札者_名前() == "" or self.tdss.tds[i][1].get_落札者_名前() == "落札者データの表示期間が終了しました。":
-                    print(f"{i} データ無視")
+                    print(f"{i} 欠損データ")
 
                     i = i + 1
                 else:
