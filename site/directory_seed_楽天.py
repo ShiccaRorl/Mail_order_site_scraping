@@ -34,9 +34,11 @@ Base = automap_base()
 #session = Session(engine)
 
 
-class Rakuten():
+class Rakuten(Mail_order_site):
     def __init__(self):
         self.config = Config()
+        self.setup()
+        
         Base = automap_base()
         # engine, suppose it has two tables 'user' and 'address' set up
         self.engine = create_engine(self.config.db_path)
@@ -51,13 +53,15 @@ class Rakuten():
         self.seeds = Base.classes.seeds
         self.site = Base.classes.site
         self.sale = Base.classes.sale
+        
+        
 
 
-    def get_data(self):
-        self.data = self.mail_order_site.get_data()
+    def get_data2(self):
+        self.data = self.get_data()
         return str(self.data.seed)
 
-    def get_seed(self):
+    def get_seed2(self):
         self.data = self.get_data()
         return self.data.replace("charset=euc-jp", 'charset="UTF-8"')
 
@@ -67,7 +71,7 @@ class Rakuten():
 
 
     def get_id(self):
-        soup = self.soup.find('a', {'class': f'rms-status-order-nr'})
+        soup = self.soup.find('a', {'class': 'rms-status-order-nr'})
         return soup.text.strip()
 
     def get_日付(self):
@@ -75,7 +79,7 @@ class Rakuten():
 
 
     def get_商品明細(self):
-        soup = self.soup.find('div', {'class': f'rms-row-wrapper'})
+        soup = self.soup.find('div', {'class': 'rms-row-wrapper'})
         return soup
 
     def get_商品コード(self):
