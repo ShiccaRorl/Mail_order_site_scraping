@@ -71,93 +71,170 @@ class Rakuten(Mail_order_site):
 
 
     def get_id(self):
-        soup = self.soup.find('a', {'class': 'rms-status-order-nr'})
-        return soup.text.strip()
+        try:
+            soup = self.soup.find('a', {'class': 'rms-status-order-nr'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_日付(self):
-        return
+        try:
+            temp = self.soup.find('a', {'class': 'rms-content-order-details-block-history-table'})
+            
+            temp = re.search(r"<td>注文日時</td> <td>(.*?)</td>" , temp)
+        except:
+            temp = ""
+        return temp
 
 
     def get_商品明細(self):
-        soup = self.soup.find('div', {'class': 'rms-row-wrapper'})
+        try:
+            soup = self.soup.find('div', {'class': 'rms-row-wrapper'})
+        except:
+            soup = ""
         return soup
 
     def get_商品コード(self):
-        soup = self.get_商品明細().find('a', {'class': f'rms-span-open-in-new'})
-        return soup.text.strip()
+        try:
+            soup = self.get_商品明細().find('a', {'class': f'rms-span-open-in-new'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_商品名(self):
-        soup = self.get_商品明細().find('a', {'class': f'rms-span-open-in-new'})
-        return soup.text.strip()
+        try:
+            soup = self.get_商品明細().find('a', {'class': f'rms-span-open-in-new'})
+            temp = soup.text.strip()
+        except:
+            temp= ""
+        return temp
 
     def get_数量(self):
-        soup = self.get_商品明細().find('div', {'class': f'rms-table-column-line'})
-        return soup.text.strip()
+        try:
+            soup = self.get_商品明細().find('div', {'class': f'rms-table-column-line'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
 
 
     def get_注文者_名前(self):
-        soup = self.soup.find('span', {'class': f'fullname'})
-        return soup.text.strip()
+        try:
+            soup = self.soup.find('span', {'class': f'fullname'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_注文者_ペンネーム(self):
-        return
+        try:
+            temp = ""
+            return temp
+        except:
+            temp = ""
+        return temp
 
     def get_注文者_郵便番号(self):
-        soup = self.soup.find('span', {'class': f'address'})
-        temp = str(soup.text).split(" ")[0]
-        temp = temp.replace("〒", "")
-        return temp.strip()
+        try:
+            soup = self.soup.find('span', {'class': f'address'})
+            temp = re.split("\s", str(soup.text))[0]
+            temp = temp.replace("〒", "")
+            temp = temp.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_注文者_住所(self):
-        soup = self.soup.find('span', {'class': f'address'})
-        temp = soup.text.split(" ")[1]
-        return temp.strip()
+        try:
+            soup = self.soup.find('span', {'class': f'address'})
+            temp = re.split("\s", str(soup.text))[1]
+            temp = temp.strip()
+        except:
+            temp = ""
+        return temp
 
 
     def get_注文者_電話番号(self):
-        soup = self.soup.find('span', {'class': f'phone'})
-        return soup.text.strip()
+        try:
+            soup = self.soup.find('span', {'class': f'phone'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_注文者_メールアドレス(self):
-        soup = self.soup.find('a', {'class': f'email'})
-        return soup.text.strip()
+        try:
+            soup = self.soup.find('a', {'class': f'email'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
 
 
 
     def get_送り先_名前(self):
-        soup = self.soup.find('span', {'class': f'fullname'})
-        return soup.text.strip()
+        try:
+            soup = self.soup.find('span', {'class': f'fullname'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_送り先_ペンネーム(self):
-        return
+        try:
+            print()
+        except:
+            temp = ""
+        return temp
 
     def get_送り先_郵便番号(self):
-        soup = self.soup.find('span', {'class': f'address'})
-        temp = soup.text.split(" ")[0]
-        temp = temp.replace("〒", "")
-        return temp.strip()
+        try:
+            soup = self.soup.find('span', {'class': f'address'})
+            temp = soup.text.split(" ")[0]
+            temp = temp.replace("〒", "")
+            temp = temp.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_送り先_住所(self):
-        soup = self.soup.find('span', {'class': f'address'})
-        temp = soup.text.split(" ")[0]
-        temp = temp.replace("〒", "")
-        return temp.strip()
+        try:
+            soup = self.soup.find('span', {'class': f'address'})
+            temp = soup.text.split(" ")[0]
+            temp = temp.replace("〒", "")
+            temp = temp.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_送り先_電話番号(self):
-        soup = self.soup.find('span', {'class': f'phone'})
-        return soup.text.strip()
+        try:
+            soup = self.soup.find('span', {'class': f'phone'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
 
     def get_送り先_メールアドレス(self):
-        return
+        try:
+            print()
+        except:
+            temp = ""
+        return temp
 
     def get_購買額(self):
-        soup = self.soup.find('span', {'class': f'footer-price'})
-        return soup.text.strip()
+        try:
+            soup = self.soup.find('span', {'class': f'footer-price'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
 
     def main(self):
-        self.mail_order_site = Mail_order_site()
-        self.mail_order_site.siteID = 1
-        self.get_data()
+        self.siteID = 1
+        #self.get_data()
         self.soup = BeautifulSoup(self.get_seed(), "html.parser")
         self.test()
         

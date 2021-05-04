@@ -19,6 +19,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 
 from bs4 import BeautifulSoup
+import subprocess
 
 Base = automap_base()
 
@@ -169,6 +170,8 @@ class Yahoo_auction(Mail_order_site):
             # self.tdss.test() # test mode
             self.db()
             self.update_analysis_completed()
+            print(t.id)
+            subprocess.run(f"ruby ./seeds_update.rb {t.id}", shell=True, text=True)
             
 
     def db(self):
