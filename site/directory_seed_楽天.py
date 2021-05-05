@@ -80,12 +80,17 @@ class Rakuten(Mail_order_site):
 
     def get_日付(self):
         try:
-            temp = self.soup.find('a', {'class': 'rms-content-order-details-block-history-table'})
-            
-            temp = re.search(r"<td>注文日時</td> <td>(.*?)</td>" , temp)
+            soup = self.soup.find('table', {'class': 'rms-content-order-details-block-history-table'})
+            #s = 0
+            #for i in soup.find_all("td"):
+            #    print(s)
+            #    print(i)
+            #    s = s + 1
+            temp = soup.find_all("td")[5].text
+            return temp
         except:
             temp = ""
-        return temp
+            return temp
 
 
     def get_商品明細(self):
@@ -184,7 +189,8 @@ class Rakuten(Mail_order_site):
 
     def get_送り先_ペンネーム(self):
         try:
-            print()
+            temp = ""
+            return temp
         except:
             temp = ""
         return temp
@@ -219,7 +225,8 @@ class Rakuten(Mail_order_site):
 
     def get_送り先_メールアドレス(self):
         try:
-            print()
+            temp = ""
+            return temp
         except:
             temp = ""
         return temp
