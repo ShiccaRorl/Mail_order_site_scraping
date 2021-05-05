@@ -15,12 +15,12 @@ DATABASE = 'mysql://%s:%s@%s/%s?charset=utf8' % (
     "db_name",
 )
 """
-self.config = Config()
+config = Config()
 
 
 
 ENGINE = create_engine(
-    self.config.db_path,
+    config.db_path,
     encoding = "utf-8",
     echo=True # Trueだと実行のたびにSQLが出力される
 )

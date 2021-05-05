@@ -139,7 +139,7 @@ class Yahoo_auction(Mail_order_site):
         all = []
         session = Session(bind = self.engine, autocommit = True, autoflush = True)
         all = session.query(self.seeds).filter(
-            self.seeds.siteID == self.siteID and self.seeds.analysis_completed == False).all()
+            self.seeds.siteID == self.siteID and self.seeds.analysis_completed == 0).all()
         for t in all:
             # print(i)
 
@@ -166,12 +166,12 @@ class Yahoo_auction(Mail_order_site):
                 self.tdss.add_td([td3, td4, td5])
                 i = i + 1
                 print(i)
-
+                time.sleep(1)
             # self.tdss.test() # test mode
             self.db()
-            self.update_analysis_completed()
+            self.update_analysis_completed(t.id)
             print(t.id)
-            subprocess.run(f"ruby ./seeds_update.rb {t.id}", shell=True, text=True)
+            time.sleep(1)
             
 
     def db(self):
