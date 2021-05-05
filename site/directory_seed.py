@@ -261,13 +261,13 @@ class Mail_order_site():
         seeds.analysis_completed = True
         seeds.update_at = datetime.datetime.now()
         print("回収")
-        subprocess.run(f"ruby ./seeds_update.rb {t}", shell=True, text=True)
         found_id = session.query(self.seeds).filter(self.seeds.id == t).first()
-        #session.delete(found_id)
+        session.delete(found_id)
         print("seeds delete")
         print(t)
         # session.commit()
         self.save(session)
+        subprocess.run(f"ruby ./seeds_update.rb {t}", shell=True, text=True)
 
     def save(self, session):
         session = session
