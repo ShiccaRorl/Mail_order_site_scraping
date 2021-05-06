@@ -17,7 +17,7 @@ from setting import ENGINE
 
 class Seed(Base):
     """
-    ユーザモデル
+    売上
     """
     __tablename__ = 'seed'
     id = Column('id', Integer, primary_key=True)

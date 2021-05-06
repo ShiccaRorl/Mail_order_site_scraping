@@ -16,4 +16,4 @@ rescue
 end
 
 @db[:seeds].where(:id=>ARGV[0]).update(:analysis_completed=>true, :update_at=>Time.now)
-@db[:seeds].where(:id=>ARGV[0]).delete
+#@db[:seeds].where(:id=>ARGV[0]).delete
