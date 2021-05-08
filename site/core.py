@@ -30,7 +30,7 @@ class Store_Core():
 
         # mapped classes are now created with names by default
         # matching that of the table name.
-        self.seed = Base.classes.seed
+        self.seeds = Base.classes.seeds
         self.site = Base.classes.site
 
         #session = Session(self.engine)
@@ -53,7 +53,7 @@ class Store_Core():
                 session = Session(self.engine)
 
                 #seeds = session.query(self.seed)
-                session.add(self.seed(siteID=self.siteID,
+                session.add(self.seeds(siteID=self.siteID,
                                     seed=self.seed1,
                                     create_at=datetime.datetime.now(),
                                     analysis_completed = 0))
@@ -66,7 +66,7 @@ class Store_Core():
         while i <= 5:
             try:
                 time.sleep(1)
-                #session.commit()
+                session.commit()
                 time.sleep(1)
                 i = 6 + 1
             except:
