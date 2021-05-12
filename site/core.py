@@ -1,6 +1,4 @@
-# -*- coding:utf-8 sigoto yameru 
-# 
-# -*-
+# -*- coding:utf-8 -*-
 
 import datetime
 import time
