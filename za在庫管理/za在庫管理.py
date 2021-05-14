@@ -1,5 +1,17 @@
 # -*- coding:utf-8 -*-
 
+# python -m pip install --upgrade pip
+# pip install -U sqlalchemy
+# pip install -U flake8
+# pip install -U autopep8
+
+# pip install -U openpyxl
+# pip install -U beautifulsoup4
+# pip install -U requests
+# pip install -U pyinstaller
+
+# pyinstaller kabu.py --onefile
+
 import os
 import glob
 import re
@@ -11,7 +23,12 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 
+from openpyxl import load_workbook, Workbook
+
 Base = automap_base()
+
+# Excel path
+excel_path = ""
 
 # engine, suppose it has two tables 'user' and 'address' set up
 #db_path = "sqlite:///./../../db.sqlite3"
@@ -27,11 +44,12 @@ Base.prepare(engine, reflect=True)
 
 #seeds = Base.classes.seeds
 dir_db = Base.classes.dir_db
-
+Product = Base.classes.Product
 
 print('//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ')
 
 #ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ'#.encode("cp932").replace("/", "\\")
+ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ'
 ROOT_PATH = '//vmware-host/Shared Folders/D/共有/Down'
 print(ROOT_PATH)
 
@@ -53,22 +71,31 @@ def recursive_file_check(path):
         file_run(path)
 
 def get_商品コード(file):
+    session = Session(engine)
     code = re.split("\\s", file)
     code = code[len(code)-1]
     # ここで商品データベースにSelectして存在したら、それを返す
-    return code
+    data = session.query(Product).filter(code == code).first()
+    if data != None:
+        return data
     
     code = file.split(")")
     code = code[len(code)-1]
     # ここで商品データベースにSelectして存在したら、それを返す
-    return code
+    data = session.query(Product).filter(code == code).first()
+    if data != None:
+        return data
+
     
     # ディレクトリの最後が商品コードの場合
     code = file.split("/")
     code = code[len(code)-1]
     # ここで商品データベースにSelectして存在したら、それを返す
-    return code
+    data = session.query(Product).filter(code == code).first()
+    if data != None:
+        return data
 
+    return ""
     # ファイルを開いて商品コードらしい文字列があったら、商品データベースにSelectして存在したら、それを返す
 
 
@@ -79,7 +106,23 @@ def get_商品コード(file):
     
     # それ以外はエラーで、人力でどうにかする
 
-def run():
+def get_excel_db():
+    wb = load_workbook(excel_path)
+    ws = wb["data"]
+    
+    s = 0
+    for i in ws.max_row():
+        session = Session(engine)
+        session.add(Product(code = ws[f"A{s}"],
+                            商品名 = ws[f"B{s}"],
+                            ))
+        save(session)
+    
+
+def get_金額():
+    return 0
+
+def get_directory_db():
     # ディレクトリDBで思考
     file_path=[]
     file_path = (glob.glob(f'{ROOT_PATH}/**/*.txt', recursive=True))
@@ -101,9 +144,9 @@ def run():
 
         source = load(file)
         商品名 = re.split("\n", source)[0]
-        商品コード = ""
+        商品コード = get_商品コード()
         dir = file
-        金額 = 0
+        金額 = get_金額()
         source = source
         session.add(dir_db(商品名 = 商品名,
                                     商品コード = 商品コード,
@@ -151,4 +194,5 @@ def open_folder(path):
 
 if __name__ == '__main__':
     #recursive_file_check(ROOT_PATH)
-    run()
+    get_directory_db()
+    # get_excel_db()
