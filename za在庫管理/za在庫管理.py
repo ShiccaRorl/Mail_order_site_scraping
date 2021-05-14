@@ -119,8 +119,10 @@ def get_excel_db():
         save(session)
     
 
-def get_金額():
-    return 0
+def get_金額(source):
+    m = re.match(r'\\(.*?)', source)
+    data = m.group().replace(",", "")
+    return int(data)
 
 def get_directory_db():
     # ディレクトリDBで思考
@@ -144,10 +146,18 @@ def get_directory_db():
 
         source = load(file)
         商品名 = re.split("\n", source)[0]
-        商品コード = get_商品コード()
+        商品コード = get_商品コード(source)
         dir = file
-        金額 = get_金額()
+        金額 = get_金額(source)
         source = source
+        
+        if session.query(dir_db).filter(dir_db.商品名 == 商品名).first() == None:
+            insert(session)
+        else:
+            update(session)
+            
+            
+def insert(session):
         session.add(dir_db(商品名 = 商品名,
                                     商品コード = 商品コード,
                                     update_at=datetime.datetime.now(),
@@ -170,7 +180,19 @@ def save(session):
         except:
             time.sleep(5)
             i = i + 1
-            
+
+def update(session):
+    seed = session.query(dir_db).filter(商品コード == get_商品コード()).first()
+    if seed != None:
+        seed.商品コード = 商品コード
+        seed.update_at=datetime.datetime.now()
+        seed.dir = dir
+        seed.状態 = 状態
+        seed.金額 = 金額
+        
+        save(session)
+
+
 def load(dir):
     try:
         with open(dir, 'r', encoding="utf-8") as f:
