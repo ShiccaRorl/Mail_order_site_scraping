@@ -4,6 +4,8 @@ import os
 import glob
 import re
 
+import subprocess
+
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
@@ -11,7 +13,8 @@ from sqlalchemy import create_engine
 Base = automap_base()
 
 # engine, suppose it has two tables 'user' and 'address' set up
-db_path = "sqlite:///./../../db.sqlite3"
+#db_path = "sqlite:///./../../db.sqlite3"
+db_path = "sqlite:///./db.sqlite3"
 engine = create_engine(db_path)
 # 個人情報の塊なのでGITの外に設置
 
@@ -20,13 +23,14 @@ Base.prepare(engine, reflect=True)
 
 # mapped classes are now created with names by default
 # matching that of the table name.
-seeds = Base.classes.seeds
-site = Base.classes.site
+
+#seeds = Base.classes.seeds
+dir = Base.classes.dir
 
 
 
-ROOT_PATH = 'R:/D/共有'
-
+ROOT_PATH = str('//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ').encode("cp932").replace("/", "\\")
+print(ROOT_PATH)
 
 def file_run(file_path):
     # 処理を記述
@@ -53,7 +57,12 @@ def get_商品コード(file):
     code = code[len(code)-1]
     # ここで商品データベースにSelectして存在したら、それを返す
     return code
-
+    
+    # ディレクトリの最後が商品コードの場合
+    code = file.split("/")
+    code = code[len(code)-1]
+    # ここで商品データベースにSelectして存在したら、それを返す
+    return code
 
     # ファイルを開いて商品コードらしい文字列があったら、商品データベースにSelectして存在したら、それを返す
 
@@ -77,7 +86,20 @@ def run():
             print(f"在庫0 : {file}")
         else:
             print(f"在庫あり : {file}")
-        print(get_商品コード(file))
+        #print(get_商品コード(file))
+
+
+
+def open_folder(path):
+    """
+    引数のpathを、エクスプローラーで開く
+    :param path: エクスプローラーで開きたいフォルダパス
+    :type path: unicode
+    """
+    # 開くときは cp932のstrにして実行する
+    subprocess.Popen(['explorer', path.encode("cp932").replace("/", "\\")])
+
+
 
 if __name__ == '__main__':
     #recursive_file_check(ROOT_PATH)
