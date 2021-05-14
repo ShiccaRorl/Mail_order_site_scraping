@@ -3,7 +3,8 @@
 import os
 import glob
 import re
-
+import datetime
+import time
 import subprocess
 
 from sqlalchemy.ext.automap import automap_base
@@ -25,12 +26,16 @@ Base.prepare(engine, reflect=True)
 # matching that of the table name.
 
 #seeds = Base.classes.seeds
-dir = Base.classes.dir
+dir_db = Base.classes.dir_db
 
 
+print('//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ')
 
-ROOT_PATH = str('//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ').encode("cp932").replace("/", "\\")
+#ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ'#.encode("cp932").replace("/", "\\")
+ROOT_PATH = '//vmware-host/Shared Folders/D/共有/Down'
 print(ROOT_PATH)
+
+
 
 def file_run(file_path):
     # 処理を記述
@@ -79,16 +84,59 @@ def run():
     file_path=[]
     file_path = (glob.glob(f'{ROOT_PATH}/**/*.txt', recursive=True))
     #print(file_path)
+
     for file in file_path:
+        session = Session(engine)
+        状態 = ""
         if "在庫1" in file:
             print(f"在庫1 : {file}")
+            状態 = "在庫1"
         elif "在庫0" in file:
             print(f"在庫0 : {file}")
+            状態 = "在庫0"
         else:
             print(f"在庫あり : {file}")
-        #print(get_商品コード(file))
+            状態 = "在庫あり"
+            #print(get_商品コード(file))
+
+        source = load(file)
+        商品名 = re.split("\n", source)[0]
+        商品コード = ""
+        dir = file
+        金額 = 0
+        source = source
+        session.add(dir_db(商品名 = 商品名,
+                                    商品コード = 商品コード,
+                                    update_at=datetime.datetime.now(),
+                                    dir = dir,
+                                    状態 = 状態,
+                                    金額 = 金額,
+                                    source = source,
+                                    ))
+        save(session)
 
 
+def save(session):
+    i = 0
+    while i <= 5:
+        try:
+            time.sleep(1)
+            session.commit()
+            time.sleep(1)
+            i = 6 + 1
+        except:
+            time.sleep(5)
+            i = i + 1
+            
+def load(dir):
+    try:
+        with open(dir, 'r', encoding="utf-8") as f:
+            seed1 = f.read()
+    except:
+        with open(dir, 'r', encoding="cp932") as f:
+            seed1 = f.read()
+    
+    return seed1
 
 def open_folder(path):
     """
