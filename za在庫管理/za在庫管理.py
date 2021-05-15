@@ -70,8 +70,12 @@ def recursive_file_check(path):
         # fileだったら処理
         file_run(path)
 
-def get_商品コード(file):
+
+def get_商品コード(source):
+    file = re.split("\n", source)[0]
+    
     session = Session(engine)
+    
     code = re.split("\\s", file)
     code = code[len(code)-1]
     # ここで商品データベースにSelectして存在したら、それを返す
@@ -120,23 +124,30 @@ def get_excel_db():
     
 
 def get_金額(source):
+    data = ""
     for i in re.split("\n", source):
         m = re.match(r'\\(.*?)', i)
-        if m == None:
-            print("")
-        elif m != None:
+        if m != None:
             data = m.group().replace(",", "")
-            return data
-        else:
-            return 0
+    return data
+            
 
 def get_directory_db():
     # ディレクトリDBで思考
     file_path=[]
     file_path = (glob.glob(f'{ROOT_PATH}/**/*.txt', recursive=True))
-    #print(file_path)
-
     for file in file_path:
+        source = load(file)
+        directory_db(file, source)
+        
+def get_db_source_db():
+    session = Session(engine)
+    sources = session.query(dir_db).all()
+    for db in sources:
+        directory_db(db.dir, db.source)
+
+
+def directory_db(file, source):
         session = Session(engine)
         状態 = ""
         if "在庫1" in file:
@@ -150,7 +161,7 @@ def get_directory_db():
             状態 = "在庫あり"
             #print(get_商品コード(file))
 
-        source = load(file)
+        
         商品名 = re.split("\n", source)[0]
         商品コード = get_商品コード(source)
         dir = file
@@ -158,25 +169,29 @@ def get_directory_db():
         source = source
         
         if session.query(dir_db).filter(dir_db.商品名 == 商品名).first() == None:
+            print("insert")
             session.add(dir_db(商品名 = 商品名,
                                     商品コード = 商品コード,
-                                    update_at=datetime.datetime.now(),
+                                    update_at = datetime.datetime.now(),
                                     dir = dir,
                                     状態 = 状態,
                                     金額 = 金額,
                                     source = source,
                                     ))
-            save(session)
+            session.commit()
+            #save(session)
         else:
+            print("update")
             seed = session.query(dir_db).filter(dir_db.商品名 == 商品名).first()
-            if seed != None:
-                seed.商品コード = 商品コード
-                seed.update_at=datetime.datetime.now()
-                seed.dir = dir
-                seed.状態 = 状態
-                seed.金額 = 金額
+
+            seed.商品コード = 商品コード
+            seed.update_at=datetime.datetime.now()
+            seed.dir = dir
+            seed.状態 = 状態
+            seed.金額 = 金額
         
-            save(session)
+            session.commit()
+            #save(session)
   
    
 
@@ -217,9 +232,14 @@ def open_folder(path):
     # 開くときは cp932のstrにして実行する
     subprocess.Popen(['explorer', path.encode("cp932").replace("/", "\\")])
 
-
+def all_delete():
+    session = Session(engine)
+    session.query(dir_db).delete()
+    session.commit()
 
 if __name__ == '__main__':
     #recursive_file_check(ROOT_PATH)
-    get_directory_db()
+    #all_delete()
+    #get_directory_db()
+    get_db_source_db()
     # get_excel_db()
