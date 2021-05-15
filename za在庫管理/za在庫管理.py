@@ -50,7 +50,7 @@ print('//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動した
 
 #ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ'#.encode("cp932").replace("/", "\\")
 ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ'
-ROOT_PATH = '//vmware-host/Shared Folders/D/共有/Down'
+#ROOT_PATH = '//vmware-host/Shared Folders/D/共有/Down'
 print(ROOT_PATH)
 
 
@@ -120,9 +120,15 @@ def get_excel_db():
     
 
 def get_金額(source):
-    m = re.match(r'\\(.*?)', source)
-    data = m.group().replace(",", "")
-    return int(data)
+    for i in re.split("\n", source):
+        m = re.match(r'\\(.*?)', i)
+        if m == None:
+            print("")
+        elif m != None:
+            data = m.group().replace(",", "")
+            return data
+        else:
+            return 0
 
 def get_directory_db():
     # ディレクトリDBで思考
@@ -152,13 +158,7 @@ def get_directory_db():
         source = source
         
         if session.query(dir_db).filter(dir_db.商品名 == 商品名).first() == None:
-            insert(session)
-        else:
-            update(session)
-            
-            
-def insert(session):
-        session.add(dir_db(商品名 = 商品名,
+            session.add(dir_db(商品名 = 商品名,
                                     商品コード = 商品コード,
                                     update_at=datetime.datetime.now(),
                                     dir = dir,
@@ -166,7 +166,19 @@ def insert(session):
                                     金額 = 金額,
                                     source = source,
                                     ))
-        save(session)
+            save(session)
+        else:
+            seed = session.query(dir_db).filter(dir_db.商品名 == 商品名).first()
+            if seed != None:
+                seed.商品コード = 商品コード
+                seed.update_at=datetime.datetime.now()
+                seed.dir = dir
+                seed.状態 = 状態
+                seed.金額 = 金額
+        
+            save(session)
+  
+   
 
 
 def save(session):
@@ -181,25 +193,18 @@ def save(session):
             time.sleep(5)
             i = i + 1
 
-def update(session):
-    seed = session.query(dir_db).filter(商品コード == get_商品コード()).first()
-    if seed != None:
-        seed.商品コード = 商品コード
-        seed.update_at=datetime.datetime.now()
-        seed.dir = dir
-        seed.状態 = 状態
-        seed.金額 = 金額
-        
-        save(session)
-
 
 def load(dir):
     try:
         with open(dir, 'r', encoding="utf-8") as f:
             seed1 = f.read()
     except:
-        with open(dir, 'r', encoding="cp932") as f:
-            seed1 = f.read()
+        try:
+            with open(dir, 'r', encoding="cp932") as f:
+                seed1 = f.read()
+        except:
+            with open(dir, 'r', encoding="utf-16") as f:
+                seed1 = f.read()
     
     return seed1
 
