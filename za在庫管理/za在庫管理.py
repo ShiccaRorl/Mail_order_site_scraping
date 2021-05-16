@@ -18,6 +18,7 @@ import re
 import datetime
 import time
 import subprocess
+import argparse
 
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
@@ -79,14 +80,14 @@ def get_商品コード(source):
     code = re.split("\\s", file)
     code = code[len(code)-1]
     # ここで商品データベースにSelectして存在したら、それを返す
-    data = session.query(Product).filter(code == code).first()
+    data = session.query(Product).filter(Product.code == code).first()
     if data != None:
         return data
     
     code = file.split(")")
     code = code[len(code)-1]
     # ここで商品データベースにSelectして存在したら、それを返す
-    data = session.query(Product).filter(code == code).first()
+    data = session.query(Product).filter(Product.code == code).first()
     if data != None:
         return data
 
@@ -95,7 +96,7 @@ def get_商品コード(source):
     code = file.split("/")
     code = code[len(code)-1]
     # ここで商品データベースにSelectして存在したら、それを返す
-    data = session.query(Product).filter(code == code).first()
+    data = session.query(Product).filter(Product.code == code).first()
     if data != None:
         return data
 
@@ -129,6 +130,7 @@ def get_金額(source):
         m = re.match(r'\\(.*?)', i)
         if m != None:
             data = m.group().replace(",", "")
+            return data
     return data
             
 
@@ -203,9 +205,6 @@ def save(session):
             time.sleep(1)
             session.commit()
             time.sleep(1)
-            i = 6 + 1
-        except:
-            time.sleep(5)
             i = i + 1
 
 
@@ -239,7 +238,14 @@ def all_delete():
 
 if __name__ == '__main__':
     #recursive_file_check(ROOT_PATH)
-    #all_delete()
-    #get_directory_db()
-    get_db_source_db()
-    # get_excel_db()
+    parser = argparse.ArgumentParser(descriotion=‘在庫管理です’)
+    parser.add_argument(‘arg1’)
+    parser.add_argument(‘arg2’ help=‘aaaaaa’)
+    args = parser.parse_args()
+    print(‘arg1=’+args.arg1)
+    print(‘arg2=’+args.arg2)
+
+    #all_delete() # 全部消す
+    #get_directory_db() # ディレクトリで登録する
+    get_db_source_db() # データベースで登録する
+    # get_excel_db() # エクセルからデータを抜く
