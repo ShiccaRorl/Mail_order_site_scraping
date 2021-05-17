@@ -116,13 +116,27 @@ def get_excel_db():
     
     s = 5
     for i in ws.max_row():
-        print(f"{s :}{i}")
         session = Session(engine)
-        session.add(Product(code = ws[f"B{s}"],
+        if session.query(Product).filter(Product.code == ws[f"B{s}"]).first() == None:
+            print(f"insert {s :} {i}")
+            session.add(Product(code = ws[f"B{s}"],
                             商品名 = ws[f"C{s}"],
                             下代 = ws[f"E{s}"],
                             ))
-        session.commit()
+            session.commit()
+            s = s + 1
+            time.sleep(1)
+        else:
+            print(f"update {s :} {i}")
+            session = Session(engine)
+            product = session.query(Product).filter(Product.code == ws[f"B{s}"]).first()
+            product.code = ws[f"B{s}"]
+            product.商品名 = ws[f"C{s}"]
+            product.下代 = ws[f"E{s}"]
+            
+            session.commit()
+            s = s + 1
+            time.sleep(1)
         #save(session)
     
 
@@ -132,6 +146,7 @@ def get_金額(source):
         m = re.match(r'\\(.*?)', i)
         if m != None:
             data = m.group().replace(",", "")
+            print(f"金額 : {data}")
             return data
     return data
             
@@ -242,15 +257,19 @@ def all_delete():
 if __name__ == '__main__':
     #recursive_file_check(ROOT_PATH)
     """
-    parser = argparse.ArgumentParser(descriotion=‘在庫管理です’)
-    parser.add_argument(‘arg1’)
-    parser.add_argument(‘arg2’ help=‘aaaaaa’)
+    parser = argparse.ArgumentParser(description="在庫管理です")
+    parser.add_argument("arg1", help="全部消しちゃう")
+    parser.add_argument("arg2", help="ディレクトリから登録")
+    parser.add_argument("arg3", help="データベースから登録")
+    parser.add_argument("arg4", help="エクセルから登録")
     args = parser.parse_args()
-    print(‘arg1=’+args.arg1)
-    print(‘arg2=’+args.arg2)
+    print("arg1="+args.arg1)
+    print("arg2="+args.arg2)
+    print("arg2="+args.arg3)
+    print("arg2="+args.arg4)
     """
-
+    
     #all_delete() # 全部消す
     #get_directory_db() # ディレクトリで登録する
-    #get_db_source_db() # データベースで登録する
-    get_excel_db() # エクセルからデータを抜く
+    get_db_source_db() # データベースで登録する
+    #get_excel_db() # エクセルからデータを抜く
