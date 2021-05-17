@@ -1,2 +1,2 @@
-call %windir%\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy ByPass -NoExit -Command "& 'C:\Users\ban\anaconda3\shell\condabin\conda-hook.ps1' ; conda activate
-call python zaç›å…ä«óù.py
+rem call python zaç›å…ä«óù.py directory_db
+call python zaç›å…ä«óù.py get_excel_db

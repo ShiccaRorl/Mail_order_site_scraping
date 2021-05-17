@@ -19,6 +19,7 @@ import datetime
 import time
 import subprocess
 import argparse
+import sys
 
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
@@ -44,12 +45,12 @@ Base.prepare(engine, reflect=True)
 dir_db = Base.classes.dir_db
 Product = Base.classes.Product
 
-print('//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ')
+#print('//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ')
 
 #ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ'#.encode("cp932").replace("/", "\\")
 ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ'
 #ROOT_PATH = '//vmware-host/Shared Folders/D/共有/Down'
-print(ROOT_PATH)
+#print(ROOT_PATH)
 
 # Excel path
 excel_path = "C:/Users/user/Downloads/バックアップ/プログラム/バックアップ/保存/2020年9月在庫表.xlsx"
@@ -122,6 +123,7 @@ def get_excel_db():
             session.add(Product(code = ws[f"B{s}"],
                             商品名 = ws[f"C{s}"],
                             下代 = ws[f"E{s}"],
+                            update_at = datetime.datetime.now(),
                             ))
             session.commit()
             s = s + 1
@@ -133,19 +135,33 @@ def get_excel_db():
             product.code = ws[f"B{s}"]
             product.商品名 = ws[f"C{s}"]
             product.下代 = ws[f"E{s}"]
+            product.update_at = datetime.datetime.now()
             
             session.commit()
             s = s + 1
             time.sleep(1)
         #save(session)
-    
+
+
+def 再登録日(code):
+    session = Session(engine)
+    商品名 = session.query(Product).filter(Product.code == code).first()
+    商品名2 = session.query(dir_db).filter(dir_db.code == code).first()
+    session.add(再登録日(code = code,
+                            商品名 = 商品名.商品名,
+                            商品名2 = 商品名2.商品名,
+                            update_at = datetime.datetime.now(),
+                            ))
+    session.commit()
+
 
 def get_金額(source):
     data = ""
     for i in re.split("\n", source):
-        m = re.match(r'\\(.*?)', i)
+        m = re.match(r'(\\.*?)', i)
         if m != None:
             data = m.group().replace(",", "")
+            data = data.replace("\\", "")
             print(f"金額 : {data}")
             return data
     return data
@@ -182,7 +198,7 @@ def directory_db(file, source):
 
         
         商品名 = re.split("\n", source)[0]
-        商品コード = get_商品コード(source)
+        code = get_商品コード(source)
         dir = file
         金額 = get_金額(source)
         source = source
@@ -190,7 +206,7 @@ def directory_db(file, source):
         if session.query(dir_db).filter(dir_db.商品名 == 商品名).first() == None:
             print("insert")
             session.add(dir_db(商品名 = 商品名,
-                                    商品コード = 商品コード,
+                                    code = code,
                                     update_at = datetime.datetime.now(),
                                     dir = dir,
                                     状態 = 状態,
@@ -203,7 +219,7 @@ def directory_db(file, source):
             print("update")
             seed = session.query(dir_db).filter(dir_db.商品名 == 商品名).first()
 
-            seed.商品コード = 商品コード
+            seed.code = code
             seed.update_at=datetime.datetime.now()
             seed.dir = dir
             seed.状態 = 状態
@@ -257,19 +273,41 @@ def all_delete():
 if __name__ == '__main__':
     #recursive_file_check(ROOT_PATH)
     """
-    parser = argparse.ArgumentParser(description="在庫管理です")
-    parser.add_argument("arg1", help="全部消しちゃう")
-    parser.add_argument("arg2", help="ディレクトリから登録")
-    parser.add_argument("arg3", help="データベースから登録")
-    parser.add_argument("arg4", help="エクセルから登録")
+    parser = argparse.ArgumentParser(description="なんちゃって在庫管理です")
+    #parser.add_argument("a", help="実行")
+    parser.add_argument("--directory_db", help="ディレクトリから登録")
+    parser.add_argument("--db_source_db", help="データベースから登録")
+    parser.add_argument("--get_excel_db", help="エクセルから登録")
+    parser.add_argument("--clear", help="全部消しちゃう")
     args = parser.parse_args()
-    print("arg1="+args.arg1)
-    print("arg2="+args.arg2)
-    print("arg2="+args.arg3)
-    print("arg2="+args.arg4)
+    print("arg1="+args.clear)
+    print("arg2="+args.directory_db)
+    print("arg3="+args.db_source_db)
+    print("arg4="+args.get_excel_db)
+    if args.clear == "--clear":
+        all_delete()
+    elif args.directory_db == "--directory_db":
+        get_directory_db()
+    elif args.db_source_db == "--db_source_db":
+        get_db_source_db()
+    elif args.get_excel_db == "--get_excel_db":
+        get_excel_db()
+    else:
+        print("オプションが違います。")
     """
     
+    args = sys.argv
+    if args[1] == "clear":
+        all_delete()
+    elif args[1] == "directory_db":
+        get_directory_db()
+    elif args[1] == "db_source_db":
+        get_db_source_db()
+    elif args[1] == "get_excel_db":
+        get_excel_db()
+    else:
+        print("オプションが違います。")
     #all_delete() # 全部消す
     #get_directory_db() # ディレクトリで登録する
-    get_db_source_db() # データベースで登録する
+    #get_db_source_db() # データベースで登録する
     #get_excel_db() # エクセルからデータを抜く
