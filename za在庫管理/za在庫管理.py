@@ -28,9 +28,6 @@ from openpyxl import load_workbook, Workbook
 
 Base = automap_base()
 
-# Excel path
-excel_path = ""
-
 # engine, suppose it has two tables 'user' and 'address' set up
 #db_path = "sqlite:///./../../db.sqlite3"
 db_path = "sqlite:///./db.sqlite3"
@@ -54,6 +51,8 @@ ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動
 #ROOT_PATH = '//vmware-host/Shared Folders/D/共有/Down'
 print(ROOT_PATH)
 
+# Excel path
+excel_path = "C:/Users/user/Downloads/バックアップ/プログラム/バックアップ/保存/2020年9月在庫表.xlsx"
 
 
 def file_run(file_path):
@@ -113,15 +112,18 @@ def get_商品コード(source):
 
 def get_excel_db():
     wb = load_workbook(excel_path)
-    ws = wb["data"]
+    ws = wb["マスター"]
     
-    s = 0
+    s = 5
     for i in ws.max_row():
+        print(f"{s :}{i}")
         session = Session(engine)
-        session.add(Product(code = ws[f"A{s}"],
-                            商品名 = ws[f"B{s}"],
+        session.add(Product(code = ws[f"B{s}"],
+                            商品名 = ws[f"C{s}"],
+                            下代 = ws[f"E{s}"],
                             ))
-        save(session)
+        session.commit()
+        #save(session)
     
 
 def get_金額(source):
@@ -206,7 +208,8 @@ def save(session):
             session.commit()
             time.sleep(1)
             i = i + 1
-
+        except:
+            print("失敗")
 
 def load(dir):
     try:
@@ -238,14 +241,16 @@ def all_delete():
 
 if __name__ == '__main__':
     #recursive_file_check(ROOT_PATH)
+    """
     parser = argparse.ArgumentParser(descriotion=‘在庫管理です’)
     parser.add_argument(‘arg1’)
     parser.add_argument(‘arg2’ help=‘aaaaaa’)
     args = parser.parse_args()
     print(‘arg1=’+args.arg1)
     print(‘arg2=’+args.arg2)
+    """
 
     #all_delete() # 全部消す
     #get_directory_db() # ディレクトリで登録する
-    get_db_source_db() # データベースで登録する
-    # get_excel_db() # エクセルからデータを抜く
+    #get_db_source_db() # データベースで登録する
+    get_excel_db() # エクセルからデータを抜く

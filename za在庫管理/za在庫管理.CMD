@@ -1,0 +1,1 @@
+python za在庫管理.py
