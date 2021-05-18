@@ -53,8 +53,8 @@ ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動
 #print(ROOT_PATH)
 
 # Excel path
-excel_path = "C:/Users/user/Downloads/バックアップ/プログラム/バックアップ/保存/2020年9月在庫表.xlsx"
-
+excel_path1 = "C:/Users/user/Downloads/バックアップ/プログラム/バックアップ/保存/2020年9月在庫表.xlsx"
+excel_path2 = "./2020年9月在庫表.xlsx"
 
 def file_run(file_path):
     # 処理を記述
@@ -111,35 +111,54 @@ def get_商品コード(source):
     
     # それ以外はエラーで、人力でどうにかする
 
-def get_excel_db():
-    wb = load_workbook(excel_path)
-    ws = wb["マスター"]
+def excel_slise():
+    wb1 = load_workbook(excel_path2)
+    ws_copy = wb1.copy_worksheet("マスター")
     
+    wb_new = Workbook()
+    ws_new = wb_new.active
+    ws_new = ws_copy
+    wb_new.save("./マスター.xlsx")
+
+def get_excel_db():
+    # マスターコピー
+    #wb_new = Workbook()
+    #ws_new = wb_new.active
+    #ws_new.title = "マスター"
+    
+    
+   
+    
+    wb = load_workbook(excel_path2)
+    ws = wb["マスター"]
+    print(ws.max_row)
     s = 5
-    for i in ws.max_row():
+    while s <= ws.max_row:
+        print(s)
+        print(ws[f"B{s}"].value)
         session = Session(engine)
-        if session.query(Product).filter(Product.code == ws[f"B{s}"]).first() == None:
-            print(f"insert {s :} {i}")
-            session.add(Product(code = ws[f"B{s}"],
-                            商品名 = ws[f"C{s}"],
-                            下代 = ws[f"E{s}"],
+        if session.query(Product).filter(Product.code == ws[f"B{s}"].value).first() == None:
+            print(f"insert {s :} ")
+            session.add(Product(code = ws[f"B{s}"].value,
+                            商品名 = ws[f"C{s}"].value,
+                            下代 = ws[f"E{s}"].value,
                             update_at = datetime.datetime.now(),
                             ))
             session.commit()
             s = s + 1
-            time.sleep(1)
+            #time.sleep(1)
         else:
-            print(f"update {s :} {i}")
+            print(f"update {s :} ")
             session = Session(engine)
-            product = session.query(Product).filter(Product.code == ws[f"B{s}"]).first()
-            product.code = ws[f"B{s}"]
-            product.商品名 = ws[f"C{s}"]
-            product.下代 = ws[f"E{s}"]
+            product = session.query(Product).filter(Product.code == ws[f"B{s}"].value).first()
+            product.code = ws[f"B{s}"].value
+            product.商品名 = ws[f"C{s}"].value
+            product.下代 = ws[f"E{s}"].value
             product.update_at = datetime.datetime.now()
             
             session.commit()
             s = s + 1
-            time.sleep(1)
+            #time.sleep(1)
         #save(session)
 
 
@@ -305,6 +324,8 @@ if __name__ == '__main__':
         get_db_source_db()
     elif args[1] == "get_excel_db":
         get_excel_db()
+    elif args[1] == "excel_slise":
+        excel_slise()
     else:
         print("オプションが違います。")
     #all_delete() # 全部消す
