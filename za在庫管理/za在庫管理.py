@@ -158,7 +158,7 @@ def 再登録日(code):
 def get_金額(source):
     data = ""
     for i in re.split("\n", source):
-        m = re.match(r'(\\.*?)', i)
+        m = re.match(r'￥(.*?)', i)
         if m != None:
             data = m.group().replace(",", "")
             data = data.replace("\\", "")
@@ -311,3 +311,5 @@ if __name__ == '__main__':
     #get_directory_db() # ディレクトリで登録する
     #get_db_source_db() # データベースで登録する
     #get_excel_db() # エクセルからデータを抜く
+    
+    # https://fril.jp/item/
