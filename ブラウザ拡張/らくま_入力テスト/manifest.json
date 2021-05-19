@@ -1,0 +1,16 @@
+{
+	"name": "スレイプニング拡張ラクマ_入力テスト",
+	"version": "1.0.0",
+	"manifest_version": 2,
+	"description": "スレイプニング拡張_ラクマ_入力テスト",
+	"content_scripts": [
+		{
+			"matches": [
+				"https://web.fril.jp/v2/sale/shipping/*"
+			],
+			"js": [
+				"content_rakuten_rakuma_test.js"
+			]
+		}
+	]
+}
