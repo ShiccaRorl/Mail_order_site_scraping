@@ -137,7 +137,7 @@ class Yahoo_auction(Mail_order_site):
 
     def main(self):
         all = []
-        session = Session(bind = self.engine, autocommit = True, autoflush = True)
+        session = Session(bind = self.engine)
         all = session.query(self.seeds).filter(
             self.seeds.siteID == self.siteID and self.seeds.analysis_completed == 0).all()
         for t in all:
@@ -178,7 +178,7 @@ class Yahoo_auction(Mail_order_site):
 
         i = 0
         while i <= self.config.yahoo_auction_page:
-            session = Session(bind = self.engine, autocommit = True, autoflush = True)
+            session = Session(bind = self.engine)
             if session.query(self.seed).filter(self.seed.code == self.tdss.tds[i][0].get_id()).first() == None:
                 # 新規追加
 
@@ -243,7 +243,7 @@ class Yahoo_auction(Mail_order_site):
     def update1(self, i):
                 print("")
                 print(i)
-                session = Session(bind = self.engine, autocommit = True, autoflush = True)
+                session = Session(bind = self.engine)
                 #seed = session.query(self.seed).filter(self.seed.code == self.tdss.tds[i][0].get_id()).first()
                 if self.tdss.tds[i][1].get_落札者_名前() == "" or self.tdss.tds[i][1].get_落札者_名前() == "落札者データの表示期間が終了しました。":
                     print(f"{i} 落札者データの表示期間が終了しました。")
@@ -292,7 +292,7 @@ class Yahoo_auction(Mail_order_site):
     def update2(self, i): 
                 print("")
                 print(i)
-                session = Session(bind = self.engine, autocommit = True, autoflush = True)
+                session = Session(bind = self.engine)
                 seed = session.query(self.seed).filter(self.seed.code == self.tdss.tds[i][0].get_id()).first()
                 if self.tdss.tds[i][1].get_落札者_名前() == "" or self.tdss.tds[i][1].get_落札者_名前() == "落札者データの表示期間が終了しました。":
                     print(f"{i} 落札者データの表示期間が終了しました。")
@@ -333,8 +333,8 @@ class Yahoo_auction(Mail_order_site):
                         seed.送料 = self.tdss.tds[i][2].get_送料()
                         seed.合計金額 = self.tdss.tds[i][2].get_合計金額()
 
-                        #session.commit()
-                        self.save(session)
+                        session.commit()
+                        #self.save(session)
                     except:
                         print(f"{i} アップデート失敗")
         

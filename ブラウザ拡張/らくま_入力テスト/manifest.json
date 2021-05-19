@@ -6,7 +6,7 @@
 	"content_scripts": [
 		{
 			"matches": [
-				"https://web.fril.jp/v2/sale/shipping/*"
+				"https://fril.jp/item/*"
 			],
 			"js": [
 				"content_rakuten_rakuma_test.js"

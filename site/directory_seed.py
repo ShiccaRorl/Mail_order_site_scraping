@@ -76,13 +76,13 @@ class Mail_order_site():
         #self.seed = self.get
 
     def get_data(self):
-        session = Session(bind=self.engine, autocommit=True, autoflush=True)
+        session = Session(bind=self.engine)
         self.data = session.query(self.seeds).filter(
             self.seeds.siteID == self.siteID and self.seeds.analysis_completed == False).first()
         return self.data
 
     def get_seed(self):
-        session = Session(bind=self.engine, autocommit=True, autoflush=True)
+        session = Session(bind=self.engine)
         self.data = session.query(self.seeds).filter(
             self.seeds.siteID == self.siteID and self.seeds.analysis_completed == False).first()
         return self.data.seed
@@ -192,7 +192,8 @@ class Mail_order_site():
                                   shipping=self.送料,
                                   total_fee=self.合計金額,
                                   ))
-            self.save(session)
+            session.commit()
+            #self.save(session)
         except:
             print("追加失敗")
 
@@ -242,13 +243,14 @@ class Mail_order_site():
             # if seed.total_fee == "":
             seed.total_fee = self.合計金額
 
-            self.save(session)
+            session.commit()
+            #self.save(session)
 
         except:
             print(f"アップデート失敗")
 
     def update_analysis_completed(self, t):
-        session = Session(bind=self.engine, autocommit=True, autoflush=True)
+        session = Session(bind=self.engine)
         print("self.siteID")
         print(self.siteID)
         #seeds = session.query(self.seeds).filter(self.seeds.siteID == self.siteID and self.seeds.analysis_completed == 0).first()
@@ -261,13 +263,13 @@ class Mail_order_site():
         seeds.analysis_completed = True
         seeds.update_at = datetime.datetime.now()
         print("回収")
-        found_id = session.query(self.seeds).filter(self.seeds.id == t).first()
-        session.delete(found_id)
+        session.query(self.seeds).filter(self.seeds.id == t).delete()
         print("seeds delete")
         print(t)
-        # session.commit()
-        self.save(session)
-        subprocess.run(f"ruby ./seeds_update.rb {t}", shell=True, text=True)
+        session.commit()
+        #self.save(session)
+        # Ruby からの削除策　なんか違うなー
+        #subprocess.run(f"ruby ./seeds_update.rb {t}", shell=True, text=True)
 
     def save(self, session):
         session = session
@@ -275,7 +277,7 @@ class Mail_order_site():
         while i <= 5:
             try:
                 time.sleep(1)
-                # session.commit()
+                session.commit()
                 time.sleep(1)
                 i = 6 + 1
             except:
