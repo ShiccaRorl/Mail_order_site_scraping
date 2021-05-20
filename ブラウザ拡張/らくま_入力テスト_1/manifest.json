@@ -1,8 +1,8 @@
 {
-	"name": "スレイプニング拡張ラクマ_入力テスト",
+	"name": "スレイプニング拡張ラクマ_入力テスト1",
 	"version": "1.0.0",
 	"manifest_version": 2,
-	"description": "スレイプニング拡張_ラクマ_入力テスト",
+	"description": "スレイプニング拡張_ラクマ_入力テスト1",
 	"content_scripts": [
 		{
 			"matches": [
