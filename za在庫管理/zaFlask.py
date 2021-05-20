@@ -50,7 +50,7 @@ app.config['SECRET_KEY'] = 'secret key'
 
 @app.route("/")
 def index():
-    return render_template("menu.html")
+    return render_template("jumbotron-narrow.html")
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=8000, threaded=True)
