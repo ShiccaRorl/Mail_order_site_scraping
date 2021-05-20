@@ -195,6 +195,7 @@ def get_directory_db():
         directory_db(file, source)
         
 def get_db_source_db():
+    # dbで思考する
     session = Session(engine)
     sources = session.query(dir_db).all()
     for db in sources:
