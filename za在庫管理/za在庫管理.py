@@ -20,6 +20,7 @@ import time
 import subprocess
 import argparse
 import sys
+import logging
 
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
@@ -56,153 +57,165 @@ ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動
 excel_path1 = "C:/Users/user/Downloads/バックアップ/プログラム/バックアップ/保存/2020年9月在庫表.xlsx"
 excel_path2 = "./2020年9月在庫表.xlsx"
 
-def file_run(file_path):
-    # 処理を記述
-    print(file_path)
-    
-
-def recursive_file_check(path):
-    if os.path.isdir(path):
-        # directoryだったら中のファイルに対して再帰的にこの関数を実行
-        files = os.listdir(path)
-        for file in files:
-            recursive_file_check(path + "\\" + file)
-    else:
-        # fileだったら処理
-        file_run(path)
+formatter = '%(asctime)s:%(message)s'
+logging.basicConfig(filename='test.log', level=logging.DEBUG, format=formatter)
 
 
-def get_商品コード(source):
-    file = re.split("\n", source)[0]
-    
-    session = Session(engine)
-    
-    code = re.split("\\s", file)
-    code = code[len(code)-1]
-    # ここで商品データベースにSelectして存在したら、それを返す
-    data = session.query(Product).filter(Product.code == code).first()
-    if data != None:
-        return data
-    
-    code = file.split(")")
-    code = code[len(code)-1]
-    # ここで商品データベースにSelectして存在したら、それを返す
-    data = session.query(Product).filter(Product.code == code).first()
-    if data != None:
-        return data
 
-    
-    # ディレクトリの最後が商品コードの場合
-    code = file.split("/")
-    code = code[len(code)-1]
-    # ここで商品データベースにSelectして存在したら、それを返す
-    data = session.query(Product).filter(Product.code == code).first()
-    if data != None:
-        return data
-
-    return ""
-    # ファイルを開いて商品コードらしい文字列があったら、商品データベースにSelectして存在したら、それを返す
-
-
-    # それでもだめなら、商品データベースから文字列に存在するかチェックする
-    
-    # ファイルを開いて商品データベースから文字列に存在するかチェックする
-    
-    
-    # それ以外はエラーで、人力でどうにかする
-
-def excel_slise():
-    wb1 = load_workbook(excel_path2)
-    ws_copy = wb1.copy_worksheet("マスター")
-    
-    wb_new = Workbook()
-    ws_new = wb_new.active
-    ws_new = ws_copy
-    wb_new.save("./マスター.xlsx")
-
-def get_excel_db():
-    # マスターコピー
-    #wb_new = Workbook()
-    #ws_new = wb_new.active
-    #ws_new.title = "マスター"
-    
-    
    
+
+
+class Excel_Analysis():
+    # エクセル解析
+    def excel_slise():
+        wb1 = load_workbook(excel_path2)
+        ws_copy = wb1.copy_worksheet("マスター")
     
-    wb = load_workbook(excel_path2)
-    ws = wb["マスター"]
-    print(ws.max_row)
-    s = 5
-    while s <= ws.max_row:
-        print(s)
-        print(ws[f"B{s}"].value)
-        session = Session(engine)
-        if session.query(Product).filter(Product.code == ws[f"B{s}"].value).first() == None:
-            print(f"insert {s :} ")
-            session.add(Product(code = ws[f"B{s}"].value,
+        wb_new = Workbook()
+        ws_new = wb_new.active
+        ws_new = ws_copy
+        wb_new.save("./マスター.xlsx")
+
+    def get_excel_db():
+        # マスターコピー
+        #wb_new = Workbook()
+        #ws_new = wb_new.active
+        #ws_new.title = "マスター"
+    
+        wb = load_workbook(excel_path2)
+        ws = wb["マスター"]
+        print(ws.max_row)
+        s = 5
+        while s <= ws.max_row:
+            print(s)
+            print(ws[f"B{s}"].value)
+            session = Session(engine)
+            if session.query(Product).filter(Product.code == ws[f"B{s}"].value).first() == None:
+                print(f"insert {s :} ")
+                session.add(Product(code = ws[f"B{s}"].value,
                             商品名 = ws[f"C{s}"].value,
                             下代 = ws[f"E{s}"].value,
                             update_at = datetime.datetime.now(),
                             ))
-            session.commit()
-            s = s + 1
-            #time.sleep(1)
-        else:
-            print(f"update {s :} ")
-            session = Session(engine)
-            product = session.query(Product).filter(Product.code == ws[f"B{s}"].value).first()
-            product.code = ws[f"B{s}"].value
-            product.商品名 = ws[f"C{s}"].value
-            product.下代 = ws[f"E{s}"].value
-            product.update_at = datetime.datetime.now()
+                session.commit()
+                s = s + 1
+                #time.sleep(1)
+            else:
+                print(f"update {s :} ")
+                session = Session(engine)
+                product = session.query(Product).filter(Product.code == ws[f"B{s}"].value).first()
+                product.code = ws[f"B{s}"].value
+                product.商品名 = ws[f"C{s}"].value
+                product.下代 = ws[f"E{s}"].value
+                product.update_at = datetime.datetime.now()
             
-            session.commit()
-            s = s + 1
-            #time.sleep(1)
-        #save(session)
+                session.commit()
+                s = s + 1
+                #time.sleep(1)
+            #save(session)
 
 
-def 再登録日(code):
-    session = Session(engine)
-    商品名 = session.query(Product).filter(Product.code == code).first()
-    商品名2 = session.query(dir_db).filter(dir_db.code == code).first()
-    session.add(再登録日(code = code,
+
+
+class Database_Analysis():
+    # データベース解析
+    def set_source(self, source):
+        self.source = source
+
+    def get_name(self):
+        return re.split("\n", self.source)[0]
+
+    def get_金額(source):
+        data = ""
+        for i in re.split("\n", source):
+            m = re.match(r'￥(.*?)', i)
+            if m != None:
+                data = m.group().replace(",", "")
+                data = data.replace("￥", "")
+                print(f"金額 : {data}")
+               return int(data)
+            m = re.match(r'\\(.*?)', i)
+            if m != None:
+                data = m.group().replace(",", "")
+                data = data.replace("\\", "")
+                print(f"金額 : {data}")
+                return int(data)
+            logger.error(self.get_name() + ' 金額のエラー')
+
+
+    def get_商品コード(source):
+        file = re.split("\n", source)[0]
+    
+        session = Session(engine)
+    
+        code = re.split("\\s", file)
+        code = code[len(code)-1]
+        # ここで商品データベースにSelectして存在したら、それを返す
+        data = session.query(Product).filter(Product.code == code).first()
+        if data != None:
+            return data
+    
+        code = file.split(")")
+        code = code[len(code)-1]
+        # ここで商品データベースにSelectして存在したら、それを返す
+        data = session.query(Product).filter(Product.code == code).first()
+        if data != None:
+            return data
+    
+        # ディレクトリの最後が商品コードの場合
+        code = file.split("/")
+        code = code[len(code)-1]
+        # ここで商品データベースにSelectして存在したら、それを返す
+        data = session.query(Product).filter(Product.code == code).first()
+        if data != None:
+            return data
+
+        return ""
+        # ファイルを開いて商品コードらしい文字列があったら、商品データベースにSelectして存在したら、それを返す
+
+
+        # それでもだめなら、商品データベースから文字列に存在するかチェックする
+    
+        # ファイルを開いて商品データベースから文字列に存在するかチェックする
+    
+    
+        # それ以外はエラーで、人力でどうにかする
+
+
+
+
+class Database_Registratio():
+    # データベース登録           
+    def 再登録日(code):
+        session = Session(engine)
+        商品名 = session.query(Product).filter(Product.code == code).first()
+        商品名2 = session.query(dir_db).filter(dir_db.code == code).first()
+        session.add(再登録日(code = code,
                             商品名 = 商品名.商品名,
                             商品名2 = 商品名2.商品名,
                             update_at = datetime.datetime.now(),
                             ))
-    session.commit()
+        session.commit()
 
 
-def get_金額(source):
-    data = ""
-    for i in re.split("\n", source):
-        m = re.match(r'￥(.*?)', i)
-        if m != None:
-            data = m.group().replace(",", "")
-            data = data.replace("\\", "")
-            print(f"金額 : {data}")
-            return data
-    return data
-            
 
-def get_directory_db():
-    # ディレクトリDBで思考
-    file_path=[]
-    file_path = (glob.glob(f'{ROOT_PATH}/**/*.txt', recursive=True))
-    for file in file_path:
-        source = load(file)
-        directory_db(file, source)
+    def get_directory_db():
+        # ディレクトリDBで思考
+        file_path=[]
+        file_path = (glob.glob(f'{ROOT_PATH}/**/*.txt', recursive=True))
+        for file in file_path:
+            source = load(file)
+            directory_db(file, source)
         
-def get_db_source_db():
-    # dbで思考する
-    session = Session(engine)
-    sources = session.query(dir_db).all()
-    for db in sources:
-        directory_db(db.dir, db.source)
+    def get_db_source_db():
+        # dbで思考する
+        session = Session(engine)
+        sources = session.query(dir_db).all()
+        for db in sources:
+            directory_db(db.dir, db.source)
 
 
-def directory_db(file, source):
+    def directory_db(file, source):
         session = Session(engine)
         状態 = ""
         if "在庫1" in file:
@@ -251,30 +264,37 @@ def directory_db(file, source):
    
 
 
-def save(session):
-    i = 0
-    while i <= 5:
-        try:
-            time.sleep(1)
-            session.commit()
-            time.sleep(1)
-            i = i + 1
-        except:
-            print("失敗")
+    def save(session):
+        i = 0
+        while i <= 5:
+            try:
+                time.sleep(1)
+                session.commit()
+                time.sleep(1)
+                i = i + 1
+            except:
+                print("失敗")
 
-def load(dir):
-    try:
-        with open(dir, 'r', encoding="utf-8") as f:
-            seed1 = f.read()
-    except:
+    def load(dir):
         try:
-            with open(dir, 'r', encoding="cp932") as f:
+            with open(dir, 'r', encoding="utf-8") as f:
                 seed1 = f.read()
         except:
-            with open(dir, 'r', encoding="utf-16") as f:
-                seed1 = f.read()
+            try:
+                with open(dir, 'r', encoding="cp932") as f:
+                    seed1 = f.read()
+            except:
+                with open(dir, 'r', encoding="utf-16") as f:
+                    seed1 = f.read()
     
-    return seed1
+        return seed1
+
+    def all_delete():
+        session = Session(engine)
+        session.query(dir_db).delete()
+        session.commit()
+
+
 
 def open_folder(path):
     """
@@ -285,10 +305,7 @@ def open_folder(path):
     # 開くときは cp932のstrにして実行する
     subprocess.Popen(['explorer', path.encode("cp932").replace("/", "\\")])
 
-def all_delete():
-    session = Session(engine)
-    session.query(dir_db).delete()
-    session.commit()
+
 
 if __name__ == '__main__':
     #recursive_file_check(ROOT_PATH)
@@ -316,19 +333,25 @@ if __name__ == '__main__':
         print("オプションが違います。")
     """
     
+
+    database_registratio = Database_Registratio()
+    excel_analysis = Excel_Analysis()
+
+
     args = sys.argv
     if args[1] == "clear":
-        all_delete()
+        database_registratio.all_delete()
     elif args[1] == "directory_db":
-        get_directory_db()
+        database_registratio.get_directory_db()
     elif args[1] == "db_source_db":
-        get_db_source_db()
+        database_registratio.get_db_source_db()
     elif args[1] == "get_excel_db":
-        get_excel_db()
+        excel_analysis.get_excel_db()
     elif args[1] == "excel_slise":
-        excel_slise()
+        excel_analysis.excel_slise()
     else:
         print("オプションが違います。")
+        database_registratio.get_db_source_db()
     #all_delete() # 全部消す
     #get_directory_db() # ディレクトリで登録する
     #get_db_source_db() # データベースで登録する
