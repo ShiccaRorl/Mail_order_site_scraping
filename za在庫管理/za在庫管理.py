@@ -62,60 +62,6 @@ logging.basicConfig(filename='test.log', level=logging.DEBUG, format=formatter)
 
 
 
-   
-
-
-class Excel_Analysis():
-    # エクセル解析
-    def excel_slise():
-        wb1 = load_workbook(excel_path2)
-        ws_copy = wb1.copy_worksheet("マスター")
-    
-        wb_new = Workbook()
-        ws_new = wb_new.active
-        ws_new = ws_copy
-        wb_new.save("./マスター.xlsx")
-
-    def get_excel_db():
-        # マスターコピー
-        #wb_new = Workbook()
-        #ws_new = wb_new.active
-        #ws_new.title = "マスター"
-    
-        wb = load_workbook(excel_path2)
-        ws = wb["マスター"]
-        print(ws.max_row)
-        s = 5
-        while s <= ws.max_row:
-            print(s)
-            print(ws[f"B{s}"].value)
-            session = Session(engine)
-            if session.query(Product).filter(Product.code == ws[f"B{s}"].value).first() == None:
-                print(f"insert {s :} ")
-                session.add(Product(code = ws[f"B{s}"].value,
-                            商品名 = ws[f"C{s}"].value,
-                            下代 = ws[f"E{s}"].value,
-                            update_at = datetime.datetime.now(),
-                            ))
-                session.commit()
-                s = s + 1
-                #time.sleep(1)
-            else:
-                print(f"update {s :} ")
-                session = Session(engine)
-                product = session.query(Product).filter(Product.code == ws[f"B{s}"].value).first()
-                product.code = ws[f"B{s}"].value
-                product.商品名 = ws[f"C{s}"].value
-                product.下代 = ws[f"E{s}"].value
-                product.update_at = datetime.datetime.now()
-            
-                session.commit()
-                s = s + 1
-                #time.sleep(1)
-            #save(session)
-
-
-
 
 class Database_Analysis():
     # データベース解析
@@ -335,7 +281,7 @@ if __name__ == '__main__':
     
 
     database_registratio = Database_Registratio()
-    excel_analysis = Excel_Analysis()
+
 
 
     args = sys.argv
@@ -345,10 +291,6 @@ if __name__ == '__main__':
         database_registratio.get_directory_db()
     elif args[1] == "db_source_db":
         database_registratio.get_db_source_db()
-    elif args[1] == "get_excel_db":
-        excel_analysis.get_excel_db()
-    elif args[1] == "excel_slise":
-        excel_analysis.excel_slise()
     else:
         print("オプションが違います。")
         database_registratio.get_db_source_db()
