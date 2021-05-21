@@ -39,9 +39,9 @@ Base.prepare(engine, reflect=True)
 
 # mapped classes are now created with names by default
 # matching that of the table name.
-affiliate_video = Base.classes.Affiliate_Video_affiliate_video
-affiliate_video_pic = Base.classes.Affiliate_Video_affiliate_video_pic
-
+dir_db = Base.classes.dir_db
+Product = Base.classes.Product
+再登録日 = Base.classes.再登録日
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret key'
