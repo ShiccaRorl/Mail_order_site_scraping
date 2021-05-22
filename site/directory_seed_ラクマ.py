@@ -1,7 +1,12 @@
 # -*- coding:utf-8 -*-
 
+# 2021/04/25
+# pip install -U sqlalchemy
 
-from V6_analysis_MGS import Analysis_MGS
+
+from config import Config
+from directory_seed import Mail_order_site
+
 import datetime
 import time
 import os
@@ -13,483 +18,461 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 
+from bs4 import BeautifulSoup
+
 Base = automap_base()
 
 # engine, suppose it has two tables 'user' and 'address' set up
-engine = create_engine("sqlite:///db.sqlite3")
+#engine = create_engine("sqlite:///db.sqlite3")
 
 # reflect the tables
-Base.prepare(engine, reflect=True)
+#Base.prepare(engine, reflect=True)
 
 # mapped classes are now created with names by default
 # matching that of the table name.
-affiliate_video = Base.classes.Affiliate_Video_affiliate_video
-affiliate_video_pic = Base.classes.Affiliate_Video_affiliate_video_pic
 
-session = Session(engine)
+#session = Session(engine)
 
 
-class Directory_seed1():
+class Rakuten(Mail_order_site):
     def __init__(self):
-        self.affiliate_video = Base.classes.Affiliate_Video_affiliate_video
-        self.affiliate_video_pic = Base.classes.Affiliate_Video_affiliate_video_pic
-
-    def get_dir_list(self):
-        self.file_list = []
-        for dir in glob.glob('C:\\Users\\ban\\Downloads\\MGS*.html'):
-            #print(dir)
-            with open(dir, 'r', encoding="utf-8") as f:
-                self.seed1 = f.read()
-            self.seed1 = self.seed1.replace("\n", "")
-            self.seed1 = self.seed1.replace("\r", "")
-            
-            dmm = Analysis_MGS(self.seed1)
-            
-            self.file_list.append(dmm.code)
-            self.削除する(dir)
-            self.データベースに保存する通常(dmm.code, self.seed1)
-
-    def データベースに保存する通常(self, code2, seed1):
-        self.seed1 = seed1
-        # if self.flag_データベースにinsert必要 == True:
-        #print(code2)
-        session = Session(engine)
-        # print(session.query(self.affiliate_video).filter(
-        #    self.affiliate_video.code == str(code2)).first) #.order_by(self.affiliate_video.published_date))
-        dmm = Analysis_MGS(self.seed1)
-        # .order_by(self.affiliate_video.published_date):
-        if (session.query(self.affiliate_video).filter(self.affiliate_video.code == str(code2)).first) == None:
-            session.add(self.affiliate_video(code=dmm.code,
-                                             seed_yes=True,
-                                             seed_error=0,
-                                             analysis_completed=False,
-                                             release_yes=False,
-                                             affiliate_site=1,
-                                             number_of_uses=0,
-                                             affiliate_genre=1,
-                                             created_date=datetime.datetime.now(),
-                                             published_date=datetime.datetime.now(),
-                                             title=dmm.title,
-                                             file_path="",
-                                             url=dmm.url,
-                                             actress=dmm.actress,
-                                             introduction=dmm.introduction,
-                                             my_url=dmm.my_url,
-                                             article1="",
-                                             article2="",
-                                             thumbnail1=dmm.thumbnail1,
-                                             md_file_name=dmm.md_file_name,
-                                             bittorrent="",
-                                             reference=0,
-                                             seed1=seed1,
-                                             #seed2="",
-                                             ))
-            i = 0
-            while i <= 5:
-                try:
-                    time.sleep(1)
-                    session.commit()
-                    time.sleep(1)
-                    i = 6 + 1
-                except:
-                    time.sleep(5)
-                    i = i + 1
-
-        # update
-        elif (session.query(self.affiliate_video).filter(self.affiliate_video.code == str(code2)).first) != None:
-            video = session.query(self.affiliate_video).filter(
-                self.affiliate_video.code == str(code2)).first
-            """
-            video.file_path = f"./www/MGS/{code2}/seed1.txt"
-            print(video.file_path)
-            try:
-                with open(video.file_path, 'r',  encoding="utf-8") as f:
-                    data1 = f.read()
-                self.seed1 = data1
-            except:
-                self.seed1 = ""
-                self.seed2 = ""
-            """
-            
-            # 記事関係です
-            try:
-                with open(f"./www/MGS/{code2}/記事1.txt") as f:
-                    self.article1 = f.read()
-            except:
-                self.article1 = ""
-                
-            try:
-                with open(f"./www/MGS/{code2}/記事2.txt") as f:
-                    self.article2 = f.read()
-            except:
-                self.article2 = ""
-                
-                """
-                thumbnail2 = []
-                mgs = Analysis_MGS(self.seed1)
-                if video.title == "":
-                    video.title = mgs.title
-                if video.url == "":
-                    video.url = f"https://www.mgstage.com/product/product_detail/{code2}/"
-                if video.actress == "":
-                    video.actress = mgs.actress
-                if video.introduction == "":
-                    video.introduction = mgs.introduction
-                if video.my_url == "":
-                    video.my_url = video.url + "?aff=C7EL5ZIM2LIYL36AOUMDGYKNTJ"
-                if video.article1 == "":
-                    video.article1 = self.article1
-                if video.article2 == "":
-                    video.article2 = self.article2
-                if video.thumbnail1 == "":
-                    video.thumbnail1 = mgs.thumbnail1
-                #if thumbnail2 == "":
-                #    thumbnail2 = mgs.thumbnail2[random.randint(0, len(mgs.thumbnail2))]
-                if video.md_file_name == "":
-                    video.md_file_name = f"./Video/{code2}.html"
-                if video.bittorrent == "":
-                    video.bittorrent = ""
-                if video.seed1 == "":
-                    video.seed1 = self.seed1
-                #if video.seed2 == "":
-                    #video.seed2 = self.seed2
-                """
-            video.published_date = datetime.datetime.now()
-                
-                
-            i = 0
-            while i <= 5:
-                    try:
-                        time.sleep(1)
-                        session.commit()
-                        time.sleep(1)
-                        i = 6 + 1
-                    except:
-                        time.sleep(5)
-                        i = i + 1
-                        
-        self.データベースに保存するサムネイル2(code2, self.seed1)
-
-    def データベースに保存するサムネイル2(self, code2, seed1):
-        self.seed1 = seed1
-        """
-        file_path = f"./www/MGS/{code2}/seed1.txt"
-        print(file_path)
-        seed1 = ""
-        try:
-            with open(file_path, 'r',  encoding="utf-8") as f:
-                seed1 = f.read()
-        except:
-            seed1 = ""
-            seed2 = ""        
-        try:
-            with open(f"./www/MGS/{code2}/コメント.txt", 'r',  encoding="utf-8") as f:
-                comment = f.read()
-                self.comment = comment.split('\n')
-        except:
-            comment = []
-        """
-
-        dmm = Analysis_MGS(self.seed1)
-        thumbnail2 = []
-
-        # サムネイル2読み込み
-        session = Session(engine)
-        s = 0
-        for url in dmm.thumbnail2:
-            if (session.query(self.affiliate_video_pic).filter(self.affiliate_video_pic.code == str(code2), self.affiliate_video_pic.url == url).first) == None:
-                #try:
-                #    if self.comment[s] == None:
-                #        self.comment.append("")
-                #except:
-                #    self.comment.append("")
-                session.add(self.affiliate_video_pic(code=dmm.code,
-                                                     pic_count=s,
-                                                     url=url,
-                                                     #comment=self.comment[s],
-                                                     created_date=datetime.datetime.now(),
-                                                     published_date=datetime.datetime.now(),
-                                                     ))
-                s = s + 1
-                
-                i = 0
-                while i <= 5:
-                    try:
-                        time.sleep(1)
-                        session.commit()
-                        time.sleep(1)
-                        i = 6 + 1
-                    except:
-                        time.sleep(5)
-                        i = i + 1
-
-    # コメントの取り込み
-
-        """
-        try:
-            self.comments = []
-            comment_path = f"./www/MGS/{code2}/コメント.txt"
-            with open(comment_path, 'r',  encoding="utf-8") as f:
-                self.comments = f.read().split("\n")
-        except:
-            print("commentファイル無し")
-            self.comments = []
-
-        session = Session(engine)
-        try:
-            for comment in self.comments:
-                # update
-                if (session.query(self.affiliate_video_pic).filter(self.affiliate_video_pic.code == str(code2) and self.affiliate_video_pic.url == url).first) != None:
-                    pic = session.query(self.affiliate_video_pic).filter(
-                        self.affiliate_video_pic.code == str(code2) and self.affiliate_video_pic.url == url).first
-                    if pic.comment == "":
-                        pic.comment = comment
-
-                        pic.published_date = datetime.datetime.now()
-                        
-                        i = 0
-                        while i <= 5:
-                            try:
-                                time.sleep(1)
-                                session.commit()
-                                time.sleep(1)
-                                i = 6 + 1
-                            except:
-                                time.sleep(5)
-                                i = i + 1
-                                
-        except:
-            print("コメント取り込み失敗")
-        """
+        self.config = Config()
+        self.setup()
         
-    def データベースに保存するその他ID(self, code2):
-        file_path = f"./www/MGS/{code2}/seed1.txt"
-        #print(file_path)
-        try:
-            with open(file_path, 'r',  encoding="utf-8") as f:
-                data1 = f.read()
-            data2 = ""
-        except:
-            data1 = ""
-            data2 = ""
+        Base = automap_base()
+        # engine, suppose it has two tables 'user' and 'address' set up
+        self.engine = create_engine(self.config.db_path)
+        # 個人情報の塊なのでGITの外に設置
 
-        thumbnail2 = []
-        mgs = Analysis_MGS(data1)
+        # reflect the tables
+        Base.prepare(self.engine, reflect=True)
 
-        # その他のページ読み込み
-        session = Session(engine)
-        for url in mgs.他のid:
-            if (session.query(self.affiliate_video).filter(self.affiliate_video.code == str(code2)).first) == None:
-                session.add(self.affiliate_video(code=code2,
-                                                 seed_yes=False,
-                                                 seed_error=0,
-                                                 analysis_completed=False,
-                                                 release_yes=False,
-                                                 affiliate_site=1,
-                                                 number_of_uses=0,
-                                                 affiliate_genre=1,
-                                                 created_date=datetime.datetime.now(),
-                                                 published_date=datetime.datetime.now(),
-                                                 title="",
-                                                 file_path="",
-                                                 url=f"https://www.mgstage.com/product/product_detail/{code2}/",
-                                                 actress="",
-                                                 introduction="",
-                                                 my_url=url + "?aff=C7EL5ZIM2LIYL36AOUMDGYKNTJ",
-                                                 article1="",
-                                                 article2="",
-                                                 thumbnail1="",
-                                                 md_file_name=f"./Video/{code2}.html",
-                                                 bittorrent="",
-                                                 reference = 0,
-                                                 seed1="",
-                                                 seed2="",
-                                                 ))
-                i = 0
-                while i <= 5:
-                    try:
-                        time.sleep(1)
-                        session.commit()
-                        time.sleep(1)
-                        i = 6 + 1
-                    except:
-                        time.sleep(5)
-                        i = i + 1
-            else:
-                """
-                reference = session.query(self.affiliate_video).filter(self.affiliate_video.code == str(code2)).first
-                print(reference)
-                print(reference.reference)
-                reference.reference = reference.reference + 1
-                print(code2)
-                """
-                #print("人気度")
-                """
-                print(reference)
-                
-                time.sleep(1)
-                #session.commit()
-                time.sleep(1)
-                """
-                
-    # 計算で取り出すデータ
-    def データベースに保存する計算する(self, code2):
-        session = Session(engine)
-        video = session.query(self.affiliate_video).filter(
-            self.affiliate_video.code == str(code2)).first
-        file_path = f"./www/MGS/{code2}/seed1.txt"
-        #print(file_path)
-        try:
-            with open(file_path, 'r',  encoding="utf-8") as f:
-                self.seed1 = f.read()
+        # mapped classes are now created with names by default
+        # matching that of the table name.
 
-        except:
-            self.seed1 = ""
-            self.seed2 = ""
-
-        mgs = Analysis_MGS(self.seed1)
-        session = Session(engine)
+        self.seeds = Base.classes.seeds
+        self.site = Base.classes.site
+        self.sale = Base.classes.sale
         
-        try:
-            # update
-            #mgs = Analysis_MGS(self.seed1)
-            if video.title == "":
-                video.title = mgs.title
-            if video.url == "":
-                video.url = f"https://www.mgstage.com/product/product_detail/{code2}/"
-            if video.actress == "":
-                video.actress = mgs.actress
-            if video.introduction == "":
-                video.introduction = mgs.introduction
-            if video.my_url == "":
-                video.my_url = video.url + "?aff=C7EL5ZIM2LIYL36AOUMDGYKNTJ"
-            if video.article1 == "":
-                video.article1 = ""
-            if video.article2 == "":
-                video.article2 = ""
-            if video.thumbnail1 == "":
-                video.thumbnail1 = mgs.thumbnail1
-            #if video.thumbnail2 == "":
-            #    thumbnail2 = mgs.thumbnail2
-            if video.md_file_name == "":
-                video.md_file_name = f"./Video/{code2}.html"
-            if video.bittorrent == "":
-                video.bittorrent = ""
-            if video.seed1 == "":
-                video.seed1 = seed1
-            if video.seed2 == "":
-                video.seed2 = seed2
-
-            i = 0
-            while i <= 5:
-                try:
-                    time.sleep(1)
-                    session.commit()
-                    time.sleep(1)
-                    i = 6 + 1
-                except:
-                    time.sleep(5)
-                    i = i + 1
-        except:
-            print("計算で取り出すデータ失敗")
-
-        # if self.flag_データベースにupdate必要 == True:
-
-    def アップデータ可能か調べる(self, code):
-        session = Session(engine)
-        videos = session.query(self.affiliate_video).filter(
-            self.affiliate_video.code == str(code)).all
-        file_path = f"./www/MGS/{code}/seed1.txt"
-        #print(file_path)
-        try:
-            with open(file_path, 'r',  encoding="utf-8") as f:
-                self.seed1 = f.read()
-
-        except:
-            self.seed1 = ""
-            self.seed2 = ""
-
-        mgs = Analysis_MGS(self.seed1)
-        session = Session(engine)
         
+
+
+    def get_data2(self):
+        self.data = self.get_data()
+        return str(self.data.seed)
+
+    def get_seed2(self):
+        self.data = self.get_data()
+        return self.data.replace("charset=euc-jp", 'charset="UTF-8"')
+
+    def test(self):
+        with open("./../../mail_order_site1.html", 'w', encoding="utf-8") as f:
+            f.write(str(self.get_seed()))
+        #print(self.test())
+        print("")
+        print("id")
+        print(self.get_id())
+        print("")
+        print("日付")
+        print(self.get_日付())
+        print("")
+        #print("商品明細")
+        #print(self.get_商品明細())
+        print("")
+        print(self.get_商品バリエーション())
+        print("")
+        print("商品コード")
+        print(self.get_商品コード())
+        print("")
+        print("商品名")
+        print(self.get_商品名())
+        print("")
+        print("数量")
+        print(self.get_数量())
+        print("")
+        print("注文者_名前")
+        print(self.get_注文者_名前())
+        print("")
+        print("注文者_ペンネーム")
+        print(self.get_注文者_ペンネーム())
+        print("")
+        print("注文者_郵便番号")
+        print(self.get_注文者_郵便番号())
+        print("")
+        print("注文者_住所")
+        print(self.get_注文者_住所())
+        print("")
+        print("注文者_電話番号")
+        print(self.get_注文者_電話番号())
+        print("")
+        print("注文者_メールアドレス")
+        print(self.get_注文者_メールアドレス())
+        print("")
+        print("送り先_郵便番号")
+        print(self.get_送り先_郵便番号())
+        print("")
+        print("送り先_名前")
+        print(self.get_送り先_名前())
+        print("")
+        print("送り先_ペンネーム")
+        print(self.get_送り先_ペンネーム())
+        print("")
+        print("送り先_住所")
+        print(self.get_送り先_住所())
+        print("")
+        print("送り先_電話番号")
+        print(self.get_送り先_電話番号())
+        print("")
+        print("送り先_メールアドレス")
+        print(self.get_送り先_メールアドレス())
+
+    def get_id(self):
+        # <input type="hidden" name="item_id" id="item_id" value="428254311" />
         try:
-            for video in videos:
-                # update
-                i = 0
-                mgs = Analysis_MGS(self.seed1)
-                if video.title == "":
-                    video.title = mgs.title
-                    i = 1
-                if video.url == "":
-                    video.url = f"https://www.mgstage.com/product/product_detail/{code}/"
-                    i = 1
-                if video.actress == "":
-                    video.actress = mgs.actress
-                    i = 1
-                if video.introduction == "":
-                    video.introduction = mgs.introduction
-                    i = 1
-                if video.my_url == "":
-                    video.my_url = video.url + "?aff=C7EL5ZIM2LIYL36AOUMDGYKNTJ"
-                    i = 1
-                if video.article1 == "":
-                    video.article1 = ""
-                    i = 1
-                if video.article2 == "":
-                    video.article2 = ""
-                if video.thumbnail1 == "":
-                    video.thumbnail1 = mgs.thumbnail1
-                    i = 1
-                #if video.thumbnail2 == "":
-                #    thumbnail2 = mgs.thumbnail2
-                if video.md_file_name == "":
-                    video.md_file_name = f"./Video/{code}.html"
-                    i = 1
-                if video.bittorrent == "":
-                    video.bittorrent = ""
-                if video.seed1 == "":
-                    video.seed1 = self.seed1
-                #if video.seed2 == "":
-                    #video.seed2 = self.seed2
-
-                if i == 0: # 解析が終了した印を入れる
-                    video.analysis_completed = 1
-                    video.published_date = datetime.datetime.now()
-                    
-                    
-            i = 0
-            while i <= 5:
-                try:
-                    time.sleep(1)
-                    session.commit()
-                    time.sleep(1)
-                    i = 6 + 1
-                except:
-                    time.sleep(5)
-                    i = i + 1
+            soup = self.soup.find('a', {'class': 'rms-status-order-nr'})
+            temp = soup.text.strip()
         except:
-            print("コメント取り込み失敗")
+            temp = ""
+        return temp
+
+    def get_日付(self):
+        # <p class="small-text right-align">2021/05/19 06:40</p>
+        try:
+            soup = self.soup.find('table', {'class': 'rms-content-order-details-block-history-table'})
+            #s = 0
+            #for i in soup.find_all("td"):
+            #    print(s)
+            #    print(i)
+            #    s = s + 1
+            temp = soup.find_all("td")[5].text
+            return temp
+        except:
+            temp = ""
+            return temp
 
 
-    def 削除する(self, code):
-        print(f"{code} MGS 削除します")
-        os.remove(code)
+    def get_商品明細(self):
+        try:
+            #s = 0
+            #for i in self.soup.find_all('div', {'class': 'rms-row-wrapper'}):
+            #    print(f"====={s}====")
+            #    print(i)
+            #    print("")
+            #    s = s + 1
+            soup = self.soup.find_all('div', {'class': 'rms-row-wrapper'})[13]
+        except:
+            soup = ""
+        return soup
+
+    def get_商品バリエーション(self):
+        try:
+            self.products = []
+            soup = self.get_商品明細().find('tbody')
+            for i in soup.find_all('tr'):
+                print(i)
+                product = Product()
+                product.set_tr(i)
+                product.get_商品名()
+                self.products.append(product)
+            #t = 0
+            #for s in soup:
+            #    print(f"===={t}====")
+            #    print(s)
+            #    print("")
+            #    t = t + 1
+        except:
+            soup = ""
+        return soup
+
+
+    def get_商品コード(self):
+        try:
+            temp = self.product.get_商品コード()
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
+
+    def get_商品名(self):
+        # <h2 class="item_name">新品送料込み　腰紐三本セット　白　こしひも　浴衣、着物に　AWK071-3</h2>
+        try:
+            for i in self.products:
+                print(i)
+                print(i.get_商品名())
+            temp = self.product[2].get_商品名()
+            # = self.get_商品バリエーション().find('a', {'class': f'rms-span-open-in-new'})
+            temp = temp.text.strip()
+        except:
+            temp= ""
+        return temp
+
+    def get_数量(self):
+        try:
+            #temp = self.get_商品バリエーション().find('div', {'class': f'rms-table-column-line'})
+            temp = self.product.get_数量()
+            temp = int(soup.text.strip())
+        except:
+            temp = 0
+        return temp
+
+
+    def get_注文者_名前(self):
+        # <p>
+        #    〒 841-0083<br>
+        #    佐賀県鳥栖市古賀町721-32 山下咲織様方<br>
+        #    戸上 志乃 様
+        #  </p>
+        try:
+            soup = self.soup.find('span', {'class': f'fullname'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
+
+    def get_注文者_ペンネーム(self):
+        # <p class="small-text">shino_k</p>
+        try:
+            temp = ""
+            return temp
+        except:
+            temp = ""
+        return temp
+
+    def get_注文者_郵便番号(self):
+        try:
+            soup = self.soup.find('span', {'class': f'address'})
+            temp = re.split("\s", str(soup.text))[0]
+            temp = temp.replace("〒", "")
+            temp = temp.strip()
+        except:
+            temp = ""
+        return temp
+
+    def get_注文者_住所(self):
+        try:
+            soup = self.soup.find('span', {'class': f'address'})
+            temp = re.split("\s", str(soup.text))[1]
+            temp = temp.strip()
+        except:
+            temp = ""
+        return temp
+
+
+    def get_注文者_電話番号(self):
+        try:
+            soup = self.soup.find('span', {'class': f'phone'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
+
+    def get_注文者_メールアドレス(self):
+        try:
+            soup = self.soup.find('a', {'class': f'email'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
+
+
+
+    def get_送り先_名前(self):
+        try:
+            soup = self.soup.find('span', {'class': f'fullname'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
+
+    def get_送り先_ペンネーム(self):
+        try:
+            temp = ""
+            return temp
+        except:
+            temp = ""
+        return temp
+
+    def get_送り先_郵便番号(self):
+        try:
+            soup = self.soup.find('span', {'class': f'address'})
+            temp = soup.text.split(" ")[0]
+            temp = temp.replace("〒", "")
+            temp = temp.strip()
+        except:
+            temp = ""
+        return temp
+
+    def get_送り先_住所(self):
+        try:
+            soup = self.soup.find('span', {'class': f'address'})
+            temp = soup.text.split(" ")[0]
+            temp = temp.replace("〒", "")
+            temp = temp.strip()
+        except:
+            temp = ""
+        return temp
+
+    def get_送り先_電話番号(self):
+        try:
+            soup = self.soup.find('span', {'class': f'phone'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
+
+    def get_送り先_メールアドレス(self):
+        try:
+            temp = ""
+            return temp
+        except:
+            temp = ""
+        return temp
+
+    def get_購買額(self):
+        # <div class="col s6 right-align">¥ 750</div>
+        try:
+            soup = self.soup.find('span', {'class': f'footer-price'})
+            temp = soup.text.strip()
+        except:
+            temp = ""
+        return temp
+
+        # ラクマパック
+        #<div class="col s6 grey-text">かんたんラクマパック利用料<br><span class="gray-text small-text">ゆうパケット</span></div>
+        # <div class="col s6 right-align grey-text">- ¥ 179</div>
 
     def main(self):
-        self.get_dir_list()
-
-        for code in self.file_list:
-            #print(code)
-            #self.データベースに保存する通常(code)
-            #self.データベースに保存するサムネイル2(code)
-            #self.データベースに保存するコメント(code)
-            self.データベースに保存するその他ID(code)
-            self.データベースに保存する計算する(code)
-            self.アップデータ可能か調べる(code)
-            self.削除する(code)
+        self.siteID = 1
+        all = []
+        session = Session(bind = self.engine, autocommit = True, autoflush = True)
+        all = session.query(self.seeds).filter(
+            self.seeds.siteID == self.siteID and self.seeds.analysis_completed == 0).all()
+        for t in all:
+            # print(i)
+            
+            #self.get_data()
+            self.soup = BeautifulSoup(self.get_seed(), "html.parser")
+            self.test()
+        
+            self.db()
+            self.update_analysis_completed(t.id)
+            print(t.id)
             time.sleep(1)
 
+    def db(self):
+
+        i = 0
+        session = Session(bind = self.engine, autocommit = True, autoflush = True)
+        if session.query(self.seed).filter(self.seed.code == self.get_id()).first() == None:
+                # 新規追加
+
+                    print("")
+                    print(f"{self.get_id()} 新規追加")
+                    
+                    try:
+                        self.code = self.get_id()
+                        self.siteID = self.siteID
+                        self.create_at = datetime.datetime.now()
+                        self.update_at = datetime.datetime.now()
+
+                        self.日付 = self.get_日付()
+                        #self.商品コード = self.tdss.tds[i][0].get_商品コード()
+                        #self.商品名 = self.tdss.tds[i][0].get_商品名()
+                        #self.数量 = self.tdss.tds[i][0].get_数量()
+
+                        self.購入者_名前 = self.get_注文者_名前()
+                        self.購入者_ペンネーム = self.get_注文者_ペンネーム()
+                        self.購入者_郵便番号 = self.get_注文者_郵便番号()
+                        self.購入者_住所 = self.get_注文者_住所()
+                        self.購入者_電話番号 = self.get_注文者_電話番号()
+                        self.購入者_メールアドレス = self.get_注文者_メールアドレス()
+
+                        self.送り先_名前 = self.get_送り先_名前()
+                        self.送り先_ペンネーム = self.get_送り先_ペンネーム()
+                        self.送り先_郵便番号 = self.get_送り先_郵便番号()
+                        self.送り先_住所 = self.get_送り先_住所()
+                        self.送り先_電話番号 = self.get_送り先_電話番号()
+                        self.送り先_メールアドレス = self.get_送り先_メールアドレス()
+
+                        self.購入金額 = ""
+                        self.送料 = ""
+                        self.合計金額 = ""
+
+                        self.insert_add(session)
+
+                        
+
+                    except:
+                        print(f"{i} 新規失敗")
+                        
+
+        elif session.query(self.seed).filter(self.seed.code == self.get_id()).first() != None:
+                # アップデート
+                        self.code = self.get_id()
+                        #self.update1(i)
+                        self.update2()
+        else:
+                print("エラーです")
+
+    def update2(self): 
+                print("")
+                session = Session(bind = self.engine, autocommit = True, autoflush = True)
+                seed = session.query(self.seed).filter(self.seed.code == self.get_id()).first()
+                    
+
+                print("アップデート")
+
+                try:
+                        seed.code = self.get_id()
+                        seed.siteID = self.siteID
+                        print(seed.code)
+                        # create_at=datetime.datetime.now()
+                        seed.update_at = datetime.datetime.now()
+
+                        seed.日付 = self.get_日付()
+                        seed.商品コード = ""
+                        seed.商品名 = ""
+                        seed.数量 = ""
+
+                        seed.購入者_名前 = self.get_注文者_名前()
+                        seed.購入者_ペンネーム = self.get_注文者_ペンネーム()
+                        seed.購入者_郵便番号 = self.get_注文者_郵便番号()
+                        seed.購入者_住所 = self.get_注文者_住所()
+                        seed.購入者_電話番号 = self.get_注文者_電話番号()
+                        seed.購入者_メールアドレス = self.get_注文者_メールアドレス()
+
+                        seed.送り先_名前 = self.get_送り先_名前()
+                        seed.送り先_ペンネーム = self.get_送り先_ペンネーム()
+                        seed.送り先_郵便番号 = self.get_送り先_郵便番号()
+                        seed.送り先_住所 = self.get_送り先_住所()
+                        seed.送り先_電話番号 = self.get_送り先_電話番号()
+                        seed.送り先_メールアドレス = self.get_送り先_メールアドレス()
+
+                        seed.購入金額 = ""
+                        seed.送料 = ""
+                        seed.合計金額 = ""
+
+                        #session.commit()
+                        self.save(session)
+                except:
+                        print(f"{i} アップデート失敗")
+
+class Product():
+    def set_tr(self, tr):
+        self.tr_soup = tr
+
+    def get_商品コード(self):
+        temp = re.split("\s", self.get_商品名())
+        temp = temp[len(temp)-1]
+        return temp
+
+    def get_商品名(self):
+        return self.tr_soup.find('a', {'class': f'rms-span-open-in-new'}).text.strip()
+
+
+    def get_数量(self):
+        return self.tr_soup.find('div', {'class': "rms-table-column-line"})
 
 if __name__ == '__main__':
-    directory_seed1 = Directory_seed1()
-    directory_seed1.main()
+    rakuten = Rakuten()
+    rakuten.main()
