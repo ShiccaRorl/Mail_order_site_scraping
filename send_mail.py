@@ -6,6 +6,8 @@ from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 
+
+
 def sendGmailAttach():
     sender, password = "shicca.rorl.asp@gmail.com", "amourpzaejtpedca" # 送信元メールアドレスとgmailへのログイン情報 
     to = 'shicca.rorl.asp@gmail.com'  # 送信先メールアドレス
