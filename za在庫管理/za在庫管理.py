@@ -100,9 +100,23 @@ class Database_Analysis():
         data = session.query(Product).filter(Product.code == code).first()
         if data != None:
             return data
-    
+
+        code = re.split("\\s", file)
+        code = code[len(code)-2]
+        # ここで商品データベースにSelectして存在したら、それを返す
+        data = session.query(Product).filter(Product.code == code).first()
+        if data != None:
+            return data
+
         code = file.split(")")
         code = code[len(code)-1]
+        # ここで商品データベースにSelectして存在したら、それを返す
+        data = session.query(Product).filter(Product.code == code).first()
+        if data != None:
+            return data
+            
+        code = file.split(")")
+        code = code[len(code)-2]
         # ここで商品データベースにSelectして存在したら、それを返す
         data = session.query(Product).filter(Product.code == code).first()
         if data != None:
