@@ -330,7 +330,7 @@ class Rakuten(Mail_order_site):
     def main(self):
         self.siteID = 1
         all = []
-        session = Session(bind = self.engine)
+        session = Session(bind = self.engine, autocommit = True, autoflush = True)
         all = session.query(self.seeds).filter(
             self.seeds.siteID == self.siteID and self.seeds.analysis_completed == 0).all()
         for t in all:
@@ -348,7 +348,7 @@ class Rakuten(Mail_order_site):
     def db(self):
 
         i = 0
-        session = Session(bind = self.engine)
+        session = Session(bind = self.engine, autocommit = True, autoflush = True)
         if session.query(self.seed).filter(self.seed.code == self.get_id()).first() == None:
                 # 新規追加
 
@@ -402,7 +402,7 @@ class Rakuten(Mail_order_site):
 
     def update2(self): 
                 print("")
-                session = Session(bind = self.engine)
+                session = Session(bind = self.engine, autocommit = True, autoflush = True)
                 seed = session.query(self.seed).filter(self.seed.code == self.get_id()).first()
                     
 
@@ -438,8 +438,8 @@ class Rakuten(Mail_order_site):
                         seed.送料 = ""
                         seed.合計金額 = ""
 
-                        session.commit()
-                        #self.save(session)
+                        #session.commit()
+                        self.save(session)
                 except:
                         print(f"{i} アップデート失敗")
 
