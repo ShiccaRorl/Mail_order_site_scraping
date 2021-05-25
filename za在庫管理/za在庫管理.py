@@ -71,26 +71,26 @@ class Database_Analysis():
     def get_name(self):
         return re.split("\n", self.source)[0]
 
-    def get_金額(source):
+    def get_金額(self, source):
         data = ""
-        for i in re.split("\n", source):
+        for i in re.split("\n", self.source):
             m = re.match(r'￥(.*?)', i)
             if m != None:
                 data = m.group().replace(",", "")
                 data = data.replace("￥", "")
                 print(f"金額 : {data}")
-               return int(data)
+                return int(data)
             m = re.match(r'\\(.*?)', i)
             if m != None:
                 data = m.group().replace(",", "")
                 data = data.replace("\\", "")
                 print(f"金額 : {data}")
                 return int(data)
-            logger.error(self.get_name() + ' 金額のエラー')
+            #logger.error(self.get_name() + ' 金額のエラー')
 
 
-    def get_商品コード(source):
-        file = re.split("\n", source)[0]
+    def get_商品コード(self, source):
+        file = re.split("\n", self.source)[0]
     
         session = Session(engine)
     
@@ -130,9 +130,9 @@ class Database_Analysis():
 
 
 
-class Database_Registratio():
+class Database_Registratio(Database_Analysis):
     # データベース登録           
-    def 再登録日(code):
+    def 再登録日(self, code):
         session = Session(engine)
         商品名 = session.query(Product).filter(Product.code == code).first()
         商品名2 = session.query(dir_db).filter(dir_db.code == code).first()
@@ -145,23 +145,23 @@ class Database_Registratio():
 
 
 
-    def get_directory_db():
+    def get_directory_db(self):
         # ディレクトリDBで思考
         file_path=[]
         file_path = (glob.glob(f'{ROOT_PATH}/**/*.txt', recursive=True))
         for file in file_path:
             source = load(file)
-            directory_db(file, source)
+            self.directory_db(file, source)
         
-    def get_db_source_db():
+    def get_db_source_db(self):
         # dbで思考する
         session = Session(engine)
         sources = session.query(dir_db).all()
         for db in sources:
-            directory_db(db.dir, db.source)
+            self.directory_db(db.dir, db.source)
 
 
-    def directory_db(file, source):
+    def directory_db(self, file, source):
         session = Session(engine)
         状態 = ""
         if "在庫1" in file:
@@ -177,9 +177,9 @@ class Database_Registratio():
 
         
         商品名 = re.split("\n", source)[0]
-        code = get_商品コード(source)
+        code = self.get_商品コード(source)
         dir = file
-        金額 = get_金額(source)
+        金額 = self.get_金額(source)
         source = source
         
         if session.query(dir_db).filter(dir_db.商品名 == 商品名).first() == None:
@@ -210,7 +210,7 @@ class Database_Registratio():
    
 
 
-    def save(session):
+    def save(self, session):
         i = 0
         while i <= 5:
             try:
@@ -221,7 +221,7 @@ class Database_Registratio():
             except:
                 print("失敗")
 
-    def load(dir):
+    def load(self, dir):
         try:
             with open(dir, 'r', encoding="utf-8") as f:
                 seed1 = f.read()
@@ -235,7 +235,7 @@ class Database_Registratio():
     
         return seed1
 
-    def all_delete():
+    def all_delete(self):
         session = Session(engine)
         session.query(dir_db).delete()
         session.commit()
@@ -285,6 +285,7 @@ if __name__ == '__main__':
 
 
     args = sys.argv
+    print(args)
     if args[1] == "clear":
         database_registratio.all_delete()
     elif args[1] == "directory_db":
@@ -294,6 +295,12 @@ if __name__ == '__main__':
     else:
         print("オプションが違います。")
         database_registratio.get_db_source_db()
+            
+        print("directory_db")
+        print("db_source_db")
+        print("")
+        
+        
     #all_delete() # 全部消す
     #get_directory_db() # ディレクトリで登録する
     #get_db_source_db() # データベースで登録する
