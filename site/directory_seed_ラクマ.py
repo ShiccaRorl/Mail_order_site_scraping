@@ -34,7 +34,7 @@ Base = automap_base()
 #session = Session(engine)
 
 
-class Rakuten(Mail_order_site):
+class Rakuma(Mail_order_site):
     def __init__(self):
         self.config = Config()
         self.setup()
@@ -66,7 +66,7 @@ class Rakuten(Mail_order_site):
         return self.data.replace("charset=euc-jp", 'charset="UTF-8"')
 
     def test(self):
-        with open("./../../mail_order_site1.html", 'w', encoding="utf-8") as f:
+        with open("./../../mail_order_site3.html", 'w', encoding="utf-8") as f:
             f.write(str(self.get_seed()))
         #print(self.test())
         print("")
@@ -129,7 +129,7 @@ class Rakuten(Mail_order_site):
     def get_id(self):
         # <input type="hidden" name="item_id" id="item_id" value="428254311" />
         try:
-            soup = self.soup.find('a', {'class': 'rms-status-order-nr'})
+            soup = self.soup.find('input', {'id': 'item_id'})
             temp = soup.text.strip()
         except:
             temp = ""
@@ -138,13 +138,13 @@ class Rakuten(Mail_order_site):
     def get_日付(self):
         # <p class="small-text right-align">2021/05/19 06:40</p>
         try:
-            soup = self.soup.find('table', {'class': 'rms-content-order-details-block-history-table'})
+            soup = self.soup.find('p', {'class': 'small-text right-align'})
             #s = 0
             #for i in soup.find_all("td"):
             #    print(s)
             #    print(i)
             #    s = s + 1
-            temp = soup.find_all("td")[5].text
+            temp = soup.text
             return temp
         except:
             temp = ""
@@ -219,8 +219,8 @@ class Rakuten(Mail_order_site):
     def get_注文者_名前(self):
         # <p>
         #    〒 841-0083<br>
-        #    佐賀県鳥栖市古賀町721-32 山下咲織様方<br>
-        #    戸上 志乃 様
+        #    山田町721-32 <br>
+        #    名前 様
         #  </p>
         try:
             soup = self.soup.find('span', {'class': f'fullname'})
@@ -230,7 +230,7 @@ class Rakuten(Mail_order_site):
         return temp
 
     def get_注文者_ペンネーム(self):
-        # <p class="small-text">shino_k</p>
+        # <p class="small-text">ペンネーム</p>
         try:
             temp = ""
             return temp
@@ -452,12 +452,18 @@ class Rakuten(Mail_order_site):
                         seed.送料 = ""
                         seed.合計金額 = ""
 
-                        #session.commit()
-                        self.save(session)
+                        session.commit()
+                        #self.save(session)
                 except:
                         print(f"{i} アップデート失敗")
 
 class Product():
+    def set_code(self, code):
+        self.code = code
+
+    def get_code(self):
+        return self.code
+
     def set_tr(self, tr):
         self.tr_soup = tr
 
@@ -474,5 +480,5 @@ class Product():
         return self.tr_soup.find('div', {'class': "rms-table-column-line"})
 
 if __name__ == '__main__':
-    rakuten = Rakuten()
-    rakuten.main()
+    rakuma = Rakuma()
+    rakuma.main()

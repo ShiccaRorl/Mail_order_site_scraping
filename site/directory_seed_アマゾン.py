@@ -66,7 +66,7 @@ class Amazon(Mail_order_site):
         return self.data.replace("charset=euc-jp", 'charset="UTF-8"')
 
     def test(self):
-        with open("./../../mail_order_site1.html", 'w', encoding="utf-8") as f:
+        with open("./../../mail_order_site0.html", 'w', encoding="utf-8") as f:
             f.write(str(self.get_seed()))
         #print(self.test())
         print("")
@@ -224,7 +224,7 @@ class Amazon(Mail_order_site):
 
 
     def get_注文者_名前(self):
-        # <a data-test-id="buyer-name-with-link">渕野ひとみ</a>
+        # <a data-test-id="buyer-name-with-link">名前</a>
         try:
             soup = self.soup.find('span', {'class': f'fullname'})
             temp = soup.text.strip()
@@ -280,7 +280,7 @@ class Amazon(Mail_order_site):
 
 
     def get_送り先_名前(self):
-        # <span class="">松茂ひとみ<br></span>
+        # <span class="">名前<br></span>
         try:
             soup = self.soup.find('span', {'class': f'fullname'})
             temp = soup.text.strip()
@@ -309,8 +309,8 @@ class Amazon(Mail_order_site):
 
     def get_送り先_住所(self):
         # <span class="">佐賀県<br></span>
-        # <span class="">武雄市北方町志久<br></span>
-        # <span class="">2298-3<br></span>
+        # <span class="">山田町<br></span>
+        # <span class="">4444<br></span>
         try:
             soup = self.soup.find('span', {'class': f'address'})
             temp = soup.text.split(" ")[0]
@@ -482,5 +482,5 @@ class Product():
         return self.tr_soup.find('div', {'class': "rms-table-column-line"})
 
 if __name__ == '__main__':
-    rakuten = Rakuten()
-    rakuten.main()
+    amazon = Amazon()
+    amazon.main()
