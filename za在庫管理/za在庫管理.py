@@ -67,6 +67,8 @@ class Database_Analysis():
     # データベース解析
     def set_source(self, source):
         self.source = source
+        #formatter = '%(asctime)s:%(message)s'
+        #self.logging.basicConfig(filename='test.log', level=logging.DEBUG, format=formatter)
 
     def get_name(self):
         return re.split("\n", self.source)[0]
@@ -76,20 +78,27 @@ class Database_Analysis():
         for i in re.split("\n", self.source):
             m = re.match(r'￥(.*?)', i)
             if m != None:
-                data = m.group().replace(",", "")
-                data = data.replace("￥", "")
-                print(f"金額 : {data}")
-                return int(data)
+                try:
+                    data = m.group().replace(",", "")
+                    data = data.replace("￥", "")
+                    print(f"金額 : {data}")
+                    return int(data)
+                except:
+                    return 0
             m = re.match(r'\\(.*?)', i)
             if m != None:
-                data = m.group().replace(",", "")
-                data = data.replace("\\", "")
-                print(f"金額 : {data}")
-                return int(data)
-            #logger.error(self.get_name() + ' 金額のエラー')
+                try:
+                    data = m.group().replace(",", "")
+                    data = data.replace("\\", "")
+                    print(f"金額 : {data}")
+                    return int(data)
+                except:
+                    return 0
+            #self.logger.error(self.get_name() + ' 金額のエラー')
 
 
     def get_商品コード(self, source):
+        self.source = source
         file = re.split("\n", self.source)[0]
     
         session = Session(engine)
@@ -286,7 +295,15 @@ if __name__ == '__main__':
 
     args = sys.argv
     print(args)
-    if args[1] == "clear":
+    if args[1] == None:
+        print("オプションが違います。")
+        database_registratio.get_db_source_db()
+            
+        print("directory_db")
+        print("db_source_db")
+        print("")
+
+    elif args[1] == "clear":
         database_registratio.all_delete()
     elif args[1] == "directory_db":
         database_registratio.get_directory_db()
