@@ -99,6 +99,8 @@ class Database_Analysis():
 
     def get_商品コード(self, source):
         self.source = source
+        
+        
         file = re.split("\n", self.source)[0]
     
         session = Session(engine)
@@ -175,47 +177,58 @@ class Database_Registratio(Database_Analysis):
         状態 = ""
         if "在庫1" in file:
             print(f"在庫1 : {file}")
-            状態 = "在庫1"
+            self.r_状態 = "在庫1"
         elif "在庫0" in file:
             print(f"在庫0 : {file}")
-            状態 = "在庫0"
+            self.r_状態 = "在庫0"
         else:
             print(f"在庫あり : {file}")
-            状態 = "在庫あり"
+            self.r_状態 = "在庫あり"
             #print(get_商品コード(file))
 
         
-        商品名 = re.split("\n", source)[0]
-        code = self.get_商品コード(source)
-        dir = file
-        金額 = self.get_金額(source)
-        source = source
+        self.商品名 = re.split("\n", source)[0]
+        self.code = self.get_商品コード(source)
+        self.dir = file
+        self.金額 = self.get_金額(source)
+        self.source = source
         
-        if session.query(dir_db).filter(dir_db.商品名 == 商品名).first() == None:
+        if session.query(dir_db).filter(dir_db.商品名 == self.商品名).first() == None:
             print("insert")
-            session.add(dir_db(商品名 = 商品名,
+            session.add(dir_db(商品名 = self.商品名,
                                     code = code,
                                     update_at = datetime.datetime.now(),
-                                    dir = dir,
-                                    状態 = 状態,
-                                    金額 = 金額,
-                                    source = source,
+                                    dir = self.dir,
+                                    r_状態 = self.状態,
+                                    r_金額 = self.金額,
+                                    source = self.source,
                                     ))
-            session.commit()
-            #save(session)
+            #session.commit()
+            self.save(session)
         else:
             print("update")
-            seed = session.query(dir_db).filter(dir_db.商品名 == 商品名).first()
+            seed = session.query(dir_db).filter(dir_db.商品名 == self.商品名).first()
 
-            seed.code = code
+            seed.code = self.code
             seed.update_at=datetime.datetime.now()
-            seed.dir = dir
-            seed.状態 = 状態
-            seed.金額 = 金額
-        
+            seed.dir = self.dir
+            seed.r_状態 = self.状態
+            seed.r_金額 = self.金額
+            print(self.code)
+            print(self.r_金額)
             session.commit()
-            #save(session)
+            #self.save(session)
   
+            i = 0
+            while i <= 5:
+                #try:
+                    time.sleep(1)
+                    session.commit()
+                    time.sleep(1)
+                    print(i)
+                    i = i + 1
+                #except:
+                    print("失敗")
    
 
 
@@ -226,6 +239,7 @@ class Database_Registratio(Database_Analysis):
                 time.sleep(1)
                 session.commit()
                 time.sleep(1)
+                print(i)
                 i = i + 1
             except:
                 print("失敗")
