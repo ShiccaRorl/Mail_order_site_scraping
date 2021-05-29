@@ -177,13 +177,13 @@ class Database_Registratio(Database_Analysis):
         状態 = ""
         if "在庫1" in file:
             print(f"在庫1 : {file}")
-            self.r_状態 = "在庫1"
+            self.状態 = "在庫1"
         elif "在庫0" in file:
             print(f"在庫0 : {file}")
-            self.r_状態 = "在庫0"
+            self.状態 = "在庫0"
         else:
             print(f"在庫あり : {file}")
-            self.r_状態 = "在庫あり"
+            self.状態 = "在庫あり"
             #print(get_商品コード(file))
 
         
@@ -212,10 +212,10 @@ class Database_Registratio(Database_Analysis):
             seed.code = self.code
             seed.update_at=datetime.datetime.now()
             seed.dir = self.dir
-            seed.r_状態 = self.状態
-            seed.r_金額 = self.金額
+            seed.状態 = self.状態
+            seed.金額 = self.金額
             print(self.code)
-            print(self.r_金額)
+            print(self.金額)
             session.commit()
             #self.save(session)
   
