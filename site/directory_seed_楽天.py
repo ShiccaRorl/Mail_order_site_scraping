@@ -443,7 +443,7 @@ class Rakuten(Mail_order_site):
                 except:
                         print(f"{i} アップデート失敗")
 
-class Product():
+class Sale():
     def set_tr(self, tr):
         self.tr_soup = tr
 
