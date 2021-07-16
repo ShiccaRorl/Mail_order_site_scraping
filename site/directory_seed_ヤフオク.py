@@ -21,6 +21,7 @@ from sqlalchemy import create_engine
 from bs4 import BeautifulSoup
 import subprocess
 
+
 Base = automap_base()
 
 # engine, suppose it has two tables 'user' and 'address' set up
