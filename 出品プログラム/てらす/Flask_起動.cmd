@@ -1,8 +1,12 @@
-:loop
+
 
 rem cd Às‚·‚éƒvƒƒOƒ‰ƒ€‚ÌŠK‘w
 call C:\\Users\\ban\\anaconda3\\Scripts\\activate.bat
 
+:loop
+
 python Flask_index.py
+
+rem powershell sleep 5
 
 goto :loop
