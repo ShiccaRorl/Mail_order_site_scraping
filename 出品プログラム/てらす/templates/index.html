@@ -4,7 +4,9 @@
   </head>
   <body>
     <form action="/edit" method="post" enctype="multipart/form-data"> Seed : <textarea
-name="seed" value="{{ seed }}" type="text" cols="100" rows="10">{{ seed }}</textarea>
+name="seed" value="{{ dict01['seed'] }}" type="text" cols="100" rows="10">{{ dict01['seed'] }}</textarea><br>
+      <br>
+      cood:<input name="code" value="&quot;&quot;" type="text"><br>
       <p><br>
       </p>
       <button name="set_seed" autofocus="autofocus" type="submit" formmethod="post"
