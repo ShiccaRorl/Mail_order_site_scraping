@@ -3,7 +3,7 @@
 import re
 
 
-class core:
+class Core:
     def set_seed(self, seed):
         self.seed = str(seed)
         self.seed = self.seed.split('\t')
@@ -194,7 +194,7 @@ if __name__ == "__main__":
         seed = f.read()
         f.close()
 
-    core = core()
+    core = Core()
     seed = core.set_seed(seed)
 
     s = 0

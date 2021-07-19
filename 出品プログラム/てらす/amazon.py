@@ -2,10 +2,10 @@
 
 import re
 
-from converter import core
+from converter import Core
 
 
-class amazon(core):
+class Amazon(Core):
     def __init__(self):
         print("amazon")
 
@@ -60,7 +60,7 @@ if __name__ == "__main__":
         seed = f.read()
         f.close()
 
-    amazon = amazon()
+    amazon = Amazon()
     amazon.set_seed(seed)
 
     print("商品名 :  " + str(amazon.get_商品名2()))
