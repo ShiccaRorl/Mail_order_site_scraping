@@ -201,11 +201,11 @@ def edit():
     return render_template('index.html', dict01=dict01)
 
 
-@app.route('/Parser', methods=['POST', 'GET'])
-def Parser():
+@app.route('/parser', methods=['POST', 'GET'])
+def parser():
 
-    dict02 = {}
-    return render_template('Parser.html', dict02=dict02)
+
+    return render_template('parser.html', dict01=dict01)
 
 @app.route('/amazon', methods=['POST', 'GET'])
 def amazon_run():

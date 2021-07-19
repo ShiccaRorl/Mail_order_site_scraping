@@ -1,315 +1,288 @@
 <html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <form action="/Parser" method="post" enctype="multipart/form-data"> <textarea
 
-name="seed" value="{{ dict01['seed'] }}" type="text" cols="100" rows="10">{{ dict01['seed'] }}</textarea><br>
-      <br>
-      <div style="text-align: center;"><button name="Parser">うまく取り込めない時</button></div>
-    </form>
-      <h2> AMAZON</h2>
-      <form action="/Parser" method="post" enctype="multipart/form-data">
-      &nbsp;<input name="riyu1" value="{{dict01['riyu1']}}" type="checkbox">柄有り
-      <input name="riyu2" value="{{dict01['riyu2']}}" type="checkbox">バリュー有り（色違
-      い）<input name="riyu3" value="{{dict01['riyu3']}}" type="checkbox">ゆ うパケット<br>
-      <table width="100%" border="1">
-        <tbody>
-          <tr>
-            <td style="text-align: center;">商品</td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">販売コード</td>
-            <td><input name="code" value="{{dict01['code']}}" type="text"></td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">商品名</td>
-            <td><input name="name" value="{{dict01['name']}}" size="100" type="text"><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">販売価格（税抜き）</td>
-            <td><input name="hanbai_kakaku" value="{{dict01['hanbai_kakaku']}}"
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
 
-                type="number"><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">販売価格　X　1.1　＝</td>
-            <td><input name="hanbai_kakaku_x_10" value="{{dict01['hanbai_kakaku_x_10']}}"
-
-                type="number"><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">下代</td>
-            <td><input name="gedai" value="{{dict01['gedai']}}" type="number"><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">在庫数</td>
-            <td><input name="zaiko" value="{{dict01['zaiko']}}" type="number"><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;"><br>
-            </td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: center;">発送方法</td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;"> <br>
-            </td>
-            <td><input name="riyu2" value="{{riyu3}}" type="checkbox">定形外120円<input
-
-                name="riyu2" value="{{riyu3}}" type="checkbox">ゆうパケット250円<input
-
-                name="riyu2" value="{{riyu3}}" type="checkbox">ゆうパ ケット350円<input
-
-                name="riyu2" value="{{riyu3}}" type="checkbox">宅急便<br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">梱包サイズ</td>
-            <td><input name="konpo" value="{{dict01['konpo']}}" type="number"><br>
-            </td>
-          </tr>
-          <tr>
-            <td><br>
-            </td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: center;">商品説明</td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">商品の説明</td>
-            <td><input name="setumei" value="{{dict01['setumei']}}" size="100" type="text"><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">サイズ</td>
-            <td><input name="saizu" value="{{dict01['saizu']}}" size="100" type="text"><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">品質</td>
-            <td><input name="hinsitu" value="{{dict01['hinsitu']}}" size="100" type="text"><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;"><br>
-            </td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">モニター説明</td>
-            <td><input name="monita" value="{{dict01['monita']}}" size="100" type="text"><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">柄の説明</td>
-            <td><input name="gara" value="{{dict01['gara']}}" size="100" type="text"><br>
-            </td>
-          </tr>
-          <tr>
-            <td><br>
-            </td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: center;">ゆうパケット </td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">ゆうパケットの説明</td>
-            <td><input name="yuupa" value="{{dict01['yuupa']}}" size="100" type="text"><br>
-            </td>
-          </tr>
-          <tr>
-            <td><br>
-            </td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: center;">備考<br>
-            </td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">コメント</td>
-            <td><textarea name="comment" value="{{dict01['comment']}}"></textarea><br>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <br>
-      <div style="text-align: center;"><button name="set_seed" autofocus="autofocus"
-
-          type="submit" formmethod="post" formnovalidate="formnovalidate">
-          amazon </button></div>
-    </form>
+<body>
+  <form action="/parser" method="post" enctype="multipart/form-data"> <textarea name="seed" value="{{ dict01['seed'] }}"
+      type="text" cols="100" rows="10">{{ dict01['seed'] }}</textarea><br>
     <br>
-    <form action="/rakuten" method="post" enctype="multipart/form-data">
-      <h2> 楽天</h2>
-      <input name="riyu1" value="{{riyu1}}" type="checkbox">柄有り <input name="riyu2"
-
-        value="{{riyu2}}" type="checkbox">バリュー有り（色違い）<input name="riyu2" value="{{riyu3}}"
-
-        type="checkbox">ゆ うパケット<br>
-      <table width="100%" border="1">
-        <tbody>
-          <tr>
-            <td style="text-align: center;">商品</td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">販売価格</td>
-            <td><input name="hanbai_kakaku_rakuten" value="{{dict01['hanbai_kakaku_rakuten']}}"
-
-                type="number"><br>
-            </td>
-          </tr>
-          <tr>
-            <td><br>
-            </td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td><br>
-            </td>
-            <td><br>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <br>
-      <div style="text-align: center;"><button name="set_seed" autofocus="autofocus"
-
-          type="submit" formmethod="post" formnovalidate="formnovalidate"> 楽天 </button></div>
-    </form>
-    <form action="/rakuma" method="post" enctype="multipart/form-data">
-      <h2>ラクマ</h2>
-      <input name="riyu1" value="{{riyu1}}" type="checkbox">柄有り <input name="riyu2"
-
-        value="{{riyu2}}" type="checkbox">バリュー有り（色違い）<input name="riyu2" value="{{riyu3}}"
-
-        type="checkbox">ゆ うパケット<br>
-      <table width="100%" border="1">
-        <tbody>
-          <tr>
-            <td style="text-align: center;">発送方法</td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td><br>
-            </td>
-            <td><input name="riyu2" value="{{riyu3}}" type="checkbox">ゆ
-              うパケット250円<input name="riyu2" value="{{riyu3}}" type="checkbox">宅急便<br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: center;">商品</td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td style="text-align: right;">販売価格（ラクマ）</td>
-            <td><input name="hanbai_kakaku_rakuma" value="{{ dict01['hanbai_kakaku_rakuma'] }}"
-
-                type="number"><br>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <br>
-      <div style="text-align: center;"><button name="set_seed" autofocus="autofocus"
-
-          type="submit" formmethod="post" formnovalidate="formnovalidate"> ラクマ </button></div>
-    </form>
+    <div style="text-align: center;"><button name="parser">うまく取り込めない時</button></div>
+  </form>
+  <h2> AMAZON</h2>
+  <form action="/amazon" method="post" enctype="multipart/form-data">
+    &nbsp;<input name="riyu1" value="{{dict01['riyu1']}}" type="checkbox">柄有り
+    <input name="riyu2" value="{{dict01['riyu2']}}" type="checkbox">バリュー有り（色違い）<input name="riyu3"
+      value="{{dict01['riyu3']}}" type="checkbox">ゆうパケット<br>
+    <table width="100%" border="1">
+      <tbody>
+        <tr>
+          <td style="text-align: center;">商品</td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">販売コード</td>
+          <td><input name="code" value="{{dict01['code']}}" type="text"></td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">商品名</td>
+          <td><input name="name" value="{{dict01['name']}}" size="100" type="text"><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">販売価格（税抜き）</td>
+          <td><input name="hanbai_kakaku" value="{{dict01['hanbai_kakaku']}}" type="number"><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">販売価格　X　1.1　＝</td>
+          <td><input name="hanbai_kakaku_x_10" value="{{dict01['hanbai_kakaku_x_10']}}" type="number"><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">下代</td>
+          <td><input name="gedai" value="{{dict01['gedai']}}" type="number"><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">在庫数</td>
+          <td><input name="zaiko" value="{{dict01['zaiko']}}" type="number"><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;"><br>
+          </td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">発送方法</td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;"> <br>
+          </td>
+          <td><input name="riyu2" value="{{riyu3}}" type="checkbox">定形外120円<input name="riyu2" value="{{riyu3}}"
+              type="checkbox">ゆうパケット250円<input name="riyu2" value="{{riyu3}}" type="checkbox">ゆうパ ケット350円<input
+              name="riyu2" value="{{riyu3}}" type="checkbox">宅急便<br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">梱包サイズ</td>
+          <td><input name="konpo" value="{{dict01['konpo']}}" type="number"><br>
+          </td>
+        </tr>
+        <tr>
+          <td><br>
+          </td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">商品説明</td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">商品の説明</td>
+          <td><input name="setumei" value="{{dict01['setumei']}}" size="100" type="text"><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">サイズ</td>
+          <td><input name="saizu" value="{{dict01['saizu']}}" size="100" type="text"><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">品質</td>
+          <td><input name="hinsitu" value="{{dict01['hinsitu']}}" size="100" type="text"><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;"><br>
+          </td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">モニター説明</td>
+          <td><input name="monita" value="{{dict01['monita']}}" size="100" type="text"><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">柄の説明</td>
+          <td><input name="gara" value="{{dict01['gara']}}" size="100" type="text"><br>
+          </td>
+        </tr>
+        <tr>
+          <td><br>
+          </td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">ゆうパケット </td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">ゆうパケットの説明</td>
+          <td><input name="yuupa" value="{{dict01['yuupa']}}" size="100" type="text"><br>
+          </td>
+        </tr>
+        <tr>
+          <td><br>
+          </td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">備考<br>
+          </td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">コメント</td>
+          <td><textarea name="comment" value="{{dict01['comment']}}"></textarea><br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <br>
-    <form action="/yahoo_auction" method="post" enctype="multipart/form-data">
-      <h2> ヤフオク</h2>
-      <input name="riyu1" value="{{riyu1}}" type="checkbox">柄有り <input name="riyu2"
+    <div style="text-align: center;"><button name="set_seed" autofocus="autofocus" type="submit" formmethod="post"
+        formnovalidate="formnovalidate">
+        amazon </button></div>
+  </form>
+  <br>
+  <form action="/rakuten" method="post" enctype="multipart/form-data">
+    <h2> 楽天</h2>
+    <input name="riyu1" value="{{riyu1}}" type="checkbox">柄有り <input name="riyu2" value="{{riyu2}}"
+      type="checkbox">バリュー有り（色違い）<input name="riyu2" value="{{riyu3}}" type="checkbox">ゆうパケット<br>
+    <table width="100%" border="1">
+      <tbody>
+        <tr>
+          <td style="text-align: center;">商品</td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">販売価格</td>
+          <td><input name="hanbai_kakaku_rakuten" value="{{dict01['hanbai_kakaku_rakuten']}}" type="number"><br>
+          </td>
+        </tr>
+        <tr>
+          <td><br>
+          </td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td><br>
+          </td>
+          <td><br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <div style="text-align: center;"><button name="set_seed" autofocus="autofocus" type="submit" formmethod="post"
+        formnovalidate="formnovalidate"> 楽天 </button></div>
+  </form>
+  <form action="/rakuma" method="post" enctype="multipart/form-data">
+    <h2>ラクマ</h2>
+    <input name="riyu1" value="{{riyu1}}" type="checkbox">柄有り <input name="riyu2" value="{{riyu2}}"
+      type="checkbox">バリュー有り（色違い）<input name="riyu2" value="{{riyu3}}" type="checkbox">ゆ うパケット<br>
+    <table width="100%" border="1">
+      <tbody>
+        <tr>
+          <td style="text-align: center;">発送方法</td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td><br>
+          </td>
+          <td><input name="riyu2" value="{{riyu3}}" type="checkbox">ゆ
+            うパケット250円<input name="riyu2" value="{{riyu3}}" type="checkbox">宅急便<br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">商品</td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: right;">販売価格（ラクマ）</td>
+          <td><input name="hanbai_kakaku_rakuma" value="{{ dict01['hanbai_kakaku_rakuma'] }}" type="number"><br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <div style="text-align: center;"><button name="set_seed" autofocus="autofocus" type="submit" formmethod="post"
+        formnovalidate="formnovalidate"> ラクマ </button></div>
+  </form>
+  <br>
+  <form action="/yahoo_auction" method="post" enctype="multipart/form-data">
+    <h2> ヤフオク</h2>
+    <input name="riyu1" value="{{riyu1}}" type="checkbox">柄有り <input name="riyu2" value="{{riyu2}}"
+      type="checkbox">バリュー有り（色違い）<input name="riyu2" value="{{riyu3}}" type="checkbox">ゆ うパケット
+    <table width="100%" border="1">
+      <tbody>
+        <tr>
+          <td style="text-align: center;">発送方法</td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td><br>
+          </td>
+          <td><input name="riyu2" value="{{riyu3}}" type="checkbox">ゆ
+            うパケット250円<input name="riyu2" value="{{riyu3}}" type="checkbox">宅急便<br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <div style="text-align: center;"><button name="set_seed" autofocus="autofocus" type="submit" formmethod="post"
+        formnovalidate="formnovalidate"> ヤフオク
+      </button></div>
+  </form>
+  <form action="/stores" method="post" enctype="multipart/form-data">
+    <h2>ストアーズ</h2>
+    <input name="riyu1" value="{{riyu1}}" type="checkbox">柄有り <input name="riyu2" value="{{riyu2}}"
+      type="checkbox">バリュー有り（色違い）<input name="riyu2" value="{{riyu3}}" type="checkbox">ゆ うパケット<br>
+    <table width="100%" border="1">
+      <tbody>
+        <tr>
+          <td><br>
+          </td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td><br>
+          </td>
+          <td><br>
+          </td>
+        </tr>
+        <tr>
+          <td><br>
+          </td>
+          <td><br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <div style="text-align: center;"><button name="set_seed" autofocus="autofocus" type="submit" formmethod="post"
+        formnovalidate="formnovalidate"> ストアーズ
+      </button></div>
+  </form>
+</body>
 
-        value="{{riyu2}}" type="checkbox">バリュー有り（色違い）<input name="riyu2" value="{{riyu3}}"
-
-        type="checkbox">ゆ うパケット
-      <table width="100%" border="1">
-        <tbody>
-          <tr>
-            <td style="text-align: center;">発送方法</td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td><br>
-            </td>
-            <td><input name="riyu2" value="{{riyu3}}" type="checkbox">ゆ
-              うパケット250円<input name="riyu2" value="{{riyu3}}" type="checkbox">宅急便<br>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <br>
-      <div style="text-align: center;"><button name="set_seed" autofocus="autofocus"
-
-          type="submit" formmethod="post" formnovalidate="formnovalidate"> ヤフオク
-        </button></div>
-    </form>
-    <form action="/stores" method="post" enctype="multipart/form-data">
-      <h2>ストアーズ</h2>
-      <input name="riyu1" value="{{riyu1}}" type="checkbox">柄有り <input name="riyu2"
-
-        value="{{riyu2}}" type="checkbox">バリュー有り（色違い）<input name="riyu2" value="{{riyu3}}"
-
-        type="checkbox">ゆ うパケット<br>
-      <table width="100%" border="1">
-        <tbody>
-          <tr>
-            <td><br>
-            </td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td><br>
-            </td>
-            <td><br>
-            </td>
-          </tr>
-          <tr>
-            <td><br>
-            </td>
-            <td><br>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <br>
-      <div style="text-align: center;"><button name="set_seed" autofocus="autofocus"
-
-          type="submit" formmethod="post" formnovalidate="formnovalidate"> ストアーズ
-        </button></div>
-    </form>
-  </body>
 </html>
