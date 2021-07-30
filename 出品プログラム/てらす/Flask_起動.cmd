@@ -1,7 +1,8 @@
 
 
 rem cd Às‚·‚éƒvƒƒOƒ‰ƒ€‚ÌŠK‘w
-call C:\\Users\\ban\\anaconda3\\Scripts\\activate.bat
+rem call C:\\Users\\ban\\anaconda3\\Scripts\\activate.bat
+call C:\\Users\\user\\anaconda3\\Scripts\\activate.bat
 
 :loop
 
