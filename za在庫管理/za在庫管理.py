@@ -49,8 +49,8 @@ Product = Base.classes.Product
 #print('//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ')
 
 #ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ'#.encode("cp932").replace("/", "\\")
-ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ'
-#ROOT_PATH = '//vmware-host/Shared Folders/D/共有/Down'
+#ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ'
+ROOT_PATH = 'C:/Users/user/Downloads/バックアップ/プログラム/バックアップ/保存/メルカリ'
 #print(ROOT_PATH)
 
 # Excel path
@@ -203,8 +203,8 @@ class Database_Registratio(Database_Analysis):
                                     r_金額 = self.金額,
                                     source = self.source,
                                     ))
-            #session.commit()
-            self.save(session)
+            session.commit()
+            #self.save(session)
         else:
             print("update")
             seed = session.query(dir_db).filter(dir_db.商品名 == self.商品名).first()
@@ -221,13 +221,13 @@ class Database_Registratio(Database_Analysis):
   
             i = 0
             while i <= 5:
-                #try:
+                try:
                     time.sleep(1)
                     session.commit()
                     time.sleep(1)
                     print(i)
                     i = i + 1
-                #except:
+                except:
                     print("失敗")
    
 
