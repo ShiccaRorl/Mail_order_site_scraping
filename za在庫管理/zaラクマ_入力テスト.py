@@ -45,14 +45,20 @@ ROOT_PATH = 'C:/Users/user/Downloads/バックアップ/プログラム/バッ�
 
 class Rakuma_Test():
     def __init__(self):
+        args = sys.argv
+        
+        if args[1] == nil:
+            print("引数が足りません")
+        
+        self.file_path = args[1]
+        
+
+    
+        self.main()
 
     def main(self):
     
-        args = sys.argv
-        file_path = args[1]
-        
-        if file_path == nil:
-            print("引数が足りません")
+
         
     
         i = 0
@@ -69,7 +75,7 @@ class Rakuma_Test():
             
 
         
-        with open(file_path, 'r', encoding="utf-8") as f:
+        with open(self.file_path, 'r', encoding="utf-8") as f:
             self.seed1 = f.read()
 
         soup = BeautifulSoup(self.seed1, 'html.parser')
