@@ -18,6 +18,7 @@ import re
 import glob
 import sys
 import subprocess
+import pathlib
 
 """
 from sqlalchemy.ext.automap import automap_base
@@ -43,44 +44,44 @@ Base = automap_base()
 ROOT_PATH = 'C:/Users/user/Downloads/バックアップ/プログラム/バックアップ/保存/メルカリ'
 
 
-
 class Rakuma_Test():
     def __init__(self):
         args = sys.argv
 
         try:
             self.file_path = args[1]
+            self.file_out = pathlib.Path(args[1])
         except:
             print("引数が足りません")
-            self.file_path = ""
+            self.file_out = pathlib.Path("")
 
-    
         self.main()
 
     def main(self):
         #self.ラクマ出品一覧()
-        #self.ラクマディレクトリ()
-        #subprocess.run("ruby zaラクマ_入力テスト.rb", shell=True, text=True)
+        self.ラクマディレクトリ()
+        #subprocess.run("ruby zaラクマ_入力テスト.rb " +
+        #               str(self.file_out.parent), shell=True, text=True)
         #self.ラクマ登録２重チェック()
         self.在庫0商品リスト()
         self.在庫1商品リスト()
         self.登録出来ていない商品チェック()
-        
-        
-        
+
     def ラクマディレクトリ(self):
         i = 0
         for d in glob.glob(ROOT_PATH + "/*.txt"):
+            d_path = pathlib.Path(d)
             if i == 0:
-                with open("./ラクマディレクトリ.txt", 'w', encoding="utf-8") as f:
-                    f.write(d.text + "\n")
+                with open(str(self.file_out.parent) + "\\ラクマディレクトリ.txt", 'w', encoding="utf-8") as f:
+                    #f.write(d_path.stem + "\n")
+                    f.write(d_path + "\n")
                     i = 1
             else:
-                with open("./ラクマディレクトリ.txt", 'a', encoding="utf-8") as f:
-                    f.write(d.text + "\n")
+                with open(str(self.file_out.parent) + "\\ラクマディレクトリ.txt", 'a', encoding="utf-8") as f:
+                    #f.write(d_path.stem + "\n")
+                    f.write(d_path + "\n")
             print(d)
 
-            
     def ラクマ出品一覧(self):
         with open(self.file_path, 'r', encoding="utf-8") as f:
             self.seed1 = f.read()
@@ -88,24 +89,25 @@ class Rakuma_Test():
         soup = BeautifulSoup(self.seed1, 'html.parser')
         data = soup.find_all("h4", attrs={"class": "media-heading"})
 
-        #<h4 class="media-heading">新品送料込み　男女兼用　白足袋24.0ｃｍ★成人式、結婚式、卒業式 ATU005</h4>
+        # <h4 class="media-heading">新品送料込み　男女兼用　白足袋24.0ｃｍ★成人式、結婚式、卒業式 ATU005</h4>
 
         i = 0
         for d in data:
             print(d.text)
             if i == 0:
-                with open("./ラクマ出品一覧.txt", 'w', encoding="utf-8") as f:
+                print(str(self.file_out.parent))
+                with open(str(self.file_out.parent) + "\\ラクマ出品一覧.txt", 'w', encoding="utf-8") as f:
                     f.write(d.text + "\n")
                     i = 1
             else:
-                with open("./ラクマ出品一覧.txt", 'a', encoding="utf-8") as f:
+                with open(str(self.file_out.parent) + "\\ラクマ出品一覧.txt", 'a', encoding="utf-8") as f:
                     f.write(d.text + "\n")
-    
+
     def ラクマ登録２重チェック(self):
-        with open("./ラクマ出品一覧.txt", 'r', encoding="utf-8") as f:
+        with open(str(self.file_out.parent) + "/ラクマ出品一覧.txt", 'r', encoding="utf-8") as f:
             self.seed1 = f.read().split("\n")
 
-        with open("./ラクマ出品一覧Ruby.txt", 'r', encoding="utf-8") as f:
+        with open(str(self.file_out.parent) + "/ラクマ出品一覧Ruby.txt", 'r', encoding="utf-8") as f:
             self.seed2 = f.read().split("\n")
 
         # listを削除する
@@ -117,52 +119,50 @@ class Rakuma_Test():
             print("====２重チェック====")
             print(d)
             if i == 0:
-                with open("./ラクマ出品一覧２重登録.txt", 'w', encoding="utf-8") as f:
+                with open(str(self.file_out.parent) + "\\ラクマ出品一覧２重登録.txt", 'w', encoding="utf-8") as f:
                     f.write(d + "\n")
                     i = 1
             else:
-                with open("./ラクマ出品一覧２重登録.txt", 'a', encoding="utf-8") as f:
+                with open(str(self.file_out.parent) + "\\ラクマ出品一覧２重登録.txt", 'a', encoding="utf-8") as f:
                     f.write(d + "\n")
-    
+
     def 登録出来ていない商品チェック(self):
 
-        with open("./ラクマディレクトリ.txt", 'r', encoding="utf-8") as f:
+        with open(str(self.file_out.parent) + "/ラクマディレクトリ.txt", 'r', encoding="utf-8") as f:
             self.seed1 = f.read().split("\n")
-            
-        with open("./ラクマ出品一覧Ruby.txt", 'r', encoding="utf-8") as f:
+
+        with open(str(self.file_out.parent) + "/ラクマ出品一覧Ruby.txt", 'r', encoding="utf-8") as f:
             self.seed2 = f.read().split("\n")
-        
-        with open("./ラクマ出品一覧在庫0.txt", 'r', encoding="utf-8") as f:
+
+        with open(str(self.file_out.parent) + "/ラクマ出品一覧在庫0.txt", 'r', encoding="utf-8") as f:
             self.seed3 = f.read().split("\n")
 
         print(self.seed1[0])
         print(self.seed2[0])
-        print(self.seed3[0])        
+        print(self.seed3[0])
         try:
             for i in self.seed2:
                 self.seed1.remove(i)
-            
+
             for i in self.seed3:
                 self.seed1.remove(i)
-        except :
+        except:
             print("対象がないです")
-            
+
         i = 0
         for d in self.seed1:
             print("====登録出来ていない商品かも====")
             print(d)
             if i == 0:
-                with open("./登録出来ていない商品かも.txt", 'w', encoding="utf-8") as f:
+                with open(str(self.file_out.parent) + "\\登録出来ていない商品かも.txt", 'w', encoding="utf-8") as f:
                     f.write(d + "\n")
                     i = 1
             else:
-                with open("./登録出来ていない商品かも.txt", 'a', encoding="utf-8") as f:
+                with open(str(self.file_out.parent) + "\\登録出来ていない商品かも.txt", 'a', encoding="utf-8") as f:
                     f.write(d + "\n")
-            
-            
 
     def 在庫1商品リスト(self):
-        with open("./ラクマ出品一覧.txt", 'r', encoding="utf-8") as f:
+        with open(str(self.file_out.parent) + "/ラクマディレクトリ.txt", 'r', encoding="utf-8") as f:
             self.seed1 = f.read().split("\n")
 
         for t in self.seed1:
@@ -171,16 +171,15 @@ class Rakuma_Test():
                 print("====在庫1====")
                 print(t)
                 if i == 0:
-                    with open("./ラクマ出品一覧在庫1.txt", 'w', encoding="utf-8") as f:
+                    with open(str(self.file_out.parent) + "\\ラクマ出品一覧在庫1.txt", 'w', encoding="utf-8") as f:
                         f.write(t + "\n")
                         i = 1
                 else:
-                    with open("./ラクマ出品一覧在庫1.txt", 'a', encoding="utf-8") as f:
+                    with open(str(self.file_out.parent) + "\\ラクマ出品一覧在庫1.txt", 'a', encoding="utf-8") as f:
                         f.write(t + "\n")
 
-
     def 在庫0商品リスト(self):
-        with open("./ラクマ出品一覧.txt", 'r', encoding="utf-8") as f:
+        with open(str(self.file_out.parent) + "/ラクマディレクトリ.txt", 'r', encoding="utf-8") as f:
             self.seed1 = f.read().split("\n")
 
         for t in self.seed1:
@@ -189,11 +188,11 @@ class Rakuma_Test():
             if "在庫0" in t:
                 print(t)
                 if i == 0:
-                    with open("./ラクマ出品一覧在庫0.txt", 'w', encoding="utf-8") as f:
+                    with open(str(self.file_out.parent) + "\\ラクマ出品一覧在庫0.txt", 'w', encoding="utf-8") as f:
                         f.write(t + "\n")
                         i = 1
                 else:
-                    with open("./ラクマ出品一覧在庫0.txt", 'a', encoding="utf-8") as f:
+                    with open(str(self.file_out.parent) + "\\ラクマ出品一覧在庫0.txt", 'a', encoding="utf-8") as f:
                         f.write(t + "\n")
 
     def load(self, dir):
@@ -204,12 +203,9 @@ class Rakuma_Test():
         return self.seed1
 
 
-
-
 if __name__ == '__main__':
     rakuma_test = Rakuma_Test()
-    
-    #while True:
+
+    # while True:
     #    rakuma_test.main()
     #    time.sleep(10)
-        

@@ -5,3 +5,4 @@ call C:\\Users\\ban\\anaconda3\\Scripts\\activate.bat
 
 call python ./za_Rakuma_test.py %1
 
+pause
