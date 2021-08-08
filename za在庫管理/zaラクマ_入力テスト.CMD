@@ -1,4 +1,7 @@
+cd R:/L/Program/Chrome拡張/スクレイピング通販サイト/Mail_order_site_scraping/za在庫管理/
 
 call C:\\Users\\user\\anaconda3\\Scripts\\activate.bat
+call C:\\Users\\ban\\anaconda3\\Scripts\\activate.bat
 
-call python zaラクマ_入力テスト.py %1
+call python ./za_Rakuma_test.py %1
+
