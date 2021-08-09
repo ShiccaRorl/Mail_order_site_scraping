@@ -26,7 +26,9 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 
-from openpyxl import load_workbook, Workbook
+import xlrd
+import xlwt
+from xlutils.copy import copy
 
 Base = automap_base()
 
@@ -46,12 +48,12 @@ Base.prepare(engine, reflect=True)
 dir_db = Base.classes.dir_db
 Product = Base.classes.Product
 
-#print('//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ')
+# print('//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ')
 
-#ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ'#.encode("cp932").replace("/", "\\")
+# ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ'#.encode("cp932").replace("/", "\\")
 #ROOT_PATH = '//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ'
 #ROOT_PATH = '//vmware-host/Shared Folders/D/共有/Down'
-#print(ROOT_PATH)
+# print(ROOT_PATH)
 
 # Excel path
 excel_path1 = "C:/Users/user/Downloads/バックアップ/プログラム/バックアップ/保存/2020年9月在庫表.xlsx"
@@ -61,17 +63,12 @@ formatter = '%(asctime)s:%(message)s'
 logging.basicConfig(filename='test.log', level=logging.DEBUG, format=formatter)
 
 
-
-
 #import openpyxl
 
 excel_path1 = "C:/Users/user/Downloads/バックアップ/プログラム/バックアップ/保存/2020年9月在庫表.xlsx"
 excel_path2 = "./2020年9月在庫表.xlsx"
-wb = load_workbook(excel_path1)
 
-ws = wb["マスター"]
-wb.copy_worksheet(ws)
-wb.save("./Excel_db.xlsx")
+
 
 
 class Excel_Analysis():
@@ -79,7 +76,7 @@ class Excel_Analysis():
     def excel_slise():
         wb1 = load_workbook(excel_path2)
         ws_copy = wb1.copy_worksheet("マスター")
-    
+
         wb_new = Workbook()
         ws_new = wb_new.active
         ws_new = ws_copy
@@ -90,7 +87,7 @@ class Excel_Analysis():
         #wb_new = Workbook()
         #ws_new = wb_new.active
         #ws_new.title = "マスター"
-    
+
         wb = load_workbook(excel_path2)
         ws = wb["マスター"]
         print(ws.max_row)
@@ -101,41 +98,61 @@ class Excel_Analysis():
             session = Session(engine)
             if session.query(Product).filter(Product.code == ws[f"B{s}"].value).first() == None:
                 print(f"insert {s :} ")
-                session.add(Product(code = ws[f"B{s}"].value,
-                            商品名 = ws[f"C{s}"].value,
-                            下代 = ws[f"E{s}"].value,
-                            update_at = datetime.datetime.now(),
+                session.add(Product(code=ws[f"B{s}"].value,
+                            商品名=ws[f"C{s}"].value,
+                            下代=ws[f"E{s}"].value,
+                            update_at=datetime.datetime.now(),
                             ))
                 session.commit()
                 s = s + 1
-                #time.sleep(1)
+                # time.sleep(1)
             else:
                 print(f"update {s :} ")
                 session = Session(engine)
-                product = session.query(Product).filter(Product.code == ws[f"B{s}"].value).first()
+                product = session.query(Product).filter(
+                    Product.code == ws[f"B{s}"].value).first()
                 product.code = ws[f"B{s}"].value
                 product.商品名 = ws[f"C{s}"].value
                 product.下代 = ws[f"E{s}"].value
                 product.update_at = datetime.datetime.now()
-            
+
                 session.commit()
                 s = s + 1
-                #time.sleep(1)
-            #save(session)
+                # time.sleep(1)
+            # save(session)
+    
+    def マスターのコピー(self):
+        
+        #wb = load_workbook(excel_path1)
+        # xlsxを開く
+        rb = xlrd.open_workbook(excel_path2, formatting_info=True)
+
+        sheet = rb.sheet_by_name('マスター')
+
+
+        # テンプレートがある場合はxlutilsで書式を複製する
+        wb = copy(rb)
+
+        # 書き込み
+        wb.save('マスター2.xlsx')
+
+        #ws = wb["マスター"]
+        # wb.copy_worksheet(ws)
+        # wb.save("./Excel_db.xlsx")
+
 
     def 過去のデータをエクセルからDBに保存する(self):
         # 転記出来るデータを持ってくる。
-        
+        print("")
+
     def 売り上げ解析(self):
         # 過去データから売れそうな物を順番に並べる
+        print("")
+        # ================================================================
 
-# ================================================================
-    
-      
-    
-import xlrd
-import xlwt
-from xlutils.copy import copy
+        #import xlrd
+        #import xlwt
+        #from xlutils.copy import copy
 """
 #xlsxを開く
 rb = xlrd.open_workbook('sample.xlsx',formatting_info=True)
@@ -188,6 +205,7 @@ wb.save('xlwt_sample.xlsx')
 
 
 if __name__ == '__main__':
-    
+
     excel_analysis = Excel_Analysis()
-    excel_analysis.excel_slise()
+    #excel_analysis.excel_slise()
+    excel_analysis.マスターのコピー()

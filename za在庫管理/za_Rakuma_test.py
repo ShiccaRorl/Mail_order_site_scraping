@@ -58,11 +58,11 @@ class Rakuma_Test():
         self.main()
 
     def main(self):
-        #self.ラクマ出品一覧()
+        self.ラクマ出品一覧()
         self.ラクマディレクトリ()
-        #subprocess.run("ruby zaラクマ_入力テスト.rb " +
-        #               str(self.file_out.parent), shell=True, text=True)
-        #self.ラクマ登録２重チェック()
+        subprocess.run("ruby zaラクマ_入力テスト.rb " +
+                       str(self.file_out.parent), shell=True, text=True)
+        self.ラクマ登録２重チェック()
         self.在庫0商品リスト()
         self.在庫1商品リスト()
         self.登録出来ていない商品チェック()
