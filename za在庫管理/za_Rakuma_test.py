@@ -58,8 +58,9 @@ class Rakuma_Test():
         self.main()
 
     def main(self):
-        self.ラクマ出品一覧()
         self.ラクマディレクトリ()
+        self.ラクマ出品一覧()
+
         subprocess.run("ruby zaラクマ_入力テスト.rb " +
                        str(self.file_out.parent), shell=True, text=True)
         self.ラクマ登録２重チェック()
@@ -71,6 +72,7 @@ class Rakuma_Test():
         i = 0
         for d in glob.glob(ROOT_PATH + "/*.txt"):
             d_path = pathlib.Path(d)
+            print(d_path)
             if i == 0:
                 with open(str(self.file_out.parent) + "\\ラクマディレクトリ.txt", 'w', encoding="utf-8") as f:
                     #f.write(d_path.stem + "\n")
@@ -81,6 +83,7 @@ class Rakuma_Test():
                     #f.write(d_path.stem + "\n")
                     f.write(d_path + "\n")
             print(d)
+
 
     def ラクマ出品一覧(self):
         with open(self.file_path, 'r', encoding="utf-8") as f:

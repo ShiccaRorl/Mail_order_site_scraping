@@ -13,6 +13,79 @@ class Rakuma_Test
         end
 
         二重登録チェック()
+        ソートする()
+    end
+
+    def ソートする()
+        begin
+            File.open(@path + "/ラクマ出品一覧.txt", "r:utf-8") do |f|
+                @data = f.read().split("\n")
+            end
+            @data.sort!
+            File.open(@path + "/ラクマ出品一覧.txt", "w:utf-8") do |f|
+                f.write(@data)
+            end
+        end
+
+        begin
+            File.open(@path + "/ラクマ出品一覧Ruby.txt", "r:utf-8") do |f|
+                @data = f.read().split("\n")
+            end
+            @data.sort!
+            File.open(@path + "/ラクマ出品一覧Ruby.txt", "w:utf-8") do |f|
+                f.write(@data)
+            end
+        end
+
+        begin
+            File.open(@path + "/ラクマディレクトリ.txt", "r:utf-8") do |f|
+                @data = f.read().split("\n")
+            end
+            @data.sort!
+            File.open(@path + "/ラクマディレクトリ.txt", "w:utf-8") do |f|
+                f.write(@data)
+            end
+        end
+
+        begin
+            File.open(@path + "/ラクマ出品一覧在庫1.txt", "r:utf-8") do |f|
+                @data = f.read().split("\n")
+            end
+            @data.sort!
+            File.open(@path + "/ラクマ出品一覧在庫1.txt", "w:utf-8") do |f|
+                f.write(@data)
+            end
+        end
+
+        begin
+            File.open(@path + "/ラクマ出品一覧在庫0.txt", "r:utf-8") do |f|
+                @data = f.read().split("\n")
+            end
+            @data.sort!
+            File.open(@path + "/ラクマ出品一覧在庫0.txt", "w:utf-8") do |f|
+                f.write(@data)
+            end
+        end
+
+        begin
+            File.open(@path + "/ラクマ出品一覧２重登録.txt", "r:utf-8") do |f|
+                @data = f.read().split("\n")
+            end
+            @data.sort!
+            File.open(@path + "/ラクマ出品一覧２重登録.txt", "w:utf-8") do |f|
+                f.write(@data)
+            end
+        end
+
+        begin
+            File.open(@path + "/登録出来ていない商品かも.txt", "r:utf-8") do |f|
+                @data = f.read().split("\n")
+            end
+            @data.sort!
+            File.open(@path + "/登録出来ていない商品かも.txt", "w:utf-8") do |f|
+                f.write(@data)
+            end
+        end
     end
 
     def 二重登録チェック()
