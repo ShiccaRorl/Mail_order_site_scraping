@@ -59,6 +59,13 @@ class Rakuma_Test
                     end
                 end
             }
+            File.open(@path + "/ラクマディレクトリ.txt", "r:utf-8") do |f|
+                @data = f.read().split("\n")
+            end
+            @data.sort!
+            File.open(@path + "/ラクマディレクトリ.txt", "w:utf-8") do |f|
+                f.write(@data)
+            end
         end
 
         begin
