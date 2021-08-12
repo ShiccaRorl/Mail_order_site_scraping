@@ -70,7 +70,7 @@ class Rakuma_Test():
 
     def ラクマディレクトリ(self):
         i = 0
-        for d in glob.glob(ROOT_PATH + "/*.txt"):
+        for d in glob.glob(ROOT_PATH + "/**/*.txt"):
             d_path = pathlib.Path(d)
             print(d_path)
             if i == 0:

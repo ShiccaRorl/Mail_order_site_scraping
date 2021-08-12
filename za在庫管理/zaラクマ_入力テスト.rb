@@ -45,6 +45,20 @@ class Rakuma_Test
             File.open(@path + "/ラクマディレクトリ.txt", "w:utf-8") do |f|
                 f.write(@data)
             end
+        rescue
+            t = 0
+            Dir.glob("**/*.txt").each{|i|
+                if t == 0 then
+                    File.open(@path + "/ラクマディレクトリ.txt", "w:utf-8") do |f|
+                        f.write(i + "\n")
+                    end
+                    t = 1
+                else
+                    File.open(@path + "/ラクマディレクトリ.txt", "a:utf-8") do |f|
+                        f.write(i + "\n")
+                    end
+                end
+            }
         end
 
         begin
