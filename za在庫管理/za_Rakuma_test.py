@@ -52,13 +52,14 @@ class Rakuma_Test():
             self.file_path = args[1]
             self.file_out = pathlib.Path(args[1])
         except:
-            print("引数が足りません")
+            print("データリフレッシュモード")
             self.file_out = pathlib.Path("")
+            self.ラクマディレクトリ()
 
         self.main()
 
     def main(self):
-        self.ラクマディレクトリ()
+        #self.ラクマディレクトリ()
         self.ラクマ出品一覧()
 
         subprocess.run("ruby zaラクマ_入力テスト.rb " +
@@ -74,12 +75,12 @@ class Rakuma_Test():
             d_path = pathlib.Path(d)
             print(d_path)
             if i == 0:
-                with open(str(self.file_out.parent) + "\\ラクマディレクトリ.txt", 'w', encoding="utf-8") as f:
+                with open("./ラクマディレクトリ.txt", 'w', encoding="utf-8") as f:
                     #f.write(d_path.stem + "\n")
                     f.write(d_path + "\n")
                     i = 1
             else:
-                with open(str(self.file_out.parent) + "\\ラクマディレクトリ.txt", 'a', encoding="utf-8") as f:
+                with open("./ラクマディレクトリ.txt", 'a', encoding="utf-8") as f:
                     #f.write(d_path.stem + "\n")
                     f.write(d_path + "\n")
             print(d)
@@ -131,7 +132,7 @@ class Rakuma_Test():
 
     def 登録出来ていない商品チェック(self):
 
-        with open(str(self.file_out.parent) + "/ラクマディレクトリ.txt", 'r', encoding="utf-8") as f:
+        with open("./ラクマディレクトリ.txt", 'r', encoding="utf-8") as f:
             self.seed1 = f.read().split("\n")
 
         with open(str(self.file_out.parent) + "/ラクマ出品一覧Ruby.txt", 'r', encoding="utf-8") as f:
@@ -165,7 +166,7 @@ class Rakuma_Test():
                     f.write(d + "\n")
 
     def 在庫1商品リスト(self):
-        with open(str(self.file_out.parent) + "/ラクマディレクトリ.txt", 'r', encoding="utf-8") as f:
+        with open("./ラクマディレクトリ.txt", 'r', encoding="utf-8") as f:
             self.seed1 = f.read().split("\n")
 
         for t in self.seed1:
@@ -182,7 +183,7 @@ class Rakuma_Test():
                         f.write(t + "\n")
 
     def 在庫0商品リスト(self):
-        with open(str(self.file_out.parent) + "/ラクマディレクトリ.txt", 'r', encoding="utf-8") as f:
+        with open("./ラクマディレクトリ.txt", 'r', encoding="utf-8") as f:
             self.seed1 = f.read().split("\n")
 
         for t in self.seed1:
