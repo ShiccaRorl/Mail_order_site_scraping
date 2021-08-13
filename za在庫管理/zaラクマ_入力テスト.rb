@@ -13,7 +13,7 @@ class Rakuma_Test
         end
 
         二重登録チェック()
-        ソートする()
+        #ソートする()
     end
 
     def ソートする()
