@@ -2,6 +2,8 @@
 
 # 2021/08/08
 
+ROOT_PATH = 'C:/Users/user/Downloads/バックアップ/プログラム/バックアップ/保存/メルカリ'
+
 
 class Rakuma_Test
     def initialize()
@@ -77,7 +79,7 @@ class Rakuma_Test
             }
         rescue
             t = 0
-            Dir.glob("**/*.txt").each{|i|
+            Dir.glob(ROOT_PATH + "/**/*.txt").each{|i|
                 if t == 0 then
                     File.open("./ラクマディレクトリ.txt", "w:utf-8") do |f|
                         f.write(i + "\n")
@@ -172,6 +174,26 @@ class Rakuma_Test
                     end
                 else
                     File.open(@path + "/登録出来ていない商品かも.txt", "a:utf-8") do |f|
+                        f.write(data + "\n")
+                    end
+                end
+            }
+        end
+
+        begin
+            File.open(@path + "/出品されているのに在庫0のリスト.txt", "r:utf-8") do |f|
+                @data = f.read().split("\n")
+            end
+            @data.sort!
+            i = 0
+            @data.each{|data|
+                if i == 0 then
+                    File.open(@path + "/出品されているのに在庫0のリスト.txt", "w:utf-8") do |f|
+                        f.write(data + "\n")
+                        i = 1
+                    end
+                else
+                    File.open(@path + "/出品されているのに在庫0のリスト.txt", "a:utf-8") do |f|
                         f.write(data + "\n")
                     end
                 end

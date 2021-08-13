@@ -59,7 +59,7 @@ class Rakuma_Test():
         self.main()
 
     def main(self):
-        #self.ラクマディレクトリ()
+        self.ラクマディレクトリ()
         self.ラクマ出品一覧()
 
         subprocess.run("ruby zaラクマ_入力テスト.rb " +
@@ -68,6 +68,7 @@ class Rakuma_Test():
         self.在庫0商品リスト()
         self.在庫1商品リスト()
         self.登録出来ていない商品チェック()
+        self.出品されているのに在庫0のリスト()
 
     def ラクマディレクトリ(self):
         i = 0
@@ -84,7 +85,6 @@ class Rakuma_Test():
                     #f.write(d_path.stem + "\n")
                     f.write(d_path + "\n")
             print(d)
-
 
     def ラクマ出品一覧(self):
         with open(self.file_path, 'r', encoding="utf-8") as f:
@@ -205,6 +205,33 @@ class Rakuma_Test():
         self.seed1 = self.seed1.replace("\n", "")
         self.seed1 = self.seed1.replace("\r", "")
         return self.seed1
+
+    def 出品されているのに在庫0のリスト(self):
+        with open(str(self.file_out.parent) + "/ラクマ出品一覧Ruby.txt", 'r', encoding="utf-8") as f:
+            self.seed1 = f.read().split("\n")
+
+        with open(str(self.file_out.parent) + "/ラクマ出品一覧在庫0.txt", 'r', encoding="utf-8") as f:
+            self.seed2 = f.read().split("\n")
+
+        data = []
+        for i in self.seed1:
+            for s in self.seed2:
+                if i == s:
+                    data.append(i)
+
+        i = 0
+        for d in data:
+
+            print("====出品されているのに在庫0のリスト====")
+            print(d)
+
+            if i == 0:
+                with open(str(self.file_out.parent) + "\\出品されているのに在庫0のリスト.txt", 'w', encoding="utf-8") as f:
+                    f.write(d + "\n")
+                    i = 1
+            else:
+                with open(str(self.file_out.parent) + "\\出品されているのに在庫0のリスト.txt", 'a', encoding="utf-8") as f:
+                    f.write(d + "\n")
 
 
 if __name__ == '__main__':
