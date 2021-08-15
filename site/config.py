@@ -72,6 +72,7 @@ class Config():
                 read_default = config_ini['DEFAULT']
             
                 self.yahoo_auction_page = read_default.get('yahoo_auction_page')
+                
         else:
             # iniファイルが存在しない場合、エラー発生
             raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), config_ini_path)
