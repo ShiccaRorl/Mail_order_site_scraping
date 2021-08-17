@@ -60,6 +60,7 @@ class Rakuma_Test
         end
 
         begin
+=begin
             File.open("./ラクマディレクトリ.txt", "r:utf-8") do |f|
                 @data = f.read().split("\n")
             end
@@ -77,7 +78,7 @@ class Rakuma_Test
                     end
                 end
             }
-        rescue
+=end
             t = 0
             Dir.glob(ROOT_PATH + "/**/*.txt").each{|i|
                 if t == 0 then
@@ -98,6 +99,8 @@ class Rakuma_Test
             File.open("./ラクマディレクトリ.txt", "w:utf-8") do |f|
                 f.write(@data)
             end
+		rescue
+			
         end
 
         begin

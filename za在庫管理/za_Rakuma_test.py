@@ -55,17 +55,21 @@ class Rakuma_Test():
             if len(args) == 1:
                 self.file_path = args[0]
                 self.file_out = pathlib.Path(args[0])
+                self.ラクマディレクトリ()
+                
             elif len(args) == 2:
                 self.file_path = args[1]
                 self.file_out = pathlib.Path(args[1])
+                
             elif len(args) == 3:
                 self.file_path2 = args[2]
                 self.file_out2 = pathlib.Path(args[2])
+                
         except:
             print("データリフレッシュモード")
             self.file_out = pathlib.Path("")
             self.file_out2 = pathlib.Path("")
-            self.ラクマディレクトリ()
+            #self.ラクマディレクトリ()
 
         self.logger = getLogger(self.file_path)
         handler = StreamHandler()
@@ -79,7 +83,7 @@ class Rakuma_Test():
         self.main()
 
     def main(self):
-        self.ラクマディレクトリ()
+        #self.ラクマディレクトリ()
         self.ラクマ出品一覧()
 
         subprocess.run("ruby zaラクマ_入力テスト.rb " +
@@ -93,11 +97,12 @@ class Rakuma_Test():
             self.出品の比較する()
 
     def ラクマディレクトリ(self):
+        print(ROOT_PATH + "/**/*.txt")
         try:
             i = 0
             for d in glob.glob(ROOT_PATH + "/**/*.txt", recursive=True):
                 d_path = pathlib.Path(d)
-                print(d_path)
+                print(d)
                 if i == 0:
                     with open("./ラクマディレクトリ.txt", 'w', encoding="utf-8") as f:
                         #f.write(d_path.stem + "\n")
@@ -107,7 +112,6 @@ class Rakuma_Test():
                     with open("./ラクマディレクトリ.txt", 'a', encoding="utf-8") as f:
                         #f.write(d_path.stem + "\n")
                         f.write(d_path + "\n")
-                print(d)
         except:
             print("ラクマディレクトリerr")
             self.logger.debug('ラクマディレクトリerr')
