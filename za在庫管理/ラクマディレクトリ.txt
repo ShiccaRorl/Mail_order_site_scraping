@@ -1,0 +1,5 @@
+R:/L/Program/eclipse/Python/Affiliate_RssReadr_7/www/DMM_アニメ/62gbr00015/seed.txt
+R:/L/Program/eclipse/Python/Affiliate_RssReadr_7/www/DMM_アニメ/62gbr00015/記事1.txt
+R:/L/Program/eclipse/Python/Affiliate_RssReadr_7/www/DMM_アニメ/62gbr00015/記事2.txt
+R:/L/Program/eclipse/Python/Affiliate_RssReadr_7/www/DMM_アニメ/62gbr00015/introduction.txt
+R:/L/Program/eclipse/Python/Affiliate_RssReadr_7/www/DMM_アニメ/62gbr00015/ネタバレ.txt

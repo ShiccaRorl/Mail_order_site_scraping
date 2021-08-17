@@ -43,7 +43,8 @@ Base = automap_base()
 
 #session = Session(engine)
 """
-ROOT_PATH = 'C:/Users/user/Downloads/バックアップ/プログラム/バックアップ/保存/メルカリ'
+ROOT_PATH = 'C:\\Users\\user\\Downloads\\バックアップ\\プログラム\\バックアップ\\保存\\メルカリ'
+#ROOT_PATH = 'R:\\L\\Program\\eclipse\\Python\\Affiliate_RssReadr_7\\www\\DMM_アニメ\\62gbr00015'
 
 
 class Rakuma_Test():
@@ -56,20 +57,20 @@ class Rakuma_Test():
                 self.file_path = args[0]
                 self.file_out = pathlib.Path(args[0])
                 self.ラクマディレクトリ()
-                
+
             elif len(args) == 2:
                 self.file_path = args[1]
                 self.file_out = pathlib.Path(args[1])
-                
+
             elif len(args) == 3:
                 self.file_path2 = args[2]
                 self.file_out2 = pathlib.Path(args[2])
-                
+
         except:
             print("データリフレッシュモード")
             self.file_out = pathlib.Path("")
             self.file_out2 = pathlib.Path("")
-            #self.ラクマディレクトリ()
+            # self.ラクマディレクトリ()
 
         self.logger = getLogger(self.file_path)
         handler = StreamHandler()
@@ -83,7 +84,7 @@ class Rakuma_Test():
         self.main()
 
     def main(self):
-        #self.ラクマディレクトリ()
+        # self.ラクマディレクトリ()
         self.ラクマ出品一覧()
 
         subprocess.run("ruby zaラクマ_入力テスト.rb " +
@@ -97,21 +98,20 @@ class Rakuma_Test():
             self.出品の比較する()
 
     def ラクマディレクトリ(self):
-        print(ROOT_PATH + "/**/*.txt")
+        print(ROOT_PATH + "\\**\\*.txt")
         try:
             i = 0
-            for d in glob.glob(ROOT_PATH + "/**/*.txt", recursive=True):
+            for d in glob.glob(ROOT_PATH + "\\**\\*.txt", recursive=True):
+                d = d.replace("\\", "/")
                 d_path = pathlib.Path(d)
-                print(d)
+                print(d_path)
                 if i == 0:
                     with open("./ラクマディレクトリ.txt", 'w', encoding="utf-8") as f:
-                        #f.write(d_path.stem + "\n")
-                        f.write(d_path + "\n")
+                        f.write(d + "\n")
                         i = 1
                 else:
                     with open("./ラクマディレクトリ.txt", 'a', encoding="utf-8") as f:
-                        #f.write(d_path.stem + "\n")
-                        f.write(d_path + "\n")
+                        f.write(d + "\n")
         except:
             print("ラクマディレクトリerr")
             self.logger.debug('ラクマディレクトリerr')
