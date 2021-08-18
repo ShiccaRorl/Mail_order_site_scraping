@@ -43,6 +43,8 @@ Base = automap_base()
 
 #session = Session(engine)
 """
+
+# 現本から取り込む
 ROOT_PATH = 'C:\\Users\\user\\Downloads\\バックアップ\\プログラム\\バックアップ\\保存\\メルカリ'
 #ROOT_PATH = 'R:\\L\\Program\\eclipse\\Python\\Affiliate_RssReadr_7\\www\\DMM_アニメ\\62gbr00015'
 
@@ -94,8 +96,8 @@ class Rakuma_Test():
         self.在庫1商品リスト()
         self.登録出来ていない商品チェック()
         self.出品されているのに在庫0のリスト()
-        if self.file_out2 != None:
-            self.出品の比較する()
+        #if self.file_out2 != None:
+        #    self.出品の比較する()
 
     def ラクマディレクトリ(self):
         print(ROOT_PATH + "\\**\\*.txt")
@@ -182,14 +184,14 @@ class Rakuma_Test():
             print(self.seed1[0])
             print(self.seed2[0])
             print(self.seed3[0])
-            try:
-                for i in self.seed2:
+            #try:
+            for i in self.seed2:
                     self.seed1.remove(i)
 
-                for i in self.seed3:
+            for i in self.seed3:
                     self.seed1.remove(i)
-            except:
-                print("対象がないです")
+            #except:
+                #print("対象がないです")
 
             i = 0
             for d in self.seed1:
@@ -211,8 +213,8 @@ class Rakuma_Test():
             with open("./ラクマディレクトリ.txt", 'r', encoding="utf-8") as f:
                 self.seed1 = f.read().split("\n")
 
+            i = 0
             for t in self.seed1:
-                i = 0
                 if "在庫1" in t:
                     #print("====在庫1====")
                     #print(t)
@@ -232,11 +234,11 @@ class Rakuma_Test():
             with open("./ラクマディレクトリ.txt", 'r', encoding="utf-8") as f:
                 self.seed1 = f.read().split("\n")
 
+            i = 0
             for t in self.seed1:
-                #print("====在庫0====")
-                i = 0
                 if "在庫0" in t:
-                    #print(t)
+                    print("====在庫0====")
+                    print(t)
                     if i == 0:
                         with open(str(self.file_out.parent) + "\\ラクマ出品一覧在庫0.txt", 'w', encoding="utf-8") as f:
                             f.write(t + "\n")
