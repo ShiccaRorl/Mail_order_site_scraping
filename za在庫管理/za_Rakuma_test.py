@@ -104,7 +104,7 @@ class Rakuma_Test():
             for d in glob.glob(ROOT_PATH + "\\**\\*.txt", recursive=True):
                 d = d.replace("\\", "/")
                 d_path = pathlib.Path(d)
-                print(d_path)
+                #print(d_path)
                 if i == 0:
                     with open("./ラクマディレクトリ.txt", 'w', encoding="utf-8") as f:
                         f.write(d + "\n")
@@ -128,9 +128,9 @@ class Rakuma_Test():
 
             i = 0
             for d in data:
-                print(d.text)
+                #print(d.text)
                 if i == 0:
-                    print(str(self.file_out.parent))
+                    #print(str(self.file_out.parent))
                     with open(str(self.file_out.parent) + "\\ラクマ出品一覧.txt", 'w', encoding="utf-8") as f:
                         f.write(d.text + "\n")
                         i = 1
@@ -193,8 +193,8 @@ class Rakuma_Test():
 
             i = 0
             for d in self.seed1:
-                print("====登録出来ていない商品かも====")
-                print(d)
+                #print("====登録出来ていない商品かも====")
+                #print(d)
                 if i == 0:
                     with open(str(self.file_out.parent) + "\\登録出来ていない商品かも.txt", 'w', encoding="utf-8") as f:
                         f.write(d + "\n")
@@ -214,8 +214,8 @@ class Rakuma_Test():
             for t in self.seed1:
                 i = 0
                 if "在庫1" in t:
-                    print("====在庫1====")
-                    print(t)
+                    #print("====在庫1====")
+                    #print(t)
                     if i == 0:
                         with open(str(self.file_out.parent) + "\\ラクマ出品一覧在庫1.txt", 'w', encoding="utf-8") as f:
                             f.write(t + "\n")
@@ -233,10 +233,10 @@ class Rakuma_Test():
                 self.seed1 = f.read().split("\n")
 
             for t in self.seed1:
-                print("====在庫0====")
+                #print("====在庫0====")
                 i = 0
                 if "在庫0" in t:
-                    print(t)
+                    #print(t)
                     if i == 0:
                         with open(str(self.file_out.parent) + "\\ラクマ出品一覧在庫0.txt", 'w', encoding="utf-8") as f:
                             f.write(t + "\n")
@@ -272,8 +272,8 @@ class Rakuma_Test():
             i = 0
             for d in data:
 
-                print("====出品されているのに在庫0のリスト====")
-                print(d)
+                #print("====出品されているのに在庫0のリスト====")
+                #print(d)
 
                 if i == 0:
                     with open(str(self.file_out.parent) + "\\出品されているのに在庫0のリスト.txt", 'w', encoding="utf-8") as f:
@@ -305,8 +305,8 @@ class Rakuma_Test():
             i = 0
             for d in data:
 
-                print("====出品の比較する====")
-                print(d)
+                #print("====出品の比較する====")
+                #print(d)
 
                 if i == 0:
                     with open(str(self.file_out2.parent) + "\\出品の比較する.txt", 'w', encoding="utf-8") as f:
