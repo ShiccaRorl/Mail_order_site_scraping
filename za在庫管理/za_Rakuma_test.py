@@ -49,6 +49,7 @@ Base = automap_base()
 #ROOT_PATH = 'R:\\L\\Program\\eclipse\\Python\\Affiliate_RssReadr_7\\www\\DMM_アニメ\\62gbr00015'
 ROOT_PATH = '\\\DESKTOP-FK98SN0\\Users\\Public\\Documents\\吉本さんPCから移動したファイル\\メルカリラクマ出品画像\\メルカリ'
 
+
 class Rakuma_Test():
     def __init__(self):
         args = sys.argv
@@ -96,7 +97,7 @@ class Rakuma_Test():
         self.在庫1商品リスト()
         self.登録出来ていない商品チェック()
         self.出品されているのに在庫0のリスト()
-        #if self.file_out2 != None:
+        # if self.file_out2 != None:
         #    self.出品の比較する()
 
     def ラクマディレクトリ(self):
@@ -106,7 +107,7 @@ class Rakuma_Test():
             for d in glob.glob(ROOT_PATH + "\\**\\*.txt", recursive=True):
                 d = d.replace("\\", "/")
                 d_path = pathlib.Path(d)
-                #print(d_path)
+                # print(d_path)
                 if i == 0:
                     with open("./ラクマディレクトリ.txt", 'w', encoding="utf-8") as f:
                         f.write(d + "\n")
@@ -130,9 +131,9 @@ class Rakuma_Test():
 
             i = 0
             for d in data:
-                #print(d.text)
+                # print(d.text)
                 if i == 0:
-                    #print(str(self.file_out.parent))
+                    # print(str(self.file_out.parent))
                     with open(str(self.file_out.parent) + "\\ラクマ出品一覧.txt", 'w', encoding="utf-8") as f:
                         f.write(d.text + "\n")
                         i = 1
@@ -184,19 +185,22 @@ class Rakuma_Test():
             print(self.seed1[0])
             print(self.seed2[0])
             print(self.seed3[0])
-            #try:
+            # try:
             for i in self.seed2:
-                    self.seed1.remove(i)
+                self.seed1.remove(i)
 
             for i in self.seed3:
-                    self.seed1.remove(i)
-            #except:
-                #print("対象がないです")
+                self.seed1.remove(i)
+            # except:
+                # print("対象がないです")
 
             i = 0
             for d in self.seed1:
-                #print("====登録出来ていない商品かも====")
-                #print(d)
+                # print("====登録出来ていない商品かも====")
+                # print(d)
+                d_path = pathlib.Path(d)
+                d = d_path.name
+                d = d.replace(".txt", "")
                 if i == 0:
                     with open(str(self.file_out.parent) + "\\登録出来ていない商品かも.txt", 'w', encoding="utf-8") as f:
                         f.write(d + "\n")
@@ -216,15 +220,18 @@ class Rakuma_Test():
             i = 0
             for t in self.seed1:
                 if "在庫1" in t:
-                    #print("====在庫1====")
-                    #print(t)
+                    # print("====在庫1====")
+                    # print(t)
+                    d_path = pathlib.Path(t)
+                    d = d_path.name
+                    d = d.replace(".txt", "")
                     if i == 0:
                         with open(str(self.file_out.parent) + "\\ラクマ出品一覧在庫1.txt", 'w', encoding="utf-8") as f:
-                            f.write(t + "\n")
+                            f.write(d + "\n")
                             i = 1
                     else:
                         with open(str(self.file_out.parent) + "\\ラクマ出品一覧在庫1.txt", 'a', encoding="utf-8") as f:
-                            f.write(t + "\n")
+                            f.write(d + "\n")
         except:
             print("在庫1商品リストerr")
             self.logger.debug('在庫1商品リストerr')
@@ -237,15 +244,18 @@ class Rakuma_Test():
             i = 0
             for t in self.seed1:
                 if "在庫0" in t:
-                    print("====在庫0====")
-                    print(t)
+                    #print("====在庫0====")
+                    #print(t)
+                    d_path = pathlib.Path(t)
+                    d = d_path.name
+                    d = d.replace(".txt", "")
                     if i == 0:
                         with open(str(self.file_out.parent) + "\\ラクマ出品一覧在庫0.txt", 'w', encoding="utf-8") as f:
-                            f.write(t + "\n")
+                            f.write(d + "\n")
                             i = 1
                     else:
                         with open(str(self.file_out.parent) + "\\ラクマ出品一覧在庫0.txt", 'a', encoding="utf-8") as f:
-                            f.write(t + "\n")
+                            f.write(d + "\n")
         except:
             print("在庫0商品リストerr")
             self.logger.debug('在庫0商品リストerr')
@@ -274,8 +284,8 @@ class Rakuma_Test():
             i = 0
             for d in data:
 
-                #print("====出品されているのに在庫0のリスト====")
-                #print(d)
+                # print("====出品されているのに在庫0のリスト====")
+                # print(d)
 
                 if i == 0:
                     with open(str(self.file_out.parent) + "\\出品されているのに在庫0のリスト.txt", 'w', encoding="utf-8") as f:
@@ -307,8 +317,8 @@ class Rakuma_Test():
             i = 0
             for d in data:
 
-                #print("====出品の比較する====")
-                #print(d)
+                # print("====出品の比較する====")
+                # print(d)
 
                 if i == 0:
                     with open(str(self.file_out2.parent) + "\\出品の比較する.txt", 'w', encoding="utf-8") as f:
