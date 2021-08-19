@@ -45,9 +45,9 @@ Base = automap_base()
 """
 
 # 現本から取り込む
-ROOT_PATH = 'C:\\Users\\user\\Downloads\\バックアップ\\プログラム\\バックアップ\\保存\\メルカリ'
+#ROOT_PATH = 'C:\\Users\\user\\Downloads\\バックアップ\\プログラム\\バックアップ\\保存\\メルカリ'
 #ROOT_PATH = 'R:\\L\\Program\\eclipse\\Python\\Affiliate_RssReadr_7\\www\\DMM_アニメ\\62gbr00015'
-
+ROOT_PATH = '\\\DESKTOP-FK98SN0\\Users\\Public\\Documents\\吉本さんPCから移動したファイル\\メルカリラクマ出品画像\\メルカリ'
 
 class Rakuma_Test():
     def __init__(self):
