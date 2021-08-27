@@ -90,8 +90,7 @@ class Rakuma_Test():
         # self.ラクマディレクトリ()
         self.ラクマ出品一覧()
 
-        subprocess.run("ruby zaラクマ_入力テスト.rb " +
-                       str(self.file_out.parent), shell=True, text=True)
+        #subprocess.run("ruby zaラクマ_入力テスト.rb " + str(self.file_out.parent), shell=True, text=True)
         self.ラクマ登録２重チェック()
         self.在庫0商品リスト()
         self.在庫1商品リスト()
@@ -297,6 +296,15 @@ class Rakuma_Test():
         except:
             print("出品されているのに在庫0のリストerr")
             self.logger.debug('出品されているのに在庫0のリストerr')
+
+    def 出品されているB品のリスト(self):
+    
+    
+    def 出品されている在庫1のリスト(self):
+
+
+    def 商品コードが認識されなかったリスト(self):
+    
 
     def 出品の比較する(self):
         try:
