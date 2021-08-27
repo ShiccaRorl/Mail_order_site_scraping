@@ -298,13 +298,13 @@ class Rakuma_Test():
             self.logger.debug('出品されているのに在庫0のリストerr')
 
     def 出品されているB品のリスト(self):
-    
+        print("")
     
     def 出品されている在庫1のリスト(self):
-
+            print("")
 
     def 商品コードが認識されなかったリスト(self):
-    
+            print("")
 
     def 出品の比較する(self):
         try:
