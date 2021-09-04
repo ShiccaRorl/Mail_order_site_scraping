@@ -1,0 +1,14 @@
+accounting	経理
+customer	お客
+photo		写真
+product		商品
+sale		販売
+seeds		取り込みデータ
+sites		サイト
+stock		在庫管理
+		商品出品サポツール
+		UWSC
+		PyAutoGui
+		GUIツール
+		android
+		プログラム
