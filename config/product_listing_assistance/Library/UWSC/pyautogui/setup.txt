@@ -1,0 +1,17 @@
+sudo apt install python3　scrot python3-tk python3-dev
+pip3 install -U python3-xlib
+pip3 install -U Image
+pip3 install -U pillow
+pip3 install -U pyscreeze
+pip3 install -U PyTweening
+pip3 install -U opencv_python
+pip3 install -U pyautogui
+
+
+C:\Python37\Scripts\pip.exe install pywin32
+C:\Python37\Scripts\pip.exe install win32gui
+C:\Python37\Scripts\pip.exe install Image
+C:\Python37\Scripts\pip.exe install pillow
+C:\Python37\Scripts\pip.exe install pyscreeze
+C:\Python37\Scripts\pip.exe install PyTweening
+C:\Python37\Scripts\pip.exe install opencv_python

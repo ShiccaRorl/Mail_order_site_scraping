@@ -1,0 +1,9 @@
+
+
+ホスト名　ftp.rakuten.ne.jp
+ポート　16910
+
+ユーザー　wamall
+
+
+https://www.rakuten.ne.jp/gold/wamall/gazou/

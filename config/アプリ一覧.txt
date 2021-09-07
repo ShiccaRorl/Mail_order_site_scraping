@@ -6,9 +6,10 @@ sale		販売
 seeds		取り込みデータ
 sites		サイト
 stock		在庫管理
-		商品出品サポツール
+product_listing_assistance		商品出品サポツール
 		UWSC
 		PyAutoGui
+
 		GUIツール
 		android
 		プログラム
