@@ -124,10 +124,12 @@ class Rakuma_Test():
                 self.seed1 = f.read()
 
             soup = BeautifulSoup(self.seed1, 'html.parser')
-            data = soup.find_all("h4", attrs={"class": "media-heading"})
-
+            data = soup.find("div", attrs={"class": "main"})
+            data = data.find_all("h4", attrs={"class": "media-heading"})
+            
+            # body > div.drawer-overlay > div > div > div > div
             # <h4 class="media-heading">新品送料込み　男女兼用　白足袋24.0ｃｍ★成人式、結婚式、卒業式 ATU005</h4>
-
+            
             i = 0
             for d in data:
                 # print(d.text)
