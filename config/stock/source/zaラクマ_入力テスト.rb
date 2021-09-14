@@ -14,7 +14,8 @@ class Rakuma_Test
             @data = f.read().split("\n")
         end
 
-        二重登録チェック()
+        self.二重登録チェック()
+		self.二重登録チェック2()
         #ソートする()
     end
 
@@ -223,6 +224,33 @@ class Rakuma_Test
                 end
             end
         }
+    end
+	
+	    def 二重登録チェック2()
+        data = @data
+        dammy = @data
+        dammy.uniq!
+
+		dammy = data - dammy
+        s = 0
+        #dsize = data.size()
+        dammy.each{|i|
+            if s == 0 then
+                File.open(@path + "/ラクマ出品一覧２重登録2.txt", "w:utf-8") do |f|
+                    f.write(i + "\n")
+                end
+                s = 1
+            else
+                File.open(@path + "/ラクマ出品一覧２重登録2.txt", "a:utf-8") do |f|
+                    f.write(i + "\n")
+                end
+            end
+        }
+		if dammy == data then
+			    File.open(@path + "/ラクマ出品一覧２重登録2.txt", "w:utf-8") do |f|
+                    f.write("ありませんでした。" + "\n")
+                end
+		end
     end
 end
 
