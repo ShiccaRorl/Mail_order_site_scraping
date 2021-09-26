@@ -13,3 +13,6 @@ product_listing_assistance		商品出品サポツール
 		GUIツール
 		android
 		プログラム
+
+python manage.py makemigrations
+python manage.py migrate
