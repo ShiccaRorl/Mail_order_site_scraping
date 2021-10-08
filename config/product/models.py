@@ -8,6 +8,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(verbose_name="作成日時", auto_now_add=True)
     update_date_at = models.DateTimeField(verbose_name="更新日時", auto_now_add=True)
     商品名 = models.TextField(verbose_name="商品名", default="")
+    下代 = models.IntegerField(default=0)
     税抜き価格 = models.IntegerField(verbose_name="税抜き価格", default=0)
     消費税 = models.IntegerField(verbose_name="消費税", default=0)
     税率 = models.FloatField(verbose_name="税率", default=0.1)

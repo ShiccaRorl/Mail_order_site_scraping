@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'seeds',
     'sale',
     'product',
+    'product_listing_assistance',
 ]
 
 MIDDLEWARE = [
