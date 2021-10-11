@@ -28,8 +28,8 @@ class Store_Core():
 
         # mapped classes are now created with names by default
         # matching that of the table name.
-        self.seeds = Base.classes.seeds
-        self.site = Base.classes.site
+        self.seeds = Base.classes.seeds_seeds
+        self.site = Base.classes.seeds_t_販売サイト
 
         #session = Session(self.engine)
         
