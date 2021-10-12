@@ -1,3 +1,4 @@
+		人事
 accounting	経理
 customer	お客
 photo		写真

@@ -4,7 +4,7 @@ from django.db import models
 # 出品サポート
 class product_listing_assistance():
     product_listing_assistance_cood = models.IntegerField(default=0, primary_key=True)
-    商品コード = models.TextField(verbose_name="code")
+    商品コード = models.TextField(verbose_name="code", default="", blank=True, null=True)
     下代 = models.IntegerField(default=0, blank=True, null=True)
     売価 = models.IntegerField(default=0, blank=True, null=True)
     消費税 = models.IntegerField(default=0, blank=True, null=True)
@@ -16,11 +16,11 @@ class product_listing_assistance():
     更新日 = models.DateTimeField(auto_now=True, blank=True, null=True)
     
 class Amazon(product_listing_assistance):
-    cood
-    タイトル
-    売価
+    cood = models.TextField(verbose_name="code", default="", blank=True, null=True)
+    タイトル = models.TextField(verbose_name="code", default="", blank=True, null=True)
+    売価 = models.IntegerField(default=0, blank=True, null=True)
 
 class Rakuten(product_listing_assistance):
-    cood
-    タイトル
-    売価
+    cood = models.TextField(verbose_name="code", default="", blank=True, null=True)
+    タイトル = models.TextField(verbose_name="code", default="", blank=True, null=True)
+    売価 = models.IntegerField(default=0, blank=True, null=True)
