@@ -50,9 +50,9 @@ class Rakuma(Mail_order_site):
         # mapped classes are now created with names by default
         # matching that of the table name.
 
-        self.seeds = Base.classes.seeds
-        self.site = Base.classes.site
-        self.sale = Base.classes.sale
+        self.seeds = Base.classes.seeds_seeds
+        self.site = Base.classes.seeds_t_販売サイト
+        self.sale = Base.classes.sale_sele
         
         
 
@@ -347,6 +347,13 @@ class Rakuma(Mail_order_site):
         session = Session(bind = self.engine, autocommit = True, autoflush = True)
         all = session.query(self.seeds).filter(
             self.seeds.siteID == self.siteID and self.seeds.analysis_completed == 0).all()
+        
+        test = session.query(self.seeds).filter(
+            self.seeds.siteID == self.siteID and self.seeds.analysis_completed == 0).first()
+        
+        print(test)
+        
+        """
         for t in all:
             # print(i)
             
@@ -358,6 +365,7 @@ class Rakuma(Mail_order_site):
             self.update_analysis_completed(t.id)
             print(t.id)
             time.sleep(1)
+            """
 
     def db(self):
 

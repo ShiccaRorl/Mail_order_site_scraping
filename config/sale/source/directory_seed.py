@@ -61,10 +61,10 @@ class Mail_order_site():
         # mapped classes are now created with names by default
         # matching that of the table name.
 
-        self.seeds = Base.classes.seeds
-        self.seed = Base.classes.seed
-        self.site = Base.classes.site
-        self.sale = Base.classes.sale
+        self.seeds = Base.classes.seeds_seeds
+        #self.seed = Base.classes.seed
+        self.site = Base.classes.seeds_t_販売サイト
+        self.sale = Base.classes.sale_sele
 
         self.siteID = 0
         # 0	アマゾン
