@@ -4,7 +4,7 @@ import PySimpleGUIQt as sg
 
 import sys
 from PyQt5.QtWidgets import *
-https://doc.qt.io/qtforpython/overviews/dnd.html
+# https://doc.qt.io/qtforpython/overviews/dnd.html
 
 # pip install --upgrade PySimpleGUIQt
 # pip install PySide2
@@ -38,7 +38,7 @@ class DropWidget(QWidget):
 def main():
     app = QApplication(sys.argv)
     w = DropWidget()
-    w.resize(800, 600)
+    w.resize(200, 200)
     w.show()
     w.raise_()
     app.exec_()

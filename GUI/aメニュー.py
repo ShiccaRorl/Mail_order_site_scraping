@@ -106,11 +106,11 @@ id = max_id()
 
 layout = [
   [sg.Text('メニュー管理')],
-  [sg.Button(button_text='基本',key="基本")],
+  [sg.Button(button_text='通販',key="通販")],
   [sg.Button(button_text='プログラム',key="プログラム"), sg.Button(button_text='検索文字列',key="検索文字列")],
   [sg.Button(button_text='映画',key="映画")],
   [sg.Button(button_text='読書',key="読書"), sg.Button(button_text='本',key="本")],
-  [sg.Button(button_text='コミック',key="コミック")],
+
 
   [sg.Button(button_text='プロジェクト',key="プロジェクト"), sg.Button(button_text='やりたい事リスト',key="やりたい事リスト")],
   [sg.Button(button_text='メール送信',key="メール送信")],
@@ -120,14 +120,16 @@ layout = [
 # ウィンドウを作成する
 window = sg.Window('メニュー管理', layout, resizable=True)
 
+id = 1
+
 # イベントループを使用してウィンドウを表示し、対話する
 while True:
     event, values = window.read()
 # ユーザーが終了したいのか、ウィンドウが閉じられたかどうかを確認してください
     if event == sg.WINDOW_CLOSED or event == '終了' or event == "-閉じる-":
         break
-    elif event == "基本":
-        subprocess.Popen(["python", f"./a基本.py", f"{id}"], shell=True)
+    elif event == "通販":
+        subprocess.Popen(["python", f"./a通販.py", f"{id}"], shell=True)
 
     elif event == "プログラム":
         subprocess.Popen(["python", f"./aProgram.py", f"{id}"], shell=True)
@@ -147,9 +149,6 @@ while True:
         
     elif event == "本":
         print("")
-
-    elif event == "★":
-        subprocess.Popen(["python", f"./aH★.py", f"{id}"], shell=True)
 
     elif event == "コミック":
         subprocess.Popen(["python", f"./aComic.py", f"{id}"], shell=True)
