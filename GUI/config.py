@@ -48,6 +48,8 @@ class Config:
                 self.database = read_default.get('database')
                 # self.db_path_access1 = self.db_path_access1.replace('"', '')
 
+                read_SQLite3 = config_ini['SQLite3']
+                self.path = read_SQLite3.get('path')
         else:
             print("iniファイルがない")
 
@@ -57,7 +59,8 @@ class Config:
         # postgresql://scott:tiger@localhost/mydatabase
         
         # 接続文字列
-        self.engine = create_engine(f'{self.driver}://{self.username}:{self.password}@{self.host}:{self.port}/{self.database}')
+        self.engine = sqlalchemy.create_engine(f'sqlite:///{self.path}', echo=True)
+        #self.engine = create_engine(f'{self.driver}://{self.username}:{self.password}@{self.host}:{self.port}/{self.database}')
         
         #self.Base = declarative_base(bind=self.engine)
         self.Base.prepare(self.engine, reflect=True)
