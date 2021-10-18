@@ -4,7 +4,7 @@ import PySimpleGUIQt as sg
 
 import sys
 from PyQt5.QtWidgets import *
-
+https://doc.qt.io/qtforpython/overviews/dnd.html
 
 # pip install --upgrade PySimpleGUIQt
 # pip install PySide2
