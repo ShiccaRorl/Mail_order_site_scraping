@@ -204,8 +204,8 @@ layout = [
   
   [sg.Text('データ取り込み', size=(10,1)), sg.Button(button_text='データ取り込み', key="-データ取り込み-")],
   [sg.Text('サイト', size=(10,1)), sg.Button(button_text='Amazon', key="-Amazon-"), sg.Button(button_text='ヤフオク', key="-ヤフオク-"), sg.Button(button_text='楽天', key="-楽天-"), sg.Button(button_text='ラクマ', key="-ラクマ-"), sg.Button(button_text='ストアーズ', key="-ストアーズ-")],
-  #[sg.Text('気付き3', size=(10,1)), sg.Multiline(default_text="", size=(50, 5), key="-気付き3-")],
-  [sg.Text('コメント', size=(10,1)), sg.Multiline(default_text="", size=(50, 5), key="-コメント-"), sg.Button(button_text='保存', key="-保存-"), sg.Button(button_text='読了', key="-読了-"), sg.Button(button_text="コピー", key="-コピー-"), sg.Button(button_text='閉じる', key="-閉じる-")],
+  [sg.Text('クリーン', size=(10,1)), sg.Button(button_text='クリーン', key="-クリーン-")],
+  [sg.Text('コメント', size=(10,1)), sg.Multiline(default_text="", size=(50, 5), key="-コメント-"), sg.Button(button_text='保存', key="-保存-"), sg.Button(button_text='閉じる', key="-閉じる-")],
 
   [sg.Text('過去ログ', size=(10,1)), sg.Listbox(過去ログ(), enable_events=True, size=(100, 10), key='-過去ログ-')],
   ]

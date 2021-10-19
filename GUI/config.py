@@ -59,8 +59,8 @@ class Config:
         # postgresql://scott:tiger@localhost/mydatabase
         
         # 接続文字列
-        self.engine = sqlalchemy.create_engine(f'sqlite:///{self.path}', echo=True)
-        #self.engine = create_engine(f'{self.driver}://{self.username}:{self.password}@{self.host}:{self.port}/{self.database}')
+        #self.engine = sqlalchemy.create_engine(f'sqlite:///{self.path}', echo=True)
+        self.engine = create_engine(f'{self.driver}://{self.username}:{self.password}@{self.host}:{self.port}/{self.database}')
         
         #self.Base = declarative_base(bind=self.engine)
         self.Base.prepare(self.engine, reflect=True)

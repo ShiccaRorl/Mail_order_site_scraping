@@ -5,12 +5,14 @@
 import PySimpleGUI as sg
 import datetime
 
+"""
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import * 
 from sqlalchemy.orm import *
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+"""
 
 from config import Config
 #import webbrowser
@@ -108,8 +110,8 @@ layout = [
   [sg.Text('メニュー管理')],
   [sg.Button(button_text='通販',key="通販")],
   [sg.Button(button_text='プログラム',key="プログラム"), sg.Button(button_text='検索文字列',key="検索文字列")],
-  [sg.Button(button_text='映画',key="映画")],
-  [sg.Button(button_text='読書',key="読書"), sg.Button(button_text='本',key="本")],
+  #[sg.Button(button_text='映画',key="映画")],
+  #[sg.Button(button_text='読書',key="読書"), sg.Button(button_text='本',key="本")],
 
 
   [sg.Button(button_text='プロジェクト',key="プロジェクト"), sg.Button(button_text='やりたい事リスト',key="やりたい事リスト")],
