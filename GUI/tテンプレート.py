@@ -17,8 +17,8 @@ from config import Config, Timebox
 # pip install sqlalchemy
 # pip install psycopg2
 # pip install PySimpleGUI
-from peewee import *
-from LifeLog_models import *
+#from peewee import *
+#from LifeLog_models import *
 
 
 #help(sg.Table)
@@ -88,9 +88,12 @@ def max_id():
     #過去ログ = LifeLogT07読書.select().order_by(LifeLogT07読書.日付).limit(30)
     # 最大値の計算
     i = []
-    for s in 過去ログ:
-        i.append(s.id)
-    return max(i) + 1
+    try:
+        for s in 過去ログ:
+            i.append(s.id)
+        return max(i) + 1
+    except:
+        return 1
 
 def 保存():
         values["-日付-"] = datetime.date.today()
@@ -103,11 +106,13 @@ def 保存():
             start_time = datetime.datetime.now()
         if end_time == None:
             end_time = datetime.datetime.now()
-
+        print("保存")
+        print(values["-ID-"])
         try:
             session = Session(config.engine)
-            if session.query(t_07_読書).filter(t_07_読書.id == values["-ID-"]).order_by(desc(t_07_読書.日付)).first() == None:
-                session.query(t_07_読書).insert(id = max_id(),
+            if session.query(t_07_読書).filter(t_07_読書.id == values["-ID-"]).first() == None:
+                print("insert")
+                session.add(t_07_読書(id = max_id(),
                                             日付 = values["-日付-"],
                                             開始時間 = values["-開始時間-"],
                                             終了時間 = values["-終了時間-"],
@@ -119,13 +124,15 @@ def 保存():
                                             気付き2 = values["-気付き2-"],
                                             気付き3 = values["-気付き3-"],
                                             コメント = values["-コメント-"],
-                )
+                ))
                 session.commit()
                 window["-過去ログ-"].update(過去ログ())
                 sg.popup_ok('保存完了')
             else:
+                print("updata")
                 読書 = session.query(t_07_読書).filter(t_07_読書.id == values["-ID-"]).first()
                 
+                読書.id = values["-ID-"],
                 読書.日付 = values["-日付-"],
                 読書.開始時間 = values["-開始時間-"],
                 読書.終了時間 = values["-終了時間-"],
@@ -149,8 +156,30 @@ def list更新():
 def 読了():
     print("update")
 
-def コピー():
-    print("update")
+def 新規保存():
+    try:
+        session = Session(config.engine)
+        session.add(t_07_読書(id = max_id(),
+                                            日付 = values["-日付-"],
+                                            開始時間 = values["-開始時間-"],
+                                            終了時間 = values["-終了時間-"],
+                                            間時間 = values["-間時間-"],
+                                            タイトル = values["-タイトル-"],
+                                            ファイル名 = values["-ファイル名-"],
+                                            page = values["-ページ-"],
+                                            気付き1 = values["-気付き1-"],
+                                            気付き2 = values["-気付き2-"],
+                                            気付き3 = values["-気付き3-"],
+                                            コメント = values["-コメント-"],
+                ))
+        session.commit()
+        sg.popup_ok('保存完了')
+        window["-過去ログ-"].update(過去ログ())
+    except:
+        sg.PopupError('！エラー発生！')
+        window["-過去ログ-"].update(過去ログ())
+    
+
 
 def 過去ログ2():
     # == 過去ログ↓ ==
@@ -214,7 +243,7 @@ id = max_id()
 
 
 layout = [
-  [sg.Text('読書時間管理')],
+  [sg.Text('テンプレート管理')],
   [sg.Text('ID', size=(10,1)), sg.InputText(id, key="-ID-", size=(10,1))],
   [sg.Text('日付', size=(10,1)), sg.InputText('', key="-日付-", size=(20,1)), sg.Button(button_text='日付',key="日付")],
   [sg.Text('開始時間', size=(10,1)), sg.InputText('', key="-開始時間-", size=(20,1)), sg.Button(button_text='開始時間',key="開始時間")],
@@ -231,16 +260,15 @@ layout = [
   [sg.Text('気付き1', size=(10,1)), sg.Multiline(default_text="", size=(50, 5), key="-気付き1-")],
   [sg.Text('気付き2', size=(10,1)), sg.Multiline(default_text="", size=(50, 5), key="-気付き2-")],
   [sg.Text('気付き3', size=(10,1)), sg.Multiline(default_text="", size=(50, 5), key="-気付き3-")],
-  [sg.Text('コメント', size=(10,1)), sg.Multiline(default_text="", size=(50, 5), key="-コメント-"), sg.Button(button_text='保存', key="-保存-"), sg.Button(button_text='読了', key="-読了-"), sg.Button(button_text="コピー", key="-コピー-"), sg.Button(button_text='閉じる', key="-閉じる-")],
+  [sg.Text('コメント', size=(10,1)), sg.Multiline(default_text="", size=(50, 5), key="-コメント-"), sg.Button(button_text='新規保存', key="-新規保存-"), sg.Button(button_text='保存', key="-保存-"), sg.Button(button_text='読了', key="-読了-"), sg.Button(button_text='閉じる', key="-閉じる-")],
   [sg.Text('過去ログ', size=(10,1)), sg.Listbox(過去ログ(), enable_events=True, size=(200, 10), key='-過去ログ-'), sg.Button(button_text='読み込み', key="-読み込み-")],
   ]
 
 # ウィンドウを作成する
-window = sg.Window('読書時間管理', layout, resizable=True)
+window = sg.Window('テンプレート管理', layout, resizable=True)
 
 # == 時間↓ ==
-start_time = Timebox()
-end_time = Timebox()
+timebox = Timebox()
 
 # イベントループを使用してウィンドウを表示し、対話する
 while True:
@@ -249,29 +277,32 @@ while True:
     if event == sg.WINDOW_CLOSED or event == '終了' or event == "閉じるb":
         break
     elif event == "日付":
-        window["-日付-"].update(start_time.in_to_text(datetime.date.today()))
+        window["-日付-"].update(timebox.in_to_text_day(datetime.date.today()))
         日付 = datetime.date.today()
 
     elif event == "開始時間":
-        window["-開始時間-"].update(start_time.in_to_text(datetime.datetime.now()))
+        window["-開始時間-"].update(timebox.in_to_text_start(datetime.datetime.now()))
 
     elif event == "終了時間":
-        window["-終了時間-"].update(end_time.in_to_text(datetime.datetime.now()))
+        window["-終了時間-"].update(timebox.in_to_text_end(datetime.datetime.now()))
 
     elif event == "間時間":
-        print(end_time.in_time(values["-終了時間-"]))
-        print(start_time.in_time(values["-開始時間-"]))
+        window["-日付-"].update(values["-日付-"].replace('-', '/').replace('+00:00', ''))
+        window["-開始時間-"].update(values["-開始時間-"].replace('-', '/').replace('+00:00', ''))
+        window["-終了時間-"].update(values["-終了時間-"].replace('-', '/').replace('+00:00', ''))
+            
+        try:
+            # window["-間時間-"].update(end_time.in_time(values["-終了時間-"]) - start_time.in_time(values["-開始時間-"]))
+            window["-間時間-"].update(timebox.ma_time)
+        except:
+            sg.PopupError('！日付計算エラー！')
 
-        ma_datetime = (end_time.in_time(values["-終了時間-"]) - start_time.in_time(values["-開始時間-"]))
-        if (end_time.in_time(values["-終了時間-"]) - start_time.in_time(values["-開始時間-"])).seconds < 60*60*6:
-            ma_datetime = ("1970/01/01 00:00:00")
+            # == 時間↑ ==
 
-        # window["-間時間-"].update(end_time.in_time(values["-終了時間-"]) - start_time.in_time(values["-開始時間-"]))
-        window["-間時間-"].update(ma_datetime)
-        # == 時間↑ ==
-
-    elif event == "-過去ログ-" or event == "-読み込み-":
+    elif event == "-過去ログ-":
         過去ログ2()
+    elif event == "-新規保存-":
+        新規保存()
     elif event == "-保存-":
         保存()
 
@@ -280,10 +311,6 @@ while True:
         window["-読了-"].update("読了")
     elif event == "-閉じる-":
         break
-    elif event == "-コピー-":
-        window["-ID-"].update(max_id())
-        window["-タイトル_id-"].update(values["-タイトル-"])
-        window["-ファイル名_id-"].update("-ファイル名-")
 
     print(event, values)
     # Output a message to the window

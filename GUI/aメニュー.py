@@ -33,10 +33,10 @@ if id == None:
 
 config = Config()
 
-t_103_ライフログ = config.Base.classes.LifeLog_t_103_ライフログ
+#t_103_ライフログ = config.Base.classes.LifeLog_t_103_ライフログ
 
 #Session = sessionmaker(bind=config.engine)
-session = Session(config.engine)
+#session = Session(config.engine)
 
 class Menu_Log:
     def __init__(self):
@@ -54,7 +54,7 @@ class Menu_Log:
 
     def プログラム名(self, name):
         self.プログラム名 = name
-
+"""
     def 保存(self):
         t_103_ライフログ = self.config.Base.classes.LifeLog_t_103_ライフログ
         session = Session(self.config.engine)
@@ -73,7 +73,8 @@ class Menu_Log:
                                         プログラム名 = self.プログラム名,
         ))
         session.commit()
-
+"""
+"""
 def メニューログ(data=None):
         print(data)
         # 過去ログテーブル　の計算
@@ -105,7 +106,7 @@ def max_id():
 
 
 id = max_id()
-
+"""
 layout = [
   [sg.Text('メニュー管理')],
   [sg.Button(button_text='通販',key="通販")],
@@ -143,17 +144,6 @@ while True:
         subprocess.Popen(["python", f"./a検索文字列.py", f"{id}"], shell=True)
         #検索文字列menu_log.end_time()
         #検索文字列menu_log.保存()
-    elif event == "映画":
-        subprocess.Popen(["python", f"./a映画.py", f"{id}"], shell=True)
-
-    elif event == "読書":
-        subprocess.Popen(["python", f"./a読書.py", f"{id}"], shell=True)
-        
-    elif event == "本":
-        print("")
-
-    elif event == "コミック":
-        subprocess.Popen(["python", f"./aComic.py", f"{id}"], shell=True)
 
     elif event == "プロジェクト":
         print("")
