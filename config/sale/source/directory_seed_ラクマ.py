@@ -342,7 +342,7 @@ class Rakuma(Mail_order_site):
         # <div class="col s6 right-align grey-text">- ¥ 179</div>
 
     def main(self):
-        self.siteID = 1
+        self.siteID = 3
         all = []
         session = Session(bind = self.engine, autocommit = True, autoflush = True)
         all = session.query(self.seeds).filter(
