@@ -122,3 +122,9 @@ if __name__ == '__main__':
     
     #core.seed_save_auctions_yahoo()
     #print(core)
+    
+    ストアクリエイター_yahoo = Store_Core()
+    ストアクリエイター_yahoo.name = "ストアクリエイター_yahoo"
+    ストアクリエイター_yahoo.dir = f'{config.download_path}{ストアクリエイター_yahoo.name}*.html'
+    ストアクリエイター_yahoo.siteID = 6
+    ストアクリエイター_yahoo.seed_save_add()
