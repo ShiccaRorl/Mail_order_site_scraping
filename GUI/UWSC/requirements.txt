@@ -1,0 +1,47 @@
+pip install --upgrade pip --user
+pip install pyautogui
+pip install opencv_python
+pip install pywin32
+pip install speechrecognition
+pip install speake3
+pip install selenium
+pip install beautifulsoup4
+pip install xlrd xlwt
+pip install openpyxl
+pip install reportlab
+pip install pyinstaller
+pip install configparser
+
+pip freeze 
+
+altgraph
+beautifulsoup4
+configparser
+et-xmlfile
+future
+jdcal
+MouseInfo
+numpy
+opencv-python
+openpyxl
+pefile
+Pillow
+PyAudio
+PyAutoGUI
+PyGetWindow
+PyInstaller
+PyMsgBox
+pyperclip
+PyRect
+PyScreeze
+PyTweening
+pywin32
+pywin32-ctypes
+reportlab
+selenium
+soupsieve
+speake3
+SpeechRecognition
+urllib3
+xlrd
+xlwt
