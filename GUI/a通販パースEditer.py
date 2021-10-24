@@ -12,30 +12,31 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-import subprocess
 
 from config import Config, Timebox
 # pip install sqlalchemy
 # pip install psycopg2
 # pip install PySimpleGUI
+#from peewee import *
+#from LifeLog_models import *
 
 
 #help(sg.Table)
 
 config = Config()
 
-id = 1
 
-seeds = config.Base.classes.seeds_seeds
+sale_sele = config.Base.classes.sale_sele
 
 #Session = sessionmaker(bind=config.engine)
 #session = Session(config.engine)
 
+"""
 def 過去ログ(data=None):
     print(data)
     # 過去ログテーブル　の計算
     session = Session(config.engine)
-    過去ログ = session.query(seeds).order_by(desc(seeds.create_at)).all()
+    過去ログ = session.query(sale_sele).order_by(desc(sale_sele.日付)).limit(30)
     # ウィンドウの内容を定義する
     # 画面レイアウトを指定
 
@@ -44,10 +45,10 @@ def 過去ログ(data=None):
 
     #print(t)
     for i in 過去ログ:
-        member_list.append([i.id, i.create_at, i.siteID, i.analysis_completed])
+        member_list.append([i.id, i.日付, i.タイトル, i.コメント])
     return member_list
 
-"""
+
 def 本タイトル():
     # コンボボックス　本タイトルの計算
     session = Session(config.engine)
@@ -58,12 +59,33 @@ def 本タイトル():
         i.append(s.タイトル)
     過去タイトル = i
     return 過去タイトル
-"""
+
+def 本タイトル2():
+    # コンボボックス　本タイトルの計算
+    session = Session(config.engine)
+    t_07_本 = config.Base.classes.LifeLog_t_07_本
+    過去タイトル = session.query(t_07_本.タイトル, func.count(t_07_本.タイトル)).group_by(t_07_本.タイトル).all()
+    i = []
+    for s in 過去タイトル:
+        i.append(s.タイトル)
+    過去タイトル = i
+    return 過去タイトル
+
+def 本ファイル名():
+    # コンボボックス　本ファイル名の計算
+    session = Session(config.engine)
+    t_206_warez倉庫 = config.Base.classes.LifeLog_t_206_warez倉庫
+    過去ファイル名 = session.query(t_206_warez倉庫).filter(t_206_warez倉庫.やりかけ == True).order_by(desc(t_206_warez倉庫.閲覧日)).all()
+    i = []
+    for s in 過去ファイル名:
+        i.append(s.ファイル名)
+    過去ファイル名 = i
+    return 過去ファイル名
 
 def max_id():
     # 過去ログテーブル　の計算
     session = Session(config.engine)
-    過去ログ = session.query(seeds).order_by(desc(seeds.create_at)).limit(30)
+    過去ログ = session.query(t_07_読書).order_by(desc(t_07_読書.日付)).limit(30)
     #過去ログ = LifeLogT07読書.select().order_by(LifeLogT07読書.日付).limit(30)
     # 最大値の計算
     i = []
@@ -73,19 +95,7 @@ def max_id():
         return max(i) + 1
     except:
         return 1
-        
-def データ取り込み():
-    subprocess.Popen(["取り込み.cmd", f"{id}"], shell=True)
 
-def ラクマ():
-    session = Session(config.engine)
-    siteID=1 # ?
-    生ソース = session.query(seeds).filter(seeds.siteID == siteID).order_by(desc(seeds.create_at)).first()
-    print(生ソース)
-    
-    
-    
-"""
 def 保存():
         values["-日付-"] = datetime.date.today()
         日付 = datetime.date.today()
@@ -97,11 +107,13 @@ def 保存():
             start_time = datetime.datetime.now()
         if end_time == None:
             end_time = datetime.datetime.now()
-
+        print("保存")
+        print(values["-ID-"])
         try:
             session = Session(config.engine)
-            if session.query(seeds).filter(seeds.id == values["-ID-"]).order_by(desc(seeds.日付)).first() == None:
-                session.query(seeds).insert(id = max_id(),
+            if session.query(t_07_読書).filter(t_07_読書.id == values["-ID-"]).first() == None:
+                print("insert")
+                session.add(t_07_読書(id = max_id(),
                                             日付 = values["-日付-"],
                                             開始時間 = values["-開始時間-"],
                                             終了時間 = values["-終了時間-"],
@@ -113,13 +125,15 @@ def 保存():
                                             気付き2 = values["-気付き2-"],
                                             気付き3 = values["-気付き3-"],
                                             コメント = values["-コメント-"],
-                )
+                ))
                 session.commit()
                 window["-過去ログ-"].update(過去ログ())
                 sg.popup_ok('保存完了')
             else:
-                読書 = session.query(seeds).filter(seeds.id == values["-ID-"]).first()
+                print("updata")
+                読書 = session.query(t_07_読書).filter(t_07_読書.id == values["-ID-"]).first()
                 
+                読書.id = values["-ID-"],
                 読書.日付 = values["-日付-"],
                 読書.開始時間 = values["-開始時間-"],
                 読書.終了時間 = values["-終了時間-"],
@@ -136,7 +150,6 @@ def 保存():
                 sg.popup_ok('保存完了')
         except:
             sg.PopupError('！エラー発生！')
-"""
 
 def list更新():
     print("update")
@@ -144,16 +157,37 @@ def list更新():
 def 読了():
     print("update")
 
-def コピー():
-    print("update")
+def 新規保存():
+    try:
+        session = Session(config.engine)
+        session.add(t_07_読書(id = max_id(),
+                                            日付 = values["-日付-"],
+                                            開始時間 = values["-開始時間-"],
+                                            終了時間 = values["-終了時間-"],
+                                            間時間 = values["-間時間-"],
+                                            タイトル = values["-タイトル-"],
+                                            ファイル名 = values["-ファイル名-"],
+                                            page = values["-ページ-"],
+                                            気付き1 = values["-気付き1-"],
+                                            気付き2 = values["-気付き2-"],
+                                            気付き3 = values["-気付き3-"],
+                                            コメント = values["-コメント-"],
+                ))
+        session.commit()
+        sg.popup_ok('保存完了')
+        window["-過去ログ-"].update(過去ログ())
+    except:
+        sg.PopupError('！エラー発生！')
+        window["-過去ログ-"].update(過去ログ())
+    
 
-"""
+
 def 過去ログ2():
     # == 過去ログ↓ ==
         list = values["-過去ログ-"]
         id = list[0][0]
         session = Session(config.engine)
-        t = session.query(seeds).filter(seeds.id == id).first()
+        t = session.query(t_07_読書).filter(t_07_読書.id == id).first()
         id = t.id
         日付 = t.日付
         開始時間 = t.開始時間
@@ -204,34 +238,72 @@ def 過去ログ2():
         window["-気付き3-"].update(気付き3)
         window["-コメント-"].update(コメント)
         # == 過去ログ↑ ==
-"""
+
 
 id = max_id()
+"""
 
+def 取引リスト():
+    return ['test','test']
 
-layout = [
-  [sg.Text('通販管理')],
+def 消費税():
+    return 0.1
+
+def 過去ログ():
+    return ['test','test']
+
+左 = [
+    [sg.Text('通販Editer')],
+    [sg.Text('取引リスト')],
+    [sg.Listbox(取引リスト(), enable_events=True, size=(50, 200), key='-取引リスト-')],
+]
+
+ヘッダー = [
+  [sg.Text('送り状')],
   [sg.Text('ID', size=(10,1)), sg.InputText(id, key="-ID-", size=(10,1))],
   [sg.Text('日付', size=(10,1)), sg.InputText('', key="-日付-", size=(20,1)), sg.Button(button_text='日付',key="日付")],
-  [sg.Text('開始時間', size=(10,1)), sg.InputText('', key="-開始時間-", size=(20,1)), sg.Button(button_text='開始時間',key="開始時間")],
-  [sg.Text('終了時間', size=(10,1)), sg.InputText('', key="-終了時間-", size=(20,1)), sg.Button(button_text='終了時間',key="終了時間")],
+  #[sg.Text('開始時間', size=(10,1)), sg.InputText('', key="-開始時間-", size=(20,1)), sg.Button(button_text='開始時間',key="開始時間")],
+  #[sg.Text('終了時間', size=(10,1)), sg.InputText('', key="-終了時間-", size=(20,1)), sg.Button(button_text='終了時間',key="終了時間")],
   #[sg.Text('間時間', size=(10,1)), sg.InputText('', key="-間時間-", size=(20,1)), sg.Button(button_text='間時間',key="間時間")],
-  
+  [sg.Text('商品id', size=(10,1)), sg.InputText('', key="-商品id-", size=(20,1))],
+  [sg.Text('商品名前', size=(10,1)), sg.InputText('', key="-商品名前-", size=(20,1))],
+  [sg.Text('下代', size=(10,1)), sg.InputText('', key="-下代-", size=(20,1))],
   # コンボボックス
-  #[sg.Text('タイトル', size=(10, 1)), sg.Combo(本タイトル2(), enable_events=True, key="-タイトル2-", size=(50, 5))],
+  [sg.Text('消費税', size=(10, 1)), sg.Combo(消費税(), enable_events=True, key="-消費税-", size=(50, 5))],
+]
 
-  
-  [sg.Text('データ取り込み', size=(10,1)), sg.Button(button_text='データ取り込み', key="-データ取り込み-")],
-  [sg.Text('サイト', size=(10,1)), sg.Button(button_text='Amazon', key="-Amazon-"), sg.Button(button_text='ストアクリエイター', key="-ストアクリエイター-"), sg.Button(button_text='楽天', key="-楽天-"), sg.Button(button_text='ラクマ', key="-ラクマ-"), sg.Button(button_text='ストアーズ', key="-ストアーズ-"), sg.Button(button_text='メルカリ', key="-メルカリ-")],
-  [sg.Text('通販Editer', size=(10,1)), sg.Button(button_text='通販Editer', key="-通販Editer-")],
-  [sg.Text('最適化', size=(10,1)), sg.Button(button_text='最適化', key="-最適化-")],
-  [sg.Text('コメント', size=(10,1)), sg.Multiline(default_text="", size=(50, 5), key="-コメント-"), sg.Button(button_text='保存', key="-保存-"), sg.Button(button_text='閉じる', key="-閉じる-")],
+購入者 = [
+  [sg.Text('購入者')],
+  [sg.Text('名前', size=(10, 1)), sg.InputText('', key="-名前-", size=(20,1))],
+  [sg.Text('住所', size=(10,1)), sg.Multiline('', key="-住所-", size=(50, 5))],
+  [sg.Text('メールアドレス', size=(10,1)), sg.InputText('', key="-メールアドレス-", size=(20,1))],
 
-  [sg.Text('過去ログ', size=(10,1)), sg.Listbox(過去ログ(), enable_events=True, size=(100, 10), key='-過去ログ-')],
+]
+
+送付先 = [
+  [sg.Text('購入者')],
+  [sg.Text('名前', size=(10, 1)), sg.InputText('', key="-名前-", size=(20,1))],
+  [sg.Text('住所', size=(10,1)), sg.Multiline('', key="-住所-", size=(50, 5))],
+  [sg.Text('メールアドレス', size=(10,1)), sg.InputText('', key="-メールアドレス-", size=(20,1))],
+]
+
+フッター = [
+  [sg.Text('コメント', size=(10,1)), sg.Multiline(default_text="", size=(50, 5), key="-コメント-"), sg.Button(button_text='新規保存', key="-新規保存-"), sg.Button(button_text='保存', key="-保存-"), sg.Button(button_text='読了', key="-読了-"), sg.Button(button_text='閉じる', key="-閉じる-")],
+  [sg.Text('過去ログ', size=(10,1)), sg.Listbox(過去ログ(), enable_events=True, size=(200, 10), key='-過去ログ-'), sg.Button(button_text='読み込み', key="-読み込み-")],
   ]
 
+個人情報 = ([
+    sg.Pane([購入者, 送付先], orientation='h')
+])
+
+L = ([
+    [sg.Pane([ヘッダー], orientation='h')],
+    [sg.Pane([左, 個人情報], orientation='h')],
+    [sg.Pane([フッター], orientation='h')],
+    ])
+
 # ウィンドウを作成する
-window = sg.Window('通販管理', layout, resizable=True)
+window = sg.Window('通販Editer', L, resizable=True)
 
 # == 時間↓ ==
 timebox = Timebox()
@@ -262,37 +334,21 @@ while True:
             window["-間時間-"].update(timebox.ma_time)
         except:
             sg.PopupError('！日付計算エラー！')
-        # == 時間↑ ==
 
-    elif event == "-過去ログ-" or event == "-読み込み-":
+            # == 時間↑ ==
+
+    elif event == "-過去ログ-":
         過去ログ2()
-    elif event == "-データ取り込み-":
-        データ取り込み()
-    elif event == "-通販Editer-":
-        subprocess.Popen(["python", "a通販Editer.py"], shell=True)
-    elif event == "-Amazon-":
-        Amazon()
-    elif event == "-ストアクリエイター-":
-        ストアクリエイター()
-    elif event == "-楽天-":
-        楽天()
-    elif event == "-ラクマ-":
-        ラクマ()
-        
-    elif event == "-ストアーズ-":
-        ストアーズ()
+    elif event == "-新規保存-":
+        新規保存()
+    elif event == "-保存-":
+        保存()
 
-    elif event == "-メルカリ-":
-        メルカリ()    
-    
+
     elif event == "-読了-":
         window["-読了-"].update("読了")
     elif event == "-閉じる-":
         break
-    elif event == "-コピー-":
-        window["-ID-"].update(max_id())
-        window["-タイトル_id-"].update(values["-タイトル-"])
-        window["-ファイル名_id-"].update("-ファイル名-")
 
     print(event, values)
     # Output a message to the window

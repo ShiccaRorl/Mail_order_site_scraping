@@ -4,7 +4,7 @@ call C:\\tools\\Anaconda3\\Scripts\\activate.bat
 
 :loop
 
-python ./aƒƒjƒ…[.py 1
+python ./aLogin.py
 
 	timeout 10
 	

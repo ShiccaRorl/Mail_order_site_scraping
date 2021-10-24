@@ -5,14 +5,14 @@
 import PySimpleGUI as sg
 import datetime
 
-"""
+
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import * 
 from sqlalchemy.orm import *
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-"""
+
 
 from config import Config
 #import webbrowser
@@ -33,7 +33,7 @@ if id == None:
 
 config = Config()
 
-#t_103_ライフログ = config.Base.classes.LifeLog_t_103_ライフログ
+t_人事 = config.Base.classes.human_resources_t_人事
 
 #Session = sessionmaker(bind=config.engine)
 #session = Session(config.engine)
@@ -93,26 +93,32 @@ def メニューログ(data=None):
         return member_list
 
 header = ['ID', '開始時間', '終了時間', "プログラム名"]
-
+"""
 
 def max_id():
     # 過去ログテーブル　の計算
-    過去ログ = session.query(t_103_ライフログ).order_by(desc(t_103_ライフログ.開始時間)).limit(30)
+    session = Session(config.engine)
+    過去ログ = session.query(t_人事).filter(t_人事.在籍中 == True).order_by(desc(t_人事.開始時間)).all()
     # 最大値の計算
-    i = []
-    for s in 過去ログ:
-        i.append(s.id)
-    return max(i) + 1
+    try:
+        i = []
+        for s in 過去ログ:
+            i.append(s.id)
+        return max(i) + 1
+    except:
+        return 1
 
 
 id = max_id()
-"""
+
 layout = [
   [sg.Text('メニュー管理')],
+  #[sg.Button(button_text='通販データ取り込み',key="通販データ取り込み"), sg.Button(button_text='通販',key="通販")],
   [sg.Button(button_text='通販',key="通販")],
-  [sg.Button(button_text='プログラム',key="プログラム"), sg.Button(button_text='検索文字列',key="検索文字列")],
-  #[sg.Button(button_text='映画',key="映画")],
-  #[sg.Button(button_text='読書',key="読書"), sg.Button(button_text='本',key="本")],
+  [sg.Button(button_text='通販登録補助',key="通販登録補助")],
+  #[sg.Button(button_text='プログラム',key="プログラム"), sg.Button(button_text='検索文字列',key="検索文字列")],
+  [sg.Button(button_text='在庫管理',key="在庫管理")],
+  [sg.Button(button_text='通販経理',key="通販経理"), sg.Button(button_text='通販人事',key="通販人事")],
 
 
   [sg.Button(button_text='プロジェクト',key="プロジェクト"), sg.Button(button_text='やりたい事リスト',key="やりたい事リスト")],
@@ -131,28 +137,29 @@ while True:
 # ユーザーが終了したいのか、ウィンドウが閉じられたかどうかを確認してください
     if event == sg.WINDOW_CLOSED or event == '終了' or event == "-閉じる-":
         break
+    #elif event == "通販データ取り込み":
+    #    subprocess.Popen(["取り込み.cmd"], shell=True)
+
     elif event == "通販":
         subprocess.Popen(["python", f"./a通販.py", f"{id}"], shell=True)
 
-    elif event == "プログラム":
-        subprocess.Popen(["python", f"./aProgram.py", f"{id}"], shell=True)
+    elif event == "通販登録補助":
+        subprocess.Popen(["python", "/a通販登録補助.py", f"{id}"], shell=True)
 
-    elif event == "検索文字列":
-        #検索文字列menu_log = Menu_Log()
-        #検索文字列menu_log.プログラム名("検索文字列")
-        #検索文字列menu_log.start_time()
-        subprocess.Popen(["python", f"./a検索文字列.py", f"{id}"], shell=True)
-        #検索文字列menu_log.end_time()
-        #検索文字列menu_log.保存()
+    elif event == "在庫管理":
+        subprocess.Popen(["python", f"./a在庫管理.py", f"{id}"], shell=True)
 
-    elif event == "プロジェクト":
+    elif event == "通販経理":
+        print("")
+
+    elif event == "通販人事":
         print("")
 
     elif event == "やりたい事リスト":
-        subprocess.Popen(["python", f"./aやりたい事リスト.py", f"{id}"], shell=True)
+        subprocess.Popen(["python", "./aやりたい事リスト.py", f"{id}"], shell=True)
 
     elif event == "メール送信":
-        subprocess.Popen(["python", f"./aメール送信.py", f"{id}"], shell=True)
+        subprocess.Popen(["python", "./aメール送信.py", f"{id}"], shell=True)
 
     elif event == "メニューログ":
         print("")
