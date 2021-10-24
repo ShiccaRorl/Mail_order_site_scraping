@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <form action="/amazon" method="post" enctype="multipart/form-data">
+      <textarea name="seed" value="{{ seed }}" type="text">{{ seed }}</textarea>
+      <input type="checkbox" name="riyu1" value="{{riyu1}}" />柄有り
+      <input
+        type="checkbox"
+        name="riyu2"
+        value="{{riyu2}}"
+      />バリュー有り（色違い）
+      <br />
+      <button
+        name="set_seed"
+        autofocus="autofocus"
+        type="submit"
+        formmethod="post"
+        formnovalidate="formnovalidate"
+      >
+        amazon
+      </button>
+    </form>
+    <br />
+    <form action="/rakuten" method="post" enctype="multipart/form-data">
+      <input type="checkbox" name="riyu1" value="{{riyu1}}" />柄有り
+      <input
+        type="checkbox"
+        name="riyu2"
+        value="{{riyu2}}"
+      />バリュー有り（色違い）
+      <br />
+      <button
+        name="set_seed"
+        autofocus="autofocus"
+        type="submit"
+        formmethod="post"
+        formnovalidate="formnovalidate"
+      >
+        楽天
+      </button>
+      <br />
+    </form>
+    <form action="/rakuma" method="post" enctype="multipart/form-data">
+      <br />
+      <button
+        name="set_seed"
+        autofocus="autofocus"
+        type="submit"
+        formmethod="post"
+        formnovalidate="formnovalidate"
+      >
+        ラクマ
+      </button>
+    </form>
+    <br />
+    <form action="/yahoo_auction" method="post" enctype="multipart/form-data">
+      <br />
+      <button
+        name="set_seed"
+        autofocus="autofocus"
+        type="submit"
+        formmethod="post"
+        formnovalidate="formnovalidate"
+      >
+        ヤフオク
+      </button>
+    </form>
+  </body>
+</html>
