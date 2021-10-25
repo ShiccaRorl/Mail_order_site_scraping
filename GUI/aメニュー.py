@@ -23,11 +23,12 @@ import sys
 # pip install psycopg2
 # pip install PySimpleGUI
 
-args = sys.argv
-id = args[1]
+#args = sys.argv
+#id = args[1]
 
-if id == None:
-    exit
+#if id == None:
+#    exit
+
 
 #help(sg.Table)
 
