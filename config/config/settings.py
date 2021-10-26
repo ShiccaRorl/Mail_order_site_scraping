@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'sale',
     'product',
     'product_listing_assistance',
+    'human_resources',
 ]
 
 MIDDLEWARE = [
