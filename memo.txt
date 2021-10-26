@@ -1,5 +1,6 @@
 * Split Browser[]:
 https://chrome.google.com/webstore/detail/split-screen-for-google-c/dnollkdkikklpdganoecjcmmlddbennb
+https://chrome.google.com/webstore/detail/tab-resize-split-screen-l/bkpenclhmiealbebdopglffmfdiilejc
 
 
 どこでもメモ
