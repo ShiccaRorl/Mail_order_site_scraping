@@ -4,3 +4,19 @@ https://chrome.google.com/webstore/detail/split-screen-for-google-c/dnollkdkikkl
 
 どこでもメモ
 https://tanweb.net/2020/11/18/37422/
+
+
+Migrationsの履歴
+python manage.py showmigrations
+
+Migrations履歴を削除
+python manage.py migrate --fake LifeLog zero
+
+Migrationsファイルを削除
+
+再度Migrations履歴を確認
+python manage.py showmigrations
+
+python manage.py makemigrations
+
+python manage.py migrate --fake-initial
