@@ -118,6 +118,7 @@ class Rakuma_Test():
             print("ラクマディレクトリerr")
             self.logger.debug('ラクマディレクトリerr')
 
+
     def ラクマ出品一覧(self):
         try:
             with open(self.file_path, 'r', encoding="utf-8") as f:
@@ -127,7 +128,8 @@ class Rakuma_Test():
             soup = BeautifulSoup(self.seed1, 'html.parser')
             data_soup = soup.find_all("div", attrs={"class": "media-body"})
             for i in data_soup:
-                data.append(i.find("h4", attrs={"class": "media-heading"}))
+                if data_soup.find("span", attrs={"class": "waiting"}) != "売却済み"
+                    data.append(i.find("h4", attrs={"class": "media-heading"}))
 
             #data = data.find("h4", attrs={"class": "media-heading"})
             
