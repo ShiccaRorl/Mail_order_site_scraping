@@ -128,7 +128,7 @@ class Rakuma_Test():
             soup = BeautifulSoup(self.seed1, 'html.parser')
             data_soup = soup.find_all("div", attrs={"class": "media-body"})
             for i in data_soup:
-                if data_soup.find("span", attrs={"class": "waiting"}) != "売却済み"
+                if data_soup.find("span", attrs={"class": "waiting"}) != "売却済み":
                     data.append(i.find("h4", attrs={"class": "media-heading"}))
 
             #data = data.find("h4", attrs={"class": "media-heading"})
