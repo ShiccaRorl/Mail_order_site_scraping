@@ -89,7 +89,7 @@ class Rakuma_Test():
     def main(self):
         # self.ラクマディレクトリ()
         self.ラクマ出品一覧()
-
+        print("ラクマ出品一覧出力")
         subprocess.run("ruby zaラクマ_入力テスト.rb " + str(self.file_out.parent), shell=True, text=True)
         self.ラクマ登録２重チェック()
         self.在庫0商品リスト()
@@ -128,7 +128,11 @@ class Rakuma_Test():
             soup = BeautifulSoup(self.seed1, 'html.parser')
             data_soup = soup.find_all("div", attrs={"class": "media-body"})
             for i in data_soup:
-                if data_soup.find("span", attrs={"class": "waiting"}) != "売却済み":
+                print(i.find("span", attrs={"class": "waiting"}))
+                t = i.find("span", attrs={"class": "waiting"})
+                print(t.text)
+                if t.text == '出品中':
+                    print("発見")
                     data.append(i.find("h4", attrs={"class": "media-heading"}))
 
             #data = data.find("h4", attrs={"class": "media-heading"})
