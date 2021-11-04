@@ -12,7 +12,12 @@ python manage.py showmigrations
 
 Migrations履歴を削除
 python manage.py migrate --fake LifeLog zero
+
 python manage.py migrate --fake human_resources zero
+python manage.py migrate --fake seeds zero
+python manage.py migrate --fake sale zero
+python manage.py migrate --fake product zero
+python manage.py migrate --fake product_listing_assistance zero
 
 Migrationsファイルを削除
 
