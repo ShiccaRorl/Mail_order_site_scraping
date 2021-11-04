@@ -120,7 +120,7 @@ class Rakuma_Test():
 
 
     def ラクマ出品一覧(self):
-        #try:
+        try:
             with open(self.file_path, 'r', encoding="utf-8") as f:
                 self.seed1 = f.read()
 
@@ -155,7 +155,7 @@ class Rakuma_Test():
                 else:
                     with open(str(self.file_out.parent) + "\\ラクマ出品一覧.txt", 'a', encoding="utf-8") as f:
                         f.write(d.text + "\n")
-        #except:
+        except:
             print("ラクマ出品一覧err")
             self.logger.debug('ラクマ出品一覧err')
 
