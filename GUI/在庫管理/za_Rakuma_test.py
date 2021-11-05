@@ -120,7 +120,7 @@ class Rakuma_Test():
 
 
     def ラクマ出品一覧(self):
-        try:
+        #try:
             with open(self.file_path, 'r', encoding="utf-8") as f:
                 self.seed1 = f.read()
 
@@ -128,17 +128,23 @@ class Rakuma_Test():
             soup = BeautifulSoup(self.seed1, 'html.parser')
             data_soup = soup.find_all("div", attrs={"class": "media-body"})
             for i in data_soup:
-                print(i)
-                print(i.find("span", attrs={"class": "waiting"}))
-                t = i.find("span", attrs={"class": "waiting"})
-                print(t)
-                if t.text() == '出品中':
-                    print("発見")
-                    data.append(i.find("h4", attrs={"class": "media-heading"}))
-                elif t.text() == "売却済み":
-                    print("売却済み")
-                else:
-                    print("err")
+                if i != None:
+                    #print(i)
+                    #print(i.find("span", attrs={"class": "waiting"}))
+                    t = i.find("span", attrs={"class": "waiting"})
+                    #print(t)
+                    if t != None:
+                        print(str(t.text()))
+                        try:
+                            if t.text() == '出品中':
+                                print("出品中")
+                                data.append(i.find("h4", attrs={"class": "media-heading"}))
+                            elif t.text() == "売却済み":
+                                print("売却済み")
+                            else:
+                                print("err")
+                        except:
+                            print("")
             #data = data.find("h4", attrs={"class": "media-heading"})
             
             # <div class="media-body">
@@ -147,7 +153,7 @@ class Rakuma_Test():
             i = 0
             for d in data:
                 # print(d.text)
-                #print(str(self.file_out.parent) + "\\ラクマ出品一覧.txt")
+                print(str(self.file_out.parent) + "\\ラクマ出品一覧.txt")
                 if i == 0:
                     with open(str(self.file_out.parent) + "\\ラクマ出品一覧.txt", 'w', encoding="utf-8") as f:
                         f.write(d.text + "\n")
@@ -155,7 +161,7 @@ class Rakuma_Test():
                 else:
                     with open(str(self.file_out.parent) + "\\ラクマ出品一覧.txt", 'a', encoding="utf-8") as f:
                         f.write(d.text + "\n")
-        except:
+        #except:
             print("ラクマ出品一覧err")
             self.logger.debug('ラクマ出品一覧err')
 
