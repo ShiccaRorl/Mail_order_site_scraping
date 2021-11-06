@@ -134,12 +134,12 @@ class Rakuma_Test():
                     t = i.find("span", attrs={"class": "waiting"})
                     #print(t)
                     if t != None:
-                        print(str(t.text()))
+                        #print(str(t.text()))
                         try:
-                            if t.text() == '出品中':
+                            if t == '出品中':
                                 print("出品中")
                                 data.append(i.find("h4", attrs={"class": "media-heading"}))
-                            elif t.text() == "売却済み":
+                            elif t == "売却済み":
                                 print("売却済み")
                             else:
                                 print("err")
