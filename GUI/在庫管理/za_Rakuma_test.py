@@ -128,22 +128,27 @@ class Rakuma_Test():
             soup = BeautifulSoup(self.seed1, 'html.parser')
             data_soup = soup.find_all("div", attrs={"class": "media-body"})
             for i in data_soup:
-                if i != None:
-                    #print(i)
+                if i == None:
+                    print("")
+                else:
                     #print(i.find("span", attrs={"class": "waiting"}))
                     t = i.find("span", attrs={"class": "waiting"})
                     #print(t)
-                    if t != None:
-                        #print(str(t.text()))
-                        try:
-                            if t == '出品中':
+                    if t == None:
+                        print("")
+                    else:
+                        #try:
+                            print(t)
+                            m = t.text
+                            print(m)
+                            if m == '出品中':
                                 print("出品中")
                                 data.append(i.find("h4", attrs={"class": "media-heading"}))
-                            elif t == "売却済み":
+                            elif m == "売却済み":
                                 print("売却済み")
                             else:
-                                print("err")
-                        except:
+                                print("それ以外")
+                        #except:
                             print("")
             #data = data.find("h4", attrs={"class": "media-heading"})
             
