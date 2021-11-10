@@ -384,23 +384,25 @@ class Rakuma_Test():
 
         return logger
 
-    def 商品番号取得():
+    def 商品番号取得(self):
         with open(str(self.file_out.parent) + "/ラクマ出品一覧.txt", 'r', encoding="utf-8") as f:
             self.seed1 = f.read().split("\n")
         
         a = 0
         for i in self.seed1:
+            b = len(i.split("\s"))
             s = i.split("\s")[-1] # 文字列スペース区切りの一番最後
-            t = i.split("\s")[-2] # 文字列スペース区切りの二番目を取得
+            #t = i.split("\s")[-2] # 文字列スペース区切りの二番目を取得
+            c = len(i.split(")"))
             m = i.split(")")[-1] # 文字列カッコ区切りの一番最後
             
             if a == 0:
                 with open(str(self.file_out.parent) + "/商品コード.txt", 'w', encoding="utf-8") as f:
-                    f.write(s+ "\t" + t + "\t" + m + "\n")
+                    f.write(str(b) + str(c) + " " + s + " " +  m + "\n")
                     a = 1
             else:
                 with open(str(self.file_out.parent) + "/商品コード.txt", 'a', encoding="utf-8") as f:
-                    f.write(s+ "\t" + t + "\t" + m + "\n")
+                    f.write(str(b) + str(c) + " " + s + " " +  m + "\n")
 
 
 if __name__ == '__main__':
