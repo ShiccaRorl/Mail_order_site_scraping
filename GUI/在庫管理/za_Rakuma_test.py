@@ -89,14 +89,15 @@ class Rakuma_Test():
     def main(self):
         # self.ラクマディレクトリ()
         self.ラクマ出品一覧()
-        self.商品番号取得()
+        #self.商品番号取得()
         print("ラクマ出品一覧出力")
-        subprocess.run("ruby zaラクマ_入力テスト.rb " + str(self.file_out.parent), shell=True, text=True)
+
         self.ラクマ登録２重チェック()
         self.在庫0商品リスト()
         self.在庫1商品リスト()
         self.登録出来ていない商品チェック()
         self.出品されているのに在庫0のリスト()
+        subprocess.run("ruby zaラクマ_入力テスト.rb " + str(self.file_out.parent), shell=True, text=True)
         # if self.file_out2 != None:
         #    self.出品の比較する()
 

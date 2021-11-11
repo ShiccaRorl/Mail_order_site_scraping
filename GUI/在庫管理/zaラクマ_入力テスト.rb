@@ -16,6 +16,7 @@ class Rakuma_Test
 
         self.二重登録チェック()
 		self.二重登録チェック2()
+		self.商品コード()
         #ソートする()
     end
 
@@ -252,6 +253,33 @@ class Rakuma_Test
                 end
 		end
     end
+	
+	def 商品コード()
+		data = @data
+		s = 0
+		data.each{|line|
+		a = line.split("\s")[-1]
+		b = line.split("\s")[-2]
+		c = line.split(")")[-1]
+			if s == 0 then
+                File.open(@path + "/ラクマ出品コード表.txt", "w:utf-8") do |f|
+                    f.write(a + "\t" + b + "\t" + c + "\n")
+                end
+                s = 1
+            else
+                File.open(@path + "/ラクマ出品コード表.txt", "a:utf-8") do |f|
+                    f.write(a.to_s + "\t" + b.to_s + "\t" + c.to_s + "\n")
+                end
+            end
+		
+		
+		
+		
+		}
+		
+		
+		
+	end
 end
 
 rakuma_test = Rakuma_Test.new()
