@@ -256,9 +256,13 @@ class Rakuma_Test
 	
 	def 商品コードフィルター(data)
 		# それっぽいのを返す
-		#p data.match(/^[A-Z]\d\d\d$/)
-		data2 = data.match(/^[A-Z]\d\d\d/)
-		return data2
+		begin
+			data.strip!
+			#p data.match(/^[A-Z]\d\d\d$/)
+			data2 = data.match(/^[A-Z]*?\d\d\d/)
+		rescue
+			return nil
+		return data2.to_s()
 	end
 	
 	def 商品コード()
@@ -268,34 +272,46 @@ class Rakuma_Test
 			a = line.split("\s")[-1]
 			b = line.split("\s")[-2]
 			c = line.split(")")[-1]
+			
+			p a
+			p b
+			p c
 		
 			d = self.商品コードフィルター(a)
 			e = self.商品コードフィルター(b)
 			f = self.商品コードフィルター(c)
-		if s == 0 then
-			if d != nil then
-		
-			elsif e != nil then
-		
-			elsif f != nil then
-		
-			else
-		
+			
+			p d
+			p e
+			p f
+			
+			File.open(@path + "/ラクマ出品コード表.txt", "w:utf-8") do |f|
+                f.write("")
 			end
-		else
-		
-		end
-			if s == 0 then
-                File.open(@path + "/ラクマ出品コード表.txt", "w:utf-8") do |f|
-                    f.write(d + "\n")
+				
+				if d == nil then
+				
+				else
+					File.open(@path + "/ラクマ出品コード表.txt", "a:utf-8") do |f|
+						f.write(d + "\n")
+					end
                 end
-                s = 1
-            else
-                File.open(@path + "/ラクマ出品コード表.txt", "a:utf-8") do |f|
-                    f.write(d + "\n")
-                end
-            end
 		
+				if e == nil then
+				
+				else
+					File.open(@path + "/ラクマ出品コード表.txt", "a:utf-8") do |f|
+						f.write(e + "\n")
+					end
+                end
+				
+				if f == nil then
+				
+				else
+					File.open(@path + "/ラクマ出品コード表.txt", "a:utf-8") do |fd|
+						fd.write(f + "\n")
+					end
+                end
 		
 		
 		
