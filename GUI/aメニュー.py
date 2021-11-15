@@ -5,7 +5,7 @@
 import PySimpleGUI as sg
 import datetime
 
-
+"""
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import * 
 from sqlalchemy.orm import *
@@ -35,10 +35,10 @@ import sys
 config = Config()
 
 t_人事 = config.Base.classes.human_resources_t_人事
-
+"""
 #Session = sessionmaker(bind=config.engine)
 #session = Session(config.engine)
-
+"""
 class Menu_Log:
     def __init__(self):
         self.config = Config()
@@ -55,7 +55,7 @@ class Menu_Log:
 
     def プログラム名(self, name):
         self.プログラム名 = name
-"""
+
     def 保存(self):
         t_103_ライフログ = self.config.Base.classes.LifeLog_t_103_ライフログ
         session = Session(self.config.engine)
@@ -74,6 +74,7 @@ class Menu_Log:
                                         プログラム名 = self.プログラム名,
         ))
         session.commit()
+
 """
 """
 def メニューログ(data=None):
@@ -95,7 +96,7 @@ def メニューログ(data=None):
 
 header = ['ID', '開始時間', '終了時間', "プログラム名"]
 """
-
+"""
 def max_id():
     # 過去ログテーブル　の計算
     session = Session(config.engine)
@@ -111,7 +112,7 @@ def max_id():
 
 
 id = max_id()
-
+"""
 layout = [
   [sg.Text('メニュー管理')],
   #[sg.Button(button_text='通販データ取り込み',key="通販データ取り込み"), sg.Button(button_text='通販',key="通販")],
