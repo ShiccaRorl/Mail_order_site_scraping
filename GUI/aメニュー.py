@@ -124,8 +124,7 @@ layout = [
 
 
   [sg.Button(button_text='プロジェクト',key="プロジェクト"), sg.Button(button_text='やりたい事リスト',key="やりたい事リスト")],
-  [sg.Button(button_text='メール送信',key="メール送信")],
-  [sg.Button(button_text='メニューログ',key="メニューログ")],
+  [sg.Button(button_text='メール送信',key="メール送信"), sg.Button(button_text='作業ログ',key="作業ログ")],
   ]
 
 # ウィンドウを作成する
@@ -162,6 +161,9 @@ while True:
 
     elif event == "メール送信":
         subprocess.Popen(["python", "./aメール送信.py", f"{id}"], shell=True)
+
+    elif event == "作業ログ":
+        subprocess.Popen(["python", "./a作業ログ.py", f"{id}"], shell=True)
 
     elif event == "メニューログ":
         print("")
