@@ -285,40 +285,34 @@ class Rakuma_Test
 			p e
 			p f
 			
-			File.open(@path + "/ラクマ出品コード表.txt", "w:utf-8") do |f|
-                f.write("")
-			end
-				
-				if d == nil then
-				
-				else
+			if s == 0 then
+				File.open(@path + "/ラクマ出品コード表.txt", "w:utf-8") do |f|
+					f.write("")
+				end
+				File.open(@path + "/ラクマ出品コード表err.txt", "w:utf-8") do |f|
+					f.write("")
+				end
+				s = 1
+			else
+				if d != nil then
 					File.open(@path + "/ラクマ出品コード表.txt", "a:utf-8") do |f|
 						f.write(d + "\n")
 					end
-                end
-		
-				if e == nil then
-				
-				else
+				elsif e != nil then
 					File.open(@path + "/ラクマ出品コード表.txt", "a:utf-8") do |f|
 						f.write(e + "\n")
 					end
-                end
-				
-				if f == nil then
-				
-				else
+				elsif f != nil then
 					File.open(@path + "/ラクマ出品コード表.txt", "a:utf-8") do |fd|
 						fd.write(f + "\n")
 					end
+				else
+					File.open(@path + "/ラクマ出品コード表err.txt", "a:utf-8") do |f|
+						f.write(line)
+					end
                 end
-		
-		
-		
+			end
 		}
-		
-		
-		
 	end
 end
 
