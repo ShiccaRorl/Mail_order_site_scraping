@@ -120,7 +120,7 @@ layout = [
   [sg.Button(button_text='通販登録補助',key="通販登録補助")],
   #[sg.Button(button_text='プログラム',key="プログラム"), sg.Button(button_text='検索文字列',key="検索文字列")],
   [sg.Button(button_text='在庫管理',key="在庫管理")],
-  [sg.Button(button_text='通販経理',key="通販経理"), sg.Button(button_text='通販人事',key="通販人事")],
+  [sg.Button(button_text='通販経理',key="通販経理"),],
 
 
   [sg.Button(button_text='プロジェクト',key="プロジェクト"), sg.Button(button_text='やりたい事リスト',key="やりたい事リスト")],
@@ -151,9 +151,6 @@ while True:
         subprocess.Popen(["python", f"./a在庫管理.py", f"{id}"], shell=True)
 
     elif event == "通販経理":
-        print("")
-
-    elif event == "通販人事":
         print("")
 
     elif event == "やりたい事リスト":

@@ -262,6 +262,7 @@ class Rakuma_Test
 			data2 = data.match(/^[A-Z]*?\d\d\d/)
 		rescue
 			return nil
+		end
 		return data2.to_s()
 	end
 	
@@ -294,15 +295,15 @@ class Rakuma_Test
 				end
 				s = 1
 			else
-				if d != nil then
+				if d != nil or d != "" then
 					File.open(@path + "/ラクマ出品コード表.txt", "a:utf-8") do |f|
 						f.write(d + "\n")
 					end
-				elsif e != nil then
+				elsif e != nil or e != ""  then
 					File.open(@path + "/ラクマ出品コード表.txt", "a:utf-8") do |f|
 						f.write(e + "\n")
 					end
-				elsif f != nil then
+				elsif f != nil or f != ""  then
 					File.open(@path + "/ラクマ出品コード表.txt", "a:utf-8") do |fd|
 						fd.write(f + "\n")
 					end
