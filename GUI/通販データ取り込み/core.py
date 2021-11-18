@@ -45,7 +45,9 @@ class Store_Core():
     def seed_save_add(self):
         for d in glob.glob(self.dir):
             print(d)
-            if d != None:
+            if d == None:
+                print()
+            else:
                 self.seed1 = self.load(d)
 
                 session = Session(self.engine)

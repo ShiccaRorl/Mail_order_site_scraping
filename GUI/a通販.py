@@ -75,7 +75,7 @@ def max_id():
         return 1
         
 def データ取り込み():
-    subprocess.Popen(["取り込み.cmd", f"{id}"], shell=True)
+    subprocess.Popen(["python", "./通販データ取り込み/core.py", f"{id}"], shell=True)
 
 def ラクマ():
     session = Session(config.engine)
