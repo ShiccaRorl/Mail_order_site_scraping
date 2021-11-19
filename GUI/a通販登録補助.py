@@ -28,33 +28,33 @@ id = 1
 
 seeds = config.Base.classes.seeds_seeds
 
-id = max_id()
 
 
-layout = [
+
+layout = sg.Column([
   [sg.Text('通販登録補助管理', size=(13,1))],
-  [sg.Text('ソース', size=(10,1)), sg.Multiline(default_text="", key="-ソース-", size=(10, 5))],
-  [sg.Text('柄あり', size=(10,1)), ],
-  [sg.Text('バリエーションあり', size=(10,1)),],
+  [sg.Text('ソース', size=(10,1)), sg.Multiline(default_text="", key="-ソース-", size=(70, 10))],
+  [sg.Text('柄あり', size=(10,1)), sg.Checkbox("固定", key="-固定-")],
+  [sg.Text('バリエーションあり', size=(10,1)),sg.Checkbox("固定", key="-固定-")],
   
   [sg.Text('商品', size=(13,1))],
-  [sg.Text('商品コード', size=(10,1)), sg.InputText('', key="-商品コード-", size=(20,1)), ],
-  [sg.Text('商品名', size=(10,1)), sg.InputText('', key="-商品名-", size=(20,1)), ],
-  [sg.Text('税抜き価格', size=(10,1)), sg.Button(button_text='Amazon', key="-Amazon-"), sg.Button(button_text='ストアクリエイター', key="-ストアクリエイター-"), sg.Button(button_text='楽天', key="-楽天-"), sg.Button(button_text='ラクマ', key="-ラクマ-"), sg.Button(button_text='ストアーズ', key="-ストアーズ-"), sg.Button(button_text='メルカリ', key="-メルカリ-")],
-  [sg.Text('税送料込み', size=(10,1)), sg.Button(button_text='通販Editer', key="-通販Editer-")],
+  [sg.Text('商品コード', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品コード-", size=(40,1)), sg.Button(button_text='コピー', key="-コピー-")],
+  [sg.Text('商品名', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40,1)),sg.Button(button_text='コピー', key="-コピー-") ],
+  [sg.Text('税抜き価格', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40,1)),sg.Button(button_text='コピー', key="-コピー-")],
+  [sg.Text('税送料込み', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40,1)),sg.Button(button_text='コピー', key="-コピー-")],
 
-　　[sg.Text('発送方法', size=(13,1))],
-  [sg.Text('ヤフオク', size=(10,1)), sg.Button(button_text='最適化', key="-最適化-")],
-  [sg.Text('アマゾン', size=(10,1)), sg.Multiline(default_text="", size=(50, 5), key="-コメント-"), sg.Button(button_text='保存', key="-保存-"), sg.Button(button_text='閉じる', key="-閉じる-")],
-　　[sg.Text('楽天', size=(10,1))],
-　　[sg.Text('メルカリ', size=(10,1))],
-　　[sg.Text('ラクマ', size=(10,1))],
+  [sg.Text('発送方法', size=(13,1))],
+  [sg.Text('ヤフオク', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40,1)), sg.Button(button_text='コピー', key="-コピー-")],
+  [sg.Text('アマゾン', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40,1)), sg.Button(button_text='コピー', key="-コピー-")],
+  [sg.Text('楽天', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40,1)), sg.Button(button_text='コピー', key="-コピー-")],
+  [sg.Text('メルカリ', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40,1)), sg.Button(button_text='コピー', key="-コピー-")],
+  [sg.Text('ラクマ', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40,1)), sg.Button(button_text='コピー', key="-コピー-")],
 
-　　[sg.Text('商品説明', size=(13,1))],
-　　[sg.Text('ラクマ', size=(10,1))],
+  [sg.Text('商品説明', size=(10,1))],
+  [sg.Text('ラクマ', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40,1)), sg.Button(button_text='コピー', key="-コピー-")],
 
-  [sg.Text('過去ログ', size=(10,1)), sg.Listbox(過去ログ(), enable_events=True, size=(100, 10), key='-過去ログ-')],
-  ]
+  [sg.Text('過去ログ', size=(10,1)), sg.Listbox([0,0], enable_events=True, size=(100, 10), key='-過去ログ-')],
+  ])
 
 # ウィンドウを作成する
 window = sg.Window('通販登録補助管理', layout, resizable=True)
