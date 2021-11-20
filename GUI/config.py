@@ -66,25 +66,6 @@ class Config:
         #self.Base = declarative_base(bind=self.engine)
         self.Base.prepare(self.engine, reflect=True)
 
-        """
-        # peewee
-        self.db = PostgresqlDatabase(
-            'LifeLog',  # Required by Peewee.
-            user='root',  # Will be passed directly to psycopg2.
-            password='root',  # Ditto.
-            host='192.168.10.8',  # Ditto.
-            port='5432',
-        )
-        
-        #self.db = PostgresqlDatabase('LifeLog', user='root')
-        self.db = PostgresqlExtDatabase(
-        database='LifeLog',
-        user='root',
-        password="root",
-        host="192.168.10.8",
-        port=5432,
-        register_hstore=False)
-        """
         
 class Timebox():
     def __init__(self):

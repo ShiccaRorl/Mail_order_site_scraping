@@ -29,14 +29,14 @@ id = 1
 seeds = config.Base.classes.seeds_seeds
 
 
-
-
-layout = sg.Column([
+上= [
   [sg.Text('通販登録補助管理', size=(13,1))],
-  [sg.Text('ソース', size=(10,1)), sg.Multiline(default_text="", key="-ソース-", size=(70, 10))],
+  [sg.Text('ソース', size=(10,1)), sg.Multiline(default_text="", key="-ソース-", size=(70, 7))],
   [sg.Text('柄あり', size=(10,1)), sg.Checkbox("固定", key="-固定-")],
   [sg.Text('バリエーションあり', size=(10,1)),sg.Checkbox("固定", key="-固定-")],
-  
+]
+
+左 = [
   [sg.Text('商品', size=(13,1))],
   [sg.Text('商品コード', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品コード-", size=(40,1)), sg.Button(button_text='コピー', key="-コピー-")],
   [sg.Text('商品名', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40,1)),sg.Button(button_text='コピー', key="-コピー-") ],
@@ -51,13 +51,26 @@ layout = sg.Column([
   [sg.Text('ラクマ', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40,1)), sg.Button(button_text='コピー', key="-コピー-")],
 
   [sg.Text('商品説明', size=(10,1))],
-  [sg.Text('ラクマ', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40,1)), sg.Button(button_text='コピー', key="-コピー-")],
+  [sg.Text('サイズ', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-サイズ-", size=(40,1)), sg.Button(button_text='コピー', key="-コピー-")],
+  [sg.Text('品質', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-品質-", size=(40,1)), sg.Button(button_text='コピー', key="-コピー-")],
+  [sg.Text('生産国', size=(10,1)),sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-生産国-", size=(40,1)), sg.Button(button_text='コピー', key="-コピー-")],
+ 
+  ]
 
-  [sg.Text('過去ログ', size=(10,1)), sg.Listbox([0,0], enable_events=True, size=(100, 10), key='-過去ログ-')],
-  ])
+下 = [
+[sg.Text('過去ログ', size=(10,1)), sg.Listbox([0,0], enable_events=True, size=(70, 7), key='-過去ログ-')],
+]
+
+  
+右 = [
+    [sg.Text('操作', size=(10,1)),sg.Button(button_text='上にずらす', key="-上にずらす-")],
+    [sg.Text('', size=(10,1)),sg.Button(button_text='下にずらす', key="-下にずらす-")],
+]
+
+main = [[]]
 
 # ウィンドウを作成する
-window = sg.Window('通販登録補助管理', layout, resizable=True)
+window = sg.Window('通販登録補助管理', main, resizable=True)
 
 # == 時間↓ ==
 timebox = Timebox()
