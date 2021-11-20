@@ -19,7 +19,8 @@ from config import Config, Timebox
 # pip install psycopg2
 # pip install PySimpleGUI
 
-
+import webbrowser
+import subprocess
 #help(sg.Table)
 
 config = Config()
@@ -42,6 +43,7 @@ seeds = config.Base.classes.seeds_seeds
     [sg.Text('商品名', size=(10, 1)), sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40, 1)),],
     [sg.Text('税抜き価格', size=(10, 1)), sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-税抜き価格-", size=(40, 1)),],
     [sg.Text('税送料込み', size=(10, 1)), sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-税送料込み-", size=(40, 1)),],
+    [sg.Text('', size=(13, 1))],
 
     [sg.Text('発送方法', size=(13, 1))],
     [sg.Text('ストアクリエイター', size=(10, 1)), sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40, 1)),],
@@ -49,16 +51,17 @@ seeds = config.Base.classes.seeds_seeds
     [sg.Text('楽天', size=(10, 1)), sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40, 1)),],
     [sg.Text('メルカリ', size=(10, 1)), sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40, 1)),],
     [sg.Text('ラクマ', size=(10, 1)), sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-商品名-", size=(40, 1)),],
+    [sg.Text('', size=(13, 1))],
 
     [sg.Text('商品説明', size=(10, 1))],
     [sg.Text('サイズ', size=(10, 1)), sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-サイズ-", size=(40, 1)),],
     [sg.Text('品質', size=(10, 1)), sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-品質-", size=(40, 1)),],
     [sg.Text('生産国', size=(10, 1)), sg.Checkbox("固定", key="-固定-"), sg.InputText('', key="-生産国-", size=(40, 1)),],
     [sg.Text('', size=(10,1)),sg.Button(button_text='保存', key="-保存-")],
-])
+    ])
 
 下 = sg.Column([
-    [sg.Text('過去ログ', size=(10,1)), sg.Listbox([0,0], enable_events=True, size=(70, 7), key='-過去ログ-')],
+    [sg.Text('過去ログ', size=(10,1)), sg.Listbox([0,0], enable_events=True, size=(70, 7), key='-過去ログ-'), sg.Button(button_text='ディバック', key="-ディバック-")],
     ])
 
   
@@ -69,6 +72,7 @@ seeds = config.Base.classes.seeds_seeds
     [sg.Text('', size=(10,1)),sg.Button(button_text='Amazon', key="-Amazon-")],
     [sg.Text('', size=(10, 1)), sg.Button(button_text='ストアクリエイター', key="-ストアクリエイター-")],
     [sg.Text('', size=(10, 1)), sg.Button(button_text='楽天', key="-楽天-")],
+    [sg.Text('', size=(10, 1)), sg.Button(button_text='ストアーズ', key="-ストアーズ-")],
     [sg.Text('', size=(10, 1)), sg.Button(button_text='ラクマ', key="-ラクマ-")],
     [sg.Text('', size=(10, 1)), sg.Button(button_text='メルカリ', key="-メルカリ-")],
     ])
@@ -82,66 +86,43 @@ main = [
 # ウィンドウを作成する
 window = sg.Window('通販登録補助管理', main, resizable=True)
 
-# == 時間↓ ==
-timebox = Timebox()
-
 # イベントループを使用してウィンドウを表示し、対話する
 while True:
     event, values = window.read()
 # ユーザーが終了したいのか、ウィンドウが閉じられたかどうかを確認してください
     if event == sg.WINDOW_CLOSED or event == '終了' or event == "閉じる":
         break
-    elif event == "日付":
-        window["-日付-"].update(timebox.in_to_text_day(datetime.date.today()))
-        日付 = datetime.date.today()
-
-    elif event == "開始時間":
-        window["-開始時間-"].update(timebox.in_to_text_start(datetime.datetime.now()))
-
-    elif event == "終了時間":
-        window["-終了時間-"].update(timebox.in_to_text_end(datetime.datetime.now()))
-
-    elif event == "間時間":
-        window["-日付-"].update(values["-日付-"].replace('-', '/').replace('+00:00', ''))
-        window["-開始時間-"].update(values["-開始時間-"].replace('-', '/').replace('+00:00', ''))
-        window["-終了時間-"].update(values["-終了時間-"].replace('-', '/').replace('+00:00', ''))
-            
-        try:
-            # window["-間時間-"].update(end_time.in_time(values["-終了時間-"]) - start_time.in_time(values["-開始時間-"]))
-            window["-間時間-"].update(timebox.ma_time)
-        except:
-            sg.PopupError('！日付計算エラー！')
-        # == 時間↑ ==
-
     elif event == "-過去ログ-" or event == "-読み込み-":
         過去ログ2()
     elif event == "-データ取り込み-":
         データ取り込み()
     elif event == "-通販Editer-":
-        subprocess.Popen(["python", "a通販Editer.py"], shell=True)
+        subprocess.Popen(["python", "./a通販Editer.py"], shell=True)
     elif event == "-Amazon-":
-        Amazon()
+        webbrowser.open("https://www.google.com/search?client=firefox-b-d&q=" + values["-検索文字列-"])
+        subprocess.Popen(["python", "./通販登録補助/Amazon.py"], shell=True)
     elif event == "-ストアクリエイター-":
-        ストアクリエイター()
+        webbrowser.open("https://www.google.com/search?client=firefox-b-d&q=" + values["-検索文字列-"])
+        subprocess.Popen(["python", "./通販登録補助/ストアクリエイター.py"], shell=True)
     elif event == "-楽天-":
-        楽天()
+        webbrowser.open("https://www.google.com/search?client=firefox-b-d&q=" + values["-検索文字列-"])
+        subprocess.Popen(["python", "./通販登録補助/楽天.py"], shell=True)
     elif event == "-ラクマ-":
-        ラクマ()
+        webbrowser.open("https://www.google.com/search?client=firefox-b-d&q=" + values["-検索文字列-"])
+        subprocess.Popen(["python", "./通販登録補助/ラクマ.py"], shell=True)
         
     elif event == "-ストアーズ-":
-        ストアーズ()
+        webbrowser.open("https://www.google.com/search?client=firefox-b-d&q=" + values["-検索文字列-"])
+        subprocess.Popen(["python", "./通販登録補助/ストアーズ.py"], shell=True)
 
     elif event == "-メルカリ-":
-        メルカリ()    
+        webbrowser.open("https://www.google.com/search?client=firefox-b-d&q=" + values["-検索文字列-"])
+        subprocess.Popen(["python", "./通販登録補助/メルカリ.py"], shell=True)
     
     elif event == "-読了-":
         window["-読了-"].update("読了")
     elif event == "-閉じる-":
         break
-    elif event == "-コピー-":
-        window["-ID-"].update(max_id())
-        window["-タイトル_id-"].update(values["-タイトル-"])
-        window["-ファイル名_id-"].update("-ファイル名-")
 
     print(event, values)
     # Output a message to the window

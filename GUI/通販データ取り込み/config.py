@@ -13,7 +13,7 @@ class Config():
         # read_file()関数によるiniファイルの読み込み
         # --------------------------------------------------
         config_ini = configparser.ConfigParser()
-        config_ini_path = 'config.ini'
+        config_ini_path = './通販データ取り込み/config.ini'
 
         # iniファイルが存在するかチェック
         if os.path.exists(config_ini_path):

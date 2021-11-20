@@ -146,7 +146,7 @@ while True:
     elif event == "-データ取り込み-":
         データ取り込み()
     elif event == "-通販Editer-":
-        subprocess.Popen(["python", "a通販Editer.py"], shell=True)
+        subprocess.Popen(["python", "./a通販Editer.py"], shell=True)
     elif event == "-Amazon-":
         Amazon()
     elif event == "-ストアクリエイター-":

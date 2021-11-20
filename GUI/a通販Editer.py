@@ -72,9 +72,7 @@ def 保存():
   [sg.Text('送り状')],
   [sg.Text('ID', size=(10,1)), sg.InputText(id, key="-ID-", size=(10,1))],
   [sg.Text('日付', size=(10,1)), sg.InputText('', key="-日付-", size=(20,1)), sg.Button(button_text='日付',key="日付")],
-  #[sg.Text('開始時間', size=(10,1)), sg.InputText('', key="-開始時間-", size=(20,1)), sg.Button(button_text='開始時間',key="開始時間")],
-  #[sg.Text('終了時間', size=(10,1)), sg.InputText('', key="-終了時間-", size=(20,1)), sg.Button(button_text='終了時間',key="終了時間")],
-  #[sg.Text('間時間', size=(10,1)), sg.InputText('', key="-間時間-", size=(20,1)), sg.Button(button_text='間時間',key="間時間")],
+
   [sg.Text('商品id', size=(10,1)), sg.InputText('', key="-商品id-", size=(20,1))],
   [sg.Text('商品名前', size=(10,1)), sg.InputText('', key="-商品名前-", size=(20,1))],
   [sg.Text('下代', size=(10,1)), sg.InputText('', key="-下代-", size=(20,1))],
@@ -85,6 +83,7 @@ def 保存():
 購入者 = sg.Column([
   [sg.Text('購入者')],
   [sg.Text('名前', size=(10, 1)), sg.InputText('', key="-名前-", size=(20,1))],
+  [sg.Text('ペンネーム', size=(10, 1)), sg.InputText('', key="-ペンネーム-", size=(20, 1))],
   [sg.Text('住所', size=(10,1)), sg.Multiline('', key="-住所-", size=(50, 5))],
   [sg.Text('メールアドレス', size=(10,1)), sg.InputText('', key="-メールアドレス-", size=(20,1))],
 
@@ -93,6 +92,7 @@ def 保存():
 送付先 = sg.Column([
   [sg.Text('購入者')],
   [sg.Text('名前', size=(10, 1)), sg.InputText('', key="-名前-", size=(20,1))],
+  [sg.Text('ペンネーム', size=(10, 1)), sg.InputText('', key="-ペンネーム-", size=(20, 1))],
   [sg.Text('住所', size=(10,1)), sg.Multiline('', key="-住所-", size=(50, 5))],
   [sg.Text('メールアドレス', size=(10,1)), sg.InputText('', key="-メールアドレス-", size=(20,1))],
 ])
