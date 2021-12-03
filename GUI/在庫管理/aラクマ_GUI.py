@@ -18,7 +18,7 @@ from sqlalchemy.orm import sessionmaker
 # pip install psycopg2
 # pip install PySimpleGUI
 
-
+from config import Config
 #help(sg.Table)
 
 config = Config()
