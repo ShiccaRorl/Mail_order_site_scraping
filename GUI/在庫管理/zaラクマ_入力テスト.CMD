@@ -10,6 +10,6 @@ call C:\\Users\\user\\anaconda3\\Scripts\\activate.bat
 call C:\\Users\\ban\\anaconda3\\Scripts\\activate.bat
 
 rem call python ./za_Rakuma_test_002.py %1 %2
-call python ./za_Rakuma_test.py %1 %2
+call python ./za_Rakuma_test.py %1 %2 > log.txt
 
 pause
