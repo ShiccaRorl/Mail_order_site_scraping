@@ -64,26 +64,32 @@ def 保存():
 
 左 = sg.Column([
     [sg.Text('ラクマEditer')],
-    [sg.Text('取引リスト')],
-    [sg.Listbox(取引リスト(), enable_events=True, size=(50, 200), key='-取引リスト-')],
+    [sg.Text('並び替え')],
+    [sg.Button(button_text='そのまま',key="-そのまま-"), sg.Button(button_text='B品順',key="-B品順-"),
+     sg.Button(button_text='在庫1',key="-在庫1-"), sg.Button(button_text='売れ筋??',key="-売れ筋-"),],
+    [sg.Text('商品リスト')],
+    [sg.Listbox(商品リスト(), enable_events=True, size=(50, 200), key='-商品リスト-')],
+    [sg.InputText('', key="-id-", size=(3,1)), sg.InputText('', key="-商品名-", size=(5, 1))],
 ])
 
-ヘッダー = sg.Column([
+中央 = sg.Column([
   [sg.Text('ラクマEditer')],
   [sg.Text('ID', size=(10,1)), sg.InputText(id, key="-ID-", size=(10,1))],
   [sg.Text('日付', size=(10,1)), sg.InputText('', key="-日付-", size=(20,1)), sg.Button(button_text='日付',key="-日付-")],
   [sg.Text('ファイルデータベース取り込み', size=(10,1)), sg.Button(button_text='更新',key="-更新-")],
-
 ])
 
-購入者 = sg.Column([
+右 = sg.Column([
   [sg.Text('購入者')],
   [sg.Text('名前', size=(10, 1)), sg.InputText('', key="-名前-", size=(20,1))],
   [sg.Text('ペンネーム', size=(10, 1)), sg.InputText('', key="-ペンネーム-", size=(20, 1))],
   [sg.Text('住所', size=(10,1)), sg.Multiline('', key="-住所-", size=(50, 5))],
   [sg.Text('メールアドレス', size=(10,1)), sg.InputText('', key="-メールアドレス-", size=(20,1))],
-
 ])
+
+メイン = [
+    [左,中央,右]
+]
 
 送付先 = sg.Column([
   [sg.Text('購入者')],
@@ -98,13 +104,9 @@ def 保存():
   [sg.Text('過去ログ', size=(10,1)), sg.Listbox(過去ログ(), enable_events=True, size=(200, 10), key='-過去ログ-'), sg.Button(button_text='読み込み', key="-読み込み-")],
   ])
 
-個人情報 = sg.Column([
-    [購入者, 送付先],
-])
-
 L = [
-    [sg.Pane([ヘッダー])],
-    [sg.Pane([左, 個人情報])],
+    #[sg.Pane([ヘッダー])],
+    [sg.Pane([メイン])],
     [sg.Pane([フッター])],
     ]
 
