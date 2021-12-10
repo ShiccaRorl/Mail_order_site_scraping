@@ -92,12 +92,21 @@ class Rakuma_Test():
         #self.商品番号取得()
         print("ラクマ出品一覧出力")
 
+        subprocess.run("ruby zaラクマ_入力テスト.rb " + str(self.file_out.parent), shell=True, text=True)
+
         print("二重登録された時のリスト")
         self.ラクマ登録２重チェック()
         
+        print("全体の在庫０リスト")
         self.在庫0商品リスト()
+        
+        print("全体の在庫1リスト")
         self.在庫1商品リスト()
+        
+        print("全体 - （在庫0　+　出品されているリスト）")
         self.登録出来ていない商品チェック()
+        
+        print("出品されているリストに在庫0が含まれている時のリスト")
         self.出品されているのに在庫0のリスト()
         subprocess.run("ruby zaラクマ_入力テスト.rb " + str(self.file_out.parent), shell=True, text=True)
         # if self.file_out2 != None:
@@ -186,6 +195,9 @@ class Rakuma_Test():
             for i in self.seed2:
                 self.seed1.remove(i)
 
+            print(self.seed1)
+            if self.seed1 == []:
+                print("")
             i = 0
             for d in self.seed1:
                 print("====２重チェック====")
@@ -206,7 +218,7 @@ class Rakuma_Test():
             with open("./ラクマディレクトリ.txt", 'r', encoding="utf-8") as f:
                 self.seed1 = f.read().split("\n")
 
-            with open(str(self.file_out.parent) + "/ラクマ出品一覧Ruby.txt", 'r', encoding="utf-8") as f:
+            with open(str(self.file_out.parent) + "/ラクマ出品一覧.txt", 'r', encoding="utf-8") as f:
                 self.seed2 = f.read().split("\n")
 
             with open(str(self.file_out.parent) + "/ラクマ出品一覧在庫0.txt", 'r', encoding="utf-8") as f:
@@ -299,7 +311,7 @@ class Rakuma_Test():
 
     def 出品されているのに在庫0のリスト(self):
         try:
-            with open(str(self.file_out.parent) + "/ラクマ出品一覧Ruby.txt", 'r', encoding="utf-8") as f:
+            with open(str(self.file_out.parent) + "/ラクマ出品一覧.txt", 'r', encoding="utf-8") as f:
                 self.seed1 = f.read().split("\n")
 
             with open(str(self.file_out.parent) + "/ラクマ出品一覧在庫0.txt", 'r', encoding="utf-8") as f:
