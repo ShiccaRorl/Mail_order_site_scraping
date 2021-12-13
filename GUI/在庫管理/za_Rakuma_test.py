@@ -220,23 +220,23 @@ class Rakuma_Test():
             with open("./ラクマディレクトリ.txt", 'r', encoding="utf-8") as f:
                 self.seed1 = f.read().split("\n")
 
-            with open(str(self.file_out.parent) + "/ラクマ出品一覧.txt", 'r', encoding="utf-8") as f:
+            with open(str(self.file_out.parent) + "\\ラクマ出品一覧.txt", 'r', encoding="utf-8") as f:
                 self.seed2 = f.read().split("\n")
 
-            with open(str(self.file_out.parent) + "/ラクマ出品一覧在庫0.txt", 'r', encoding="utf-8") as f:
+            with open("./ラクマ出品一覧在庫0.txt", 'r', encoding="utf-8") as f:
                 self.seed3 = f.read().split("\n")
 
             print(self.seed1[0])
             print(self.seed2[0])
             print(self.seed3[0])
-            # try:
-            for i in self.seed2:
-                self.seed1.remove(i)
+            try:
+                for i in self.seed2:
+                    self.seed1.remove(i)
 
-            for i in self.seed3:
-                self.seed1.remove(i)
-            # except:
-                # print("対象がないです")
+                for i in self.seed3:
+                    self.seed1.remove(i)
+            except:
+                print("対象がないです")
 
             i = 0
             for d in self.seed1:
