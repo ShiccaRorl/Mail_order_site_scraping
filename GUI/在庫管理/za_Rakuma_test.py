@@ -107,6 +107,12 @@ class Rakuma_Test():
         print("全体 - （在庫0　+　出品されているリスト）")
         self.登録出来ていない商品チェック()
         
+        print("出品されているB品")
+        self.出品されているB品のリスト()
+        
+        print("出品されている在庫1")
+        self.出品されている在庫1のリスト()
+        
         print("出品されているリストに在庫0が含まれている時のリスト")
         self.出品されているのに在庫0のリスト()
         subprocess.run("ruby zaラクマ_入力テスト.rb " + str(self.file_out.parent), shell=True, text=True)
@@ -343,10 +349,81 @@ class Rakuma_Test():
             self.logger.debug('出品されているのに在庫0のリストerr')
 
     def 出品されているB品のリスト(self):
-        print("")
+        with open(str(self.file_out.parent) + "/ラクマ出品一覧.txt", 'r', encoding="utf-8") as f:
+            self.seed1 = f.read().split("\n")
+        
+        data = []
+        for i in self.seed1:
+            if "B品" in i:
+                data.append(i)
+                
+        i = 0
+        for d in data:
+
+            if i == 0:
+                with open("./出品されている在庫B品のリスト.txt", 'w', encoding="utf-8") as f:
+                    f.write(d + "\n")
+                    i = 1
+            else:
+                with open("./出品されている在庫B品のリスト.txt", 'a', encoding="utf-8") as f:
+                    f.write(d + "\n")
+                
+    
+        try:
+            with open(str(self.file_out.parent) + "/ラクマ出品一覧.txt", 'r', encoding="utf-8") as f:
+                self.seed1 = f.read().split("\n")
+
+            with open("./出品されている在庫B品のリスト.txt", 'r', encoding="utf-8") as f:
+                self.seed2 = f.read().split("\n")
+
+            data = []
+            for i in self.seed1:
+                for s in self.seed2:
+                    if i == s:
+                        data.append(i)
+
+            i = 0
+            for d in data:
+
+                if i == 0:
+                    with open(str(self.file_out.parent) + "\\出品されているB品のリスト.txt", 'w', encoding="utf-8") as f:
+                        f.write(d + "\n")
+                        i = 1
+                else:
+                    with open(str(self.file_out.parent) + "\\出品されているB品のリスト.txt", 'a', encoding="utf-8") as f:
+                        f.write(d + "\n")
+        except:
+            print("出品されているB品のリストのリストerr")
+            self.logger.debug('出品されているB品のリストerr')
+    
     
     def 出品されている在庫1のリスト(self):
-            print("")
+        try:
+            with open(str(self.file_out.parent) + "/ラクマ出品一覧.txt", 'r', encoding="utf-8") as f:
+                self.seed1 = f.read().split("\n")
+
+            with open("./ラクマ出品一覧在庫1.txt", 'r', encoding="utf-8") as f:
+                self.seed2 = f.read().split("\n")
+
+            data = []
+            for i in self.seed1:
+                for s in self.seed2:
+                    if i == s:
+                        data.append(i)
+
+            i = 0
+            for d in data:
+
+                if i == 0:
+                    with open(str(self.file_out.parent) + "\\出品されている在庫1のリスト.txt", 'w', encoding="utf-8") as f:
+                        f.write(d + "\n")
+                        i = 1
+                else:
+                    with open(str(self.file_out.parent) + "\\出品されている在庫1のリスト.txt", 'a', encoding="utf-8") as f:
+                        f.write(d + "\n")
+        except:
+            print("出品されている在庫1のリストerr")
+            self.logger.debug('出品されている在庫1のリストerr')
 
     def 商品コードが認識されなかったリスト(self):
             print("")
