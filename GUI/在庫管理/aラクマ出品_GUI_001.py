@@ -49,7 +49,7 @@ def 取引リスト():
 
 
 
-ヘッダー = sg.Column([
+左 = sg.Column([
     [sg.Text('ラクマEditer')],
     [sg.Text('並び替え')],
     [sg.Button(button_text='そのまま',key="-そのまま-"), sg.Button(button_text='B品順',key="-B品順-"),
@@ -66,8 +66,25 @@ def 取引リスト():
   [sg.Text('ファイルデータベース取り込み', size=(10,1)), sg.Button(button_text='更新',key="-更新-")],
 ])
 
+右 = sg.Column([
+  [sg.Text('購入者')],
+  [sg.Text('名前', size=(10, 1)), sg.InputText('', key="-名前-", size=(20,1))],
+  [sg.Text('ペンネーム', size=(10, 1)), sg.InputText('', key="-ペンネーム-", size=(20, 1))],
+  [sg.Text('住所', size=(10,1)), sg.Multiline('', key="-住所-", size=(50, 5))],
+  [sg.Text('メールアドレス', size=(10,1)), sg.InputText('', key="-メールアドレス-", size=(20,1))],
+])
 
+メイン = [
+    [左,中央,右]
+]
 
+送付先 = sg.Column([
+  [sg.Text('購入者')],
+  [sg.Text('名前', size=(10, 1)), sg.InputText('', key="-名前-", size=(20,1))],
+  [sg.Text('ペンネーム', size=(10, 1)), sg.InputText('', key="-ペンネーム-", size=(20, 1))],
+  [sg.Text('住所', size=(10,1)), sg.Multiline('', key="-住所-", size=(50, 5))],
+  [sg.Text('メールアドレス', size=(10,1)), sg.InputText('', key="-メールアドレス-", size=(20,1))],
+])
 
 フッター = sg.Column([
   [sg.Text('コメント', size=(10,1)), sg.Multiline(default_text="", size=(50, 5), key="-コメント-"), sg.Button(button_text='新規保存', key="-新規保存-"), sg.Button(button_text='保存', key="-保存-"), sg.Button(button_text='読了', key="-読了-"), sg.Button(button_text='閉じる', key="-閉じる-")],

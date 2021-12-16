@@ -425,6 +425,34 @@ class Rakuma_Test():
             print("出品されている在庫1のリストerr")
             self.logger.debug('出品されている在庫1のリストerr')
 
+    def 出品されているB品と在庫1以外のリスト():
+        print("出品されているB品と在庫1以外のリスト。つまり普通のリスト。")
+        with open(str(self.file_out.parent) + "/ラクマ出品一覧.txt", 'r', encoding="utf-8") as f:
+            self.seed1 = f.read().split("\n")
+
+        with open(str(self.file_out.parent) + "/出品されている在庫1のリスト.txt", 'r', encoding="utf-8") as f:
+            self.seed2 = f.read().split("\n")
+            
+        with open(str(self.file_out.parent) + "/出品されているB品のリスト.txt", 'r', encoding="utf-8") as f:
+            self.seed3 = f.read().split("\n")
+            
+
+        for i in self.seed2:
+            self.seed1.remove(i)
+
+        for i in self.seed3:
+            self.seed1.remove(i)
+
+        i = 0
+        for d in self.seed1:
+            if i == 0:
+                with open(str(self.file_out.parent) + "\\出品されている普通のリスト.txt", 'w', encoding="utf-8") as f:
+                    f.write(d + "\n")
+                    i = 1
+            else:
+                with open(str(self.file_out.parent) + "\\出品されている普通のリスト.txt", 'a', encoding="utf-8") as f:
+                    f.write(d + "\n")
+
     def 商品コードが認識されなかったリスト(self):
             print("")
 
