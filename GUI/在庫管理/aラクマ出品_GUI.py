@@ -3,6 +3,8 @@
 import PySimpleGUI as sg
 import datetime
 import math
+import subprocess
+
 
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import *
@@ -51,13 +53,12 @@ def 取引リスト():
 
 ヘッダー = sg.Column([
     [sg.Text('ラクマEditer')],
-    [sg.InputText('', key="-商品名-", size=(20, 1)), sg.Button(button_text='データ取り込み',key="-データ取り込み-")],
+    [sg.InputText('', key="-データ取り込みtxt1-", size=(20, 1)), sg.FilesBrowse('データ取り込み1', key='-FILES1-', file_types=(("ラクマHtmlファイル", "*.html"),))],
+    [sg.InputText('', key="-データ取り込みtxt2-", size=(20, 1)), sg.FilesBrowse('データ取り込み2', key='-FILES2-', file_types=(("ラクマHtmlファイル", "*.html"),))],
     [sg.Text('並び替え')],
     [sg.Button(button_text='そのまま',key="-そのまま-"), sg.Button(button_text='B品順',key="-B品順-"),
      sg.Button(button_text='在庫1',key="-在庫1-"), sg.Button(button_text='売れ筋??',key="-売れ筋-"), sg.Button(button_text='ソート',key="-ソート-"),],
-    [sg.Text('商品リスト')],
-    #[sg.Listbox(商品リスト(), enable_events=True, size=(50, 200), key='-商品リスト-')],
-    [sg.InputText('', key="-商品名-", size=(10, 1))],
+    [sg.Text('商品リスト', size=(10,1)), sg.InputText('', key="-商品名-", size=(20, 1))],
 ])
 
 中央 = sg.Column([
@@ -65,7 +66,7 @@ def 取引リスト():
   #[sg.Text('ID', size=(10,1)), sg.InputText(id, key="-ID-", size=(10,1))],
   [sg.Text('日付', size=(10,1)), sg.InputText(datetime.date.today(), key="-日付-", size=(20,1)), sg.Button(button_text='日付',key="-日付-")],
   #[sg.Text('ファイルデータベース取り込み', size=(10,1)), sg.Button(button_text='更新',key="-更新-")],
-  [sg.Button(button_text='<=====',key="<====="), sg.Button(button_text='フォルダ開く',key="フォルダ開く"), sg.Button(button_text='=====>',key="=====>"),],
+  [sg.Button(button_text='<=====',key="<====="), sg.Button(button_text='フォルダ開く',key="-フォルダ開く-"), sg.Button(button_text='=====>',key="=====>"),],
 ])
 
 
@@ -95,44 +96,11 @@ while True:
     if event == sg.WINDOW_CLOSED or event == '終了' or event == "閉じるb":
         break
         
-    """
-    elif event == "日付":
-        window["-日付-"].update(timebox.in_to_text_day(datetime.date.today()))
-        日付 = datetime.date.today()
-
-    elif event == "開始時間":
-        window["-開始時間-"].update(timebox.in_to_text_start(datetime.datetime.now()))
-
-    elif event == "終了時間":
-        window["-終了時間-"].update(timebox.in_to_text_end(datetime.datetime.now()))
-
-    elif event == "間時間":
-        window["-日付-"].update(values["-日付-"].replace('-', '/').replace('+00:00', ''))
-        window["-開始時間-"].update(values["-開始時間-"].replace('-', '/').replace('+00:00', ''))
-        window["-終了時間-"].update(values["-終了時間-"].replace('-', '/').replace('+00:00', ''))
-            
-        try:
-            # window["-間時間-"].update(end_time.in_time(values["-終了時間-"]) - start_time.in_time(values["-開始時間-"]))
-            window["-間時間-"].update(timebox.ma_time)
-        except:
-            sg.PopupError('！日付計算エラー！')
-
-            # == 時間↑ ==
-
-    elif event == "-更新-":
-        過去ログ2()
-    elif event == "-新規保存-":
-        新規保存()
-    elif event == "-保存-":
-        保存()
-
-
-    elif event == "-読了-":
-        window["-読了-"].update("読了")
     elif event == "-閉じる-":
         break
-    """
 
+    elif event == "-フォルダ開く-":
+        subprocess.Popen(["explorer", r"開くフォルダのpath"], shell=True)
     print(event, values)
     # Output a message to the window
     #window['-出力-'].update('ハロー ' + values['-入力-'] + "! PySimpleGUI をお試しいただきありがとうございます")
