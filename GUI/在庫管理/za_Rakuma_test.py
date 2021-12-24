@@ -520,11 +520,11 @@ class Rakuma_Test():
             
             if a == 0:
                 with open(str(self.file_out.parent) + "/商品コード.txt", 'w', encoding="utf-8") as f:
-                    f.write(str(b) + str(c) + " " + s + " " +  m + "\n")
+                    f.write(str(b) + "\t" + str(c) + "\t" + s + "\t" +  m + "\t" + i + "\n")
                     a = 1
             else:
                 with open(str(self.file_out.parent) + "/商品コード.txt", 'a', encoding="utf-8") as f:
-                    f.write(str(b) + str(c) + " " + s + " " +  m + "\n")
+                    f.write(str(b) + "\t" + str(c) + "\t" + s + "\t" +  m + "\t" + i + "\n")
 
 
 if __name__ == '__main__':
