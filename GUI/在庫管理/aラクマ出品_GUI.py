@@ -53,20 +53,20 @@ def 取引リスト():
 
 ヘッダー = sg.Column([
     [sg.Text('ラクマEditer')],
-    [sg.InputText('', key="-データ取り込みtxt1-", size=(20, 1)), sg.FilesBrowse('データ取り込み1', key='-FILES1-', file_types=(("ラクマHtmlファイル", "*.html"),))],
-    [sg.InputText('', key="-データ取り込みtxt2-", size=(20, 1)), sg.FilesBrowse('データ取り込み2', key='-FILES2-', file_types=(("ラクマHtmlファイル", "*.html"),))],
+    [sg.InputText('', key="-データ取り込みtxt1-", size=(20, 1)), sg.FilesBrowse('データ取り込み1', key='-FILES1-', file_types=(("ラクマHtmlファイル", "*.html"),)), sg.Button(button_text='解析',key="-解析1-")],
+    [sg.InputText('', key="-データ取り込みtxt2-", size=(20, 1)), sg.FilesBrowse('データ取り込み2', key='-FILES2-', file_types=(("ラクマHtmlファイル", "*.html"),)), sg.Button(button_text='解析',key="-解析2-")],
     [sg.Text('並び替え')],
     [sg.Button(button_text='そのまま',key="-そのまま-"), sg.Button(button_text='B品順',key="-B品順-"),
      sg.Button(button_text='在庫1',key="-在庫1-"), sg.Button(button_text='売れ筋??',key="-売れ筋-"), sg.Button(button_text='ソート',key="-ソート-"),],
-    [sg.Text('商品リスト', size=(10,1)), sg.InputText('', key="-商品名-", size=(20, 1))],
+    [sg.Text('商品リスト', size=(10,1)), sg.InputText('', key="-商品コード-", size=(10, 1))],
 ])
 
 中央 = sg.Column([
   #[sg.Text('ラクマEditer')],
   #[sg.Text('ID', size=(10,1)), sg.InputText(id, key="-ID-", size=(10,1))],
-  [sg.Text('日付', size=(10,1)), sg.InputText(datetime.date.today(), key="-日付-", size=(20,1)), sg.Button(button_text='日付',key="-日付-")],
+  [sg.Text('日付', size=(10,1)), sg.InputText(datetime.date.today(), key="-日付-", size=(10,1)), sg.Button(button_text='日付',key="-日付-")],
   #[sg.Text('ファイルデータベース取り込み', size=(10,1)), sg.Button(button_text='更新',key="-更新-")],
-  [sg.Button(button_text='<=====',key="<====="), sg.Button(button_text='フォルダ開く',key="-フォルダ開く-"), sg.Button(button_text='=====>',key="=====>"),],
+  [sg.Button(button_text='<=====',key="左"), sg.Button(button_text='フォルダ開く',key="-フォルダ開く-"), sg.Button(button_text='=====>',key="右"),],
 ])
 
 
@@ -95,7 +95,11 @@ while True:
     # ユーザーが終了したいのか、ウィンドウが閉じられたかどうかを確認してください
     if event == sg.WINDOW_CLOSED or event == '終了' or event == "閉じるb":
         break
-        
+    
+    elif event == "-FILES1-":
+        subprocess.Popen(["python", "./za_Rakuma_test.py", values['FILES1']], shell=True)
+    
+    
     elif event == "-閉じる-":
         break
 
