@@ -97,8 +97,12 @@ while True:
         break
     
     elif event == "-FILES1-":
-        subprocess.Popen(["python", "./za_Rakuma_test.py", values['FILES1']], shell=True)
+        dir_pach = "./在庫管理/"
+        subprocess.Popen(["python", "./za_Rakuma_test.py", values['FILES1']], cwd = dir_pach, shell=True)
     
+    elif event == "-FILES2-":
+        dir_pach = "./在庫管理/"
+        subprocess.Popen(["python", "./za_Rakuma_test.py", values['FILES2']], cwd = dir_pach, shell=True)
     
     elif event == "-閉じる-":
         break
