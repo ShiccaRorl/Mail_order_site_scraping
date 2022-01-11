@@ -98,7 +98,7 @@ while True:
     
     elif event == "-FILES1-":
         dir_pach = "./在庫管理/"
-        subprocess.Popen(["python", "./za_Rakuma_test.py", values['FILES1']], cwd = dir_pach, shell=True)
+        subprocess.Popen(["zaラクマ_入力テスト.CMD", values['FILES1']], cwd = dir_pach, shell=True)
     
     elif event == "-FILES2-":
         dir_pach = "./在庫管理/"
