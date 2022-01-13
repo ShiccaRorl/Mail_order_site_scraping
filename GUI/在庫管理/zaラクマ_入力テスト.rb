@@ -295,6 +295,16 @@ class Rakuma_Test
 				end
 				s = 1
 			else
+				begin
+					File.open(@path + "/ラクマ出品コード表.txt", "a:utf-8") do |f|
+						f.write(line + "\t" + a + "\t" + c + "\t" + b + "\n")
+					end
+				rescue
+					File.open(@path + "/ラクマ出品コード表err.txt", "a:utf-8") do |f|
+						f.write(line + "\n")
+					end
+				end
+=begin
 				if d != nil or d != "" then
 					File.open(@path + "/ラクマ出品コード表.txt", "a:utf-8") do |f|
 						f.write(d + "\n")
@@ -312,6 +322,7 @@ class Rakuma_Test
 						f.write(line)
 					end
                 end
+=end
 			end
 		}
 	end
