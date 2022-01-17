@@ -96,14 +96,14 @@ while True:
     if event == sg.WINDOW_CLOSED or event == '終了' or event == "閉じるb":
         break
     
-    elif event == "-FILES1-":
-        dir_pach = "./在庫管理/"
-        subprocess.Popen(["zaラクマ_入力テスト.CMD", values['FILES1']], cwd = dir_pach, shell=True)
-    
-    elif event == "-FILES2-":
-        dir_pach = "./在庫管理/"
-        subprocess.Popen(["python", "./za_Rakuma_test.py", values['FILES2']], cwd = dir_pach, shell=True)
-    
+    elif event == "-解析1-":
+        #dir_pach = "./在庫管理/"
+        #subprocess.Popen(["zaラクマ_入力テスト.CMD", values['FILES1']], cwd = dir_pach, shell=True)
+        subprocess.Popen(["zaラクマ_入力テスト.CMD", values['-データ取り込みtxt1-']], shell=True)
+    elif event == "-解析2-":
+        #dir_pach = "./在庫管理/"
+        #subprocess.Popen(["python", "./za_Rakuma_test.py", values['FILES2']], cwd = dir_pach, shell=True)
+        subprocess.Popen(["python", "./za_Rakuma_test.py", values['-データ取り込みtxt2-']],shell=True)
     elif event == "-閉じる-":
         break
 
