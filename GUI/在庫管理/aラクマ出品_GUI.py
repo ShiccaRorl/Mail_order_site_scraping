@@ -53,8 +53,10 @@ def 取引リスト():
 
 ヘッダー = sg.Column([
     [sg.Text('ラクマEditer')],
-    [sg.InputText('', key="-データ取り込みtxt1-", size=(20, 1)), sg.FilesBrowse('データ取り込み1', key='-FILES1-', file_types=(("ラクマHtmlファイル", "*.html"),)), sg.Button(button_text='解析',key="-解析1-")],
-    [sg.InputText('', key="-データ取り込みtxt2-", size=(20, 1)), sg.FilesBrowse('データ取り込み2', key='-FILES2-', file_types=(("ラクマHtmlファイル", "*.html"),)), sg.Button(button_text='解析',key="-解析2-")],
+    [sg.InputText('', key="-データ取り込みtxt1-", size=(20, 1)), sg.FilesBrowse('データ取り込み1', key='-FILES1-', file_types=(("ラクマHtmlファイル", "*.html"),)), sg.Button(button_text='解析',key="-解析1-"), sg.Button(button_text='開く',key="-開く1-")],
+    [sg.InputText('', key="-データ取り込みtxt2-", size=(20, 1)), sg.FilesBrowse('データ取り込み2', key='-FILES2-', file_types=(("ラクマHtmlファイル", "*.html"),)), sg.Button(button_text='解析',key="-解析2-"), sg.Button(button_text='開く',key="-開く2-")],
+    [sg.Button(button_text='1の2重登録',key="-1の2重登録-"), sg.Button(button_text='1の0登録',key="-1の0登録-")],
+    [sg.Button(button_text='2の2重登録',key="-2の2重登録-"), sg.Button(button_text='2の0登録',key="-2の0登録-")],
     [sg.Text('並び替え')],
     [sg.Button(button_text='そのまま',key="-そのまま-"), sg.Button(button_text='B品順',key="-B品順-"),
      sg.Button(button_text='在庫1',key="-在庫1-"), sg.Button(button_text='売れ筋??',key="-売れ筋-"), sg.Button(button_text='ソート',key="-ソート-"),],
@@ -99,14 +101,17 @@ while True:
     elif event == "-解析1-":
         #dir_pach = "./在庫管理/"
         #subprocess.Popen(["zaラクマ_入力テスト.CMD", values['FILES1']], cwd = dir_pach, shell=True)
-        subprocess.Popen(["zaラクマ_入力テスト.CMD", values['-データ取り込みtxt1-']], shell=True)
+        subprocess.Popen(["python", "./za_Rakuma_test.py", values['-データ取り込みtxt1-']], shell=True)
     elif event == "-解析2-":
         #dir_pach = "./在庫管理/"
         #subprocess.Popen(["python", "./za_Rakuma_test.py", values['FILES2']], cwd = dir_pach, shell=True)
         subprocess.Popen(["python", "./za_Rakuma_test.py", values['-データ取り込みtxt2-']],shell=True)
     elif event == "-閉じる-":
         break
-
+    elif event == "-開く1-":
+        subprocess.Popen(["explorer", values['-データ取り込みtxt1-']], shell=True)
+    elif event == "-開く2-":
+        subprocess.Popen(["explorer", values['-データ取り込みtxt2-']], shell=True)
     elif event == "-フォルダ開く-":
         subprocess.Popen(["explorer", r"開くフォルダのpath"], shell=True)
     print(event, values)
