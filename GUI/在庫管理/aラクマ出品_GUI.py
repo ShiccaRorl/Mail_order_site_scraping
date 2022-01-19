@@ -4,7 +4,7 @@ import PySimpleGUI as sg
 import datetime
 import math
 import subprocess
-
+import os
 
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import *
@@ -109,9 +109,22 @@ while True:
     elif event == "-閉じる-":
         break
     elif event == "-開く1-":
-        subprocess.Popen(["explorer", values['-データ取り込みtxt1-']], shell=True)
+        print(values['-データ取り込みtxt1-'])
+        print(os.path.dirname(values['-データ取り込みtxt1-']))
+        subprocess.Popen(["explorer", os.path.dirname(values['-データ取り込みtxt1-'].replace('/', '\\'))], shell=True)
     elif event == "-開く2-":
-        subprocess.Popen(["explorer", values['-データ取り込みtxt2-']], shell=True)
+        subprocess.Popen(["explorer", os.path.dirname(values['-データ取り込みtxt2-'].replace('/', '\\'))], shell=True)
+
+    elif event == "-1の2重登録-":
+        subprocess.Popen([os.path.dirname(values['-データ取り込みtxt1-'].replace('/', '\\')) + "\\ラクマ出品一覧２重登録.txt"], shell=True)
+    elif event == "-1の0登録-":
+        subprocess.Popen([os.path.dirname(values['-データ取り込みtxt1-'].replace('/', '\\')) + "\\出品されているのに在庫0のリスト.txt"], shell=True)
+
+    elif event == "-2の2重登録-":
+        subprocess.Popen([os.path.dirname(values['-データ取り込みtxt2-'].replace('/', '\\')) + "\\ラクマ出品一覧２重登録.txt"], shell=True)
+    elif event == "-2の2重登録-":
+        subprocess.Popen([os.path.dirname(values['-データ取り込みtxt2-'].replace('/', '\\')) + "\\出品されているのに在庫0のリスト.txt"], shell=True)
+
     elif event == "-フォルダ開く-":
         subprocess.Popen(["explorer", r"開くフォルダのpath"], shell=True)
     print(event, values)
