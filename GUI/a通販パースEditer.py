@@ -31,7 +31,7 @@ sale_sele = config.Base.classes.sale_sele
 #Session = sessionmaker(bind=config.engine)
 #session = Session(config.engine)
 
-"""
+
 def 過去ログ(data=None):
     print(data)
     # 過去ログテーブル　の計算
@@ -52,8 +52,8 @@ def 過去ログ(data=None):
 def 本タイトル():
     # コンボボックス　本タイトルの計算
     session = Session(config.engine)
-    t_07_本 = config.Base.classes.LifeLog_t_07_本
-    過去タイトル = session.query(t_07_本).filter(t_07_本.やりかけ == True).order_by(desc(t_07_本.日付)).all()
+    sale_sele = config.Base.classes.LifeLog_sale_sele
+    過去タイトル = session.query(sale_sele).filter(sale_sele.やりかけ == True).order_by(desc(sale_sele.日付)).all()
     i = []
     for s in 過去タイトル:
         i.append(s.タイトル)
@@ -63,8 +63,8 @@ def 本タイトル():
 def 本タイトル2():
     # コンボボックス　本タイトルの計算
     session = Session(config.engine)
-    t_07_本 = config.Base.classes.LifeLog_t_07_本
-    過去タイトル = session.query(t_07_本.タイトル, func.count(t_07_本.タイトル)).group_by(t_07_本.タイトル).all()
+    sale_sele = config.Base.classes.LifeLog_sale_sele
+    過去タイトル = session.query(sale_sele.タイトル, func.count(sale_sele.タイトル)).group_by(sale_sele.タイトル).all()
     i = []
     for s in 過去タイトル:
         i.append(s.タイトル)
@@ -85,7 +85,7 @@ def 本ファイル名():
 def max_id():
     # 過去ログテーブル　の計算
     session = Session(config.engine)
-    過去ログ = session.query(t_07_読書).order_by(desc(t_07_読書.日付)).limit(30)
+    過去ログ = session.query(sale_sele).order_by(desc(sale_sele.日付)).limit(30)
     #過去ログ = LifeLogT07読書.select().order_by(LifeLogT07読書.日付).limit(30)
     # 最大値の計算
     i = []
@@ -111,9 +111,9 @@ def 保存():
         print(values["-ID-"])
         try:
             session = Session(config.engine)
-            if session.query(t_07_読書).filter(t_07_読書.id == values["-ID-"]).first() == None:
+            if session.query(sale_sele).filter(sale_sele.id == values["-ID-"]).first() == None:
                 print("insert")
-                session.add(t_07_読書(id = max_id(),
+                session.add(sale_sele(id = max_id(),
                                             日付 = values["-日付-"],
                                             開始時間 = values["-開始時間-"],
                                             終了時間 = values["-終了時間-"],
@@ -131,7 +131,7 @@ def 保存():
                 sg.popup_ok('保存完了')
             else:
                 print("updata")
-                読書 = session.query(t_07_読書).filter(t_07_読書.id == values["-ID-"]).first()
+                読書 = session.query(sale_sele).filter(sale_sele.id == values["-ID-"]).first()
                 
                 読書.id = values["-ID-"],
                 読書.日付 = values["-日付-"],
@@ -160,7 +160,7 @@ def 読了():
 def 新規保存():
     try:
         session = Session(config.engine)
-        session.add(t_07_読書(id = max_id(),
+        session.add(sale_sele(id = max_id(),
                                             日付 = values["-日付-"],
                                             開始時間 = values["-開始時間-"],
                                             終了時間 = values["-終了時間-"],
@@ -187,7 +187,7 @@ def 過去ログ2():
         list = values["-過去ログ-"]
         id = list[0][0]
         session = Session(config.engine)
-        t = session.query(t_07_読書).filter(t_07_読書.id == id).first()
+        t = session.query(sale_sele).filter(sale_sele.id == id).first()
         id = t.id
         日付 = t.日付
         開始時間 = t.開始時間
@@ -241,13 +241,13 @@ def 過去ログ2():
 
 
 id = max_id()
-"""
+
 
 def 取引リスト():
     return ['test','test']
 
 def 消費税():
-    return 0.1
+    return [0.1, 0.8]
 
 def 過去ログ():
     return ['test','test']
@@ -286,17 +286,17 @@ def 過去ログ():
 
 フッター = sg.Column([
   [sg.Text('コメント', size=(10,1)), sg.Multiline(default_text="", size=(50, 5), key="-コメント-"), sg.Button(button_text='新規保存', key="-新規保存-"), sg.Button(button_text='保存', key="-保存-"), sg.Button(button_text='読了', key="-読了-"), sg.Button(button_text='閉じる', key="-閉じる-")],
-  [sg.Text('過去ログ', size=(10,1)), sg.Listbox(過去ログ(), enable_events=True, size=(200, 10), key='-過去ログ-'), sg.Button(button_text='読み込み', key="-読み込み-")],
+  [sg.Text('過去ログ', size=(10,1)), sg.Listbox(過去ログ(), enable_events=True, size=(5, 5), key='-過去ログ-'), sg.Button(button_text='読み込み', key="-読み込み-")],
   ])
 
 個人情報 = [
-    sg.Pane([購入者, 送付先], orientation='h')
+    [購入者, 送付先]
 ]
 
 L = [
-    [sg.Pane([ヘッダー], orientation='h')],
-    [sg.Pane([左, 個人情報], orientation='h')],
-    [sg.Pane([フッター], orientation='h')],
+    [[ヘッダー]],
+    [[左, 個人情報]],
+    [[フッター]],
     ]
 
 # ウィンドウを作成する
