@@ -12,7 +12,7 @@ layout = [
   #[sg.Button(button_text='通販',key="-通販-")],
   [sg.Button(button_text='通販登録補助',key="-通販登録補助-"), sg.Button(button_text='ラクマ専用',key="ラクマ専用")],
   #[sg.Button(button_text='プログラム',key="プログラム"), sg.Button(button_text='検索文字列',key="検索文字列")],
-  [sg.Button(button_text='在庫管理',key="-在庫管理-")],
+  [sg.Button(button_text='在庫管理',key="-在庫管理-"), sg.Button(button_text='通販パースエディッター',key="-通販パースエディッター-")],
   [sg.Button(button_text='通販経理',key="-通販経理-"),],
 
 
@@ -48,7 +48,8 @@ while True:
 
     elif event == "-在庫管理-":
         subprocess.Popen(["python", f"./a在庫管理.py", f"{id}"], shell=True)
-        
+    elif event == "-通販パースエディッター-":
+        subprocess.Popen(["python", f"./a通販パースEditer.py", f"{id}"], shell=True)
     elif event == "ラクマ専用":
         #dir_data = "C:\\Users\\user\\Downloads\\バックアップ\\プログラム\\Chrome拡張\\Mail_order_site_scraping\\GUI\\在庫管理\\"
         dir_data = "./在庫管理/"
