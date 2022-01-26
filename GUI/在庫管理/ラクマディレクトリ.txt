@@ -681,7 +681,6 @@
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/兵児帯/くしゅふわ兵児帯/チャコール　KHO006/新品送料込み　くしゅふわ兵児帯★浴衣帯 浴衣姿にピッタリ KHO006.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/兵児帯/くしゅふわ兵児帯/マスタード　A189  KHO008/新品送料込み　くしゅふわ兵児帯★浴衣帯 浴衣姿にピッタリ A189.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/兵児帯/くしゅふわ兵児帯/ライラック　A207  KHO012/新品送料込み　くしゅふわ兵児帯★浴衣帯 浴衣姿にピッタリ A207.txt
-//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/兵児帯/くしゅふわ兵児帯/ラベンダー　A208  KHO011/新品送料込み　くしゅふわ兵児帯★浴衣帯 浴衣姿にピッタリ A208.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/兵児帯/くしゅふわ兵児帯/ワイン　KHO010/新品送料込み　くしゅふわ兵児帯★浴衣帯 浴衣姿にピッタリ KHO010.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/兵児帯/くしゅふわ兵児帯/在庫0/イエロー　A202-2  KHO001/新品送料込み　くしゅふわ兵児帯★浴衣帯 浴衣姿にピッタリ A202.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/兵児帯/くしゅふわ兵児帯/在庫0/ターコイズ　A185   KHO004/新品送料込み　くしゅふわ兵児帯★浴衣帯 浴衣姿にピッタリ A185.txt
@@ -689,6 +688,7 @@
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/兵児帯/くしゅふわ兵児帯/在庫0/ミント　KHO013/新品送料込み　くしゅふわ兵児帯★浴衣帯 浴衣姿にピッタリ KHO013.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/兵児帯/くしゅふわ兵児帯/在庫0/レッド　A190  KHO009/新品送料込み　くしゅふわ兵児帯★浴衣帯 浴衣姿にピッタリ A190.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/兵児帯/くしゅふわ兵児帯/在庫1/チェリー　A186  KHO005/新品送料込み　くしゅふわ兵児帯★浴衣帯 浴衣姿にピッタリ A186.txt
+//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/兵児帯/くしゅふわ兵児帯/在庫1/ラベンダー　A208  KHO011/新品送料込み　くしゅふわ兵児帯★浴衣帯 浴衣姿にピッタリ A208.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/兵児帯/くしゅふわ兵児帯2/在庫1/AKW007/新品送料込み　女性用 くしゅふわ兵児帯　AKW007.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/兵児帯/くしゅふわ兵児帯2/在庫1/AKW008/新品送料込み　女性用 くしゅふわ兵児帯　AKW008.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/兵児帯/プリーツ兵児帯/ピンク×ベビーピンク　M962  AKW003/新品送料込み　プリーツ兵児帯★浴衣 帯 ツートン へこ帯 M962.txt
@@ -830,6 +830,7 @@
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/女の子下駄/桜刺繍入り下駄/紫/23cm　A95   KGW004/新品送料込み　女の子下駄 桜刺繍入り鼻緒★着物、浴衣姿に 23cmA95.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/女の子下駄/桜刺繍入り下駄/紫/在庫1/22cm　A94   KGW003/新品送料込み　女の子下駄 桜刺繍入り鼻緒★着物、浴衣姿に22cm A94.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/女の子下駄/桜刺繍入り下駄/赤/22cm　A93    KGW001/新品送料込み　女の子下駄 桜刺繍入り鼻緒★着物、浴衣姿に22cm A93.txt
+//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/女の子下駄/桜刺繍入り下駄/赤/22cm　A93    KGW001/18cm　A146   KGW015/新品送料込み　花刺繍ストライプ 女の子下駄(適応16.5～18.0cm)A146.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/女の子下駄/花刺繍グラデーション  KGW021/新品送料込み　花刺繍グラデーション 女の子下駄(適応18～19.5cm)A151.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/女の子下駄/花刺繍ストライプ 女の子下駄/ピンク/18cm　A146   KGW015/新品送料込み　花刺繍ストライプ 女の子下駄(適応16.5～18.0cm)A146.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/女の子下駄/花刺繍ストライプ 女の子下駄/ピンク/19.5cm　A145   KGW013/新品送料込み　花刺繍ストライプ鼻緒 女の子下駄(適応18～19.5cm)A145.txt
@@ -1085,15 +1086,15 @@
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/ATW011/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックスATW011.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/ATW016/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックスATW016.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/ATW017/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックス ATW017.txt
-//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/ATW018/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックスATW018.txt
-//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/ATW020/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックスATW020.txt
+//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/ATW018/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックス ATW018.txt
+//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/ATW020/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックス ATW020.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/ATW021/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックスATW021.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/在庫1/ATW007/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックスATW017.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/在庫1/ATW008/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックスATW008.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/在庫1/ATW009/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックスATW009.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/在庫1/ATW010/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックスATW010.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/在庫1/ATW013/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックスATW013.txt
-//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/在庫1/ATW015/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックスATW015.txt
+//DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/在庫1/ATW015/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックス ATW015.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/在庫1/ATW019/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックスATW019.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/新色/ATW045/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックス ATW045.txt
 //DESKTOP-FK98SN0/Users/Public/Documents/吉本さんPCから移動したファイル/メルカリラクマ出品画像/メルカリ/文化足袋/新色/ATW046/新品送料込み　足袋靴下 日本製靴下 女性用足袋ソックス ATW046.txt
