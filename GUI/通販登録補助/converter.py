@@ -1,8 +1,11 @@
 # -*- encoding: utf-8 -*-
 
 import re
+
+
 class Seed:
     def __init__(self, seed):
+        self.固定 = None
         self.seed = seed
         self.flag = 0
         self.データの初期値 = 0
@@ -17,77 +20,72 @@ class Seed:
     def get_data(self):
         return self.seed[self.flag + seed.データの初期値]
 
+    def 固定(self):
+        self.固定 = "固定"
+
+
 class core:
     def set_seed(self, seed):
         self.seed = str(seed)
-        self.seed = self.seed.split('\t')
+        self.seed = re.split('\t', self.seed)
 
         self.seeds = {}
 
         seed = Seed(self.seed)
-        seed.データの初期値=0
+        seed.データの初期値 = 0
         self.seeds["code"] = seed
 
         seed = Seed(self.seed)
-        seed.データの初期値=9
+        seed.データの初期値 = 9
         self.seeds["商品名"] = seed
 
         seed = Seed(self.seed)
-        seed.データの初期値=10
+        seed.データの初期値 = 10
         self.seeds["販売価格"] = seed
 
+        seed = Seed(self.seed)
+        # seed.データの初期値=0
+        #self.seeds["販売価格_税込"] = int(self.seeds["販売価格"]) * 1
 
         seed = Seed(self.seed)
-        #seed.データの初期値=0
-        self.seeds["販売価格_税込"] = self.seeds["販売価格"] * 1.1
-
-        seed = Seed(self.seed)
-        #seed.データの初期値=9
+        # seed.データの初期値=9
         self.seeds["楽天価格"] = seed
 
         seed = Seed(self.seed)
-        #seed.データの初期値=9
+        # seed.データの初期値=9
         self.seeds["ラクマ価格"] = seed
 
         seed = Seed(self.seed)
-        seed.データの初期値=12
+        seed.データの初期値 = 12
         self.seeds["発送方法"] = seed
 
         seed = Seed(self.seed)
-        seed.データの初期値=13
+        seed.データの初期値 = 13
         self.seeds["発送料_ゆうパケット"] = seed
 
         seed = Seed(self.seed)
-        seed.データの初期値=14
+        seed.データの初期値 = 14
         self.seeds["定形外郵便"] = seed
 
         seed = Seed(self.seed)
-        seed.データの初期値=15
+        seed.データの初期値 = 15
         self.seeds["梱包サイズ"] = seed
 
-
         seed = Seed(self.seed)
-        seed.データの初期値=24
+        seed.データの初期値 = 24
         self.seeds["商品説明"] = seed
 
-
         seed = Seed(self.seed)
-        #seed.データの初期値=9
+        # seed.データの初期値=9
         self.seeds["サイズ"] = seed
 
         seed = Seed(self.seed)
-        seed.データの初期値=9
+        seed.データの初期値 = 9
         self.seeds["品質"] = seed
 
-
         seed = Seed(self.seed)
-        seed.データの初期値=24
+        seed.データの初期値 = 24
         self.seeds["サイズ"] = seed
-
-
-
-
-
 
     def set_柄(self, gara):
         self.柄 = gara
@@ -271,7 +269,9 @@ if __name__ == "__main__":
         f.close()
 
     core = core()
+    seed = re.split('\t', seed)
     seed = core.set_seed(seed)
+
 
     s = 0
     for i in seed:
@@ -279,8 +279,8 @@ if __name__ == "__main__":
         s = s + 1
 
     print("code               : " + str(core.get_code()))
-    #print("柄　　　　　　　　　:　" + str(core.get_柄()))
-    #print("バリエーション　　　:　" + str(core.get_バリエーション()))
+    # print("柄　　　　　　　　　:　" + str(core.get_柄()))
+    # print("バリエーション　　　:　" + str(core.get_バリエーション()))
     print("商品名             : " + str(core.get_商品名()))
     print("販売価格           : " + str(core.get_販売価格()))
     print("販売価格_税込      : " + str(core.get_販売価格_税込()))
