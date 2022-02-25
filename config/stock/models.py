@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 class Stock(models.Model):
@@ -14,4 +15,3 @@ class Stock(models.Model):
     出荷数量
     商品コード
     商品名
-    

@@ -14,7 +14,7 @@ from sqlalchemy.orm import sessionmaker
 
 import subprocess
 
-from .GUI.通販登録補助.converter import core
+from converter import core
 from config import Config, Timebox
 # pip install sqlalchemy
 # pip install psycopg2
@@ -26,7 +26,7 @@ import subprocess
 
 # help(sg.Table)
 
-class 通販補助(core):
+class 通販補助():
     def __init__(self):
         config = Config()
 
@@ -98,7 +98,7 @@ class 通販補助(core):
             [sg.Text('', size=(10, 1)), sg.Button(button_text='メルカリ', key="-メルカリ-")],
         ])
 
-        main = [
+        self.main = [
             [sg.Pane([上], orientation='h')],
             [sg.Pane([左, 右], orientation='h')],
             [sg.Pane([下], orientation='h')],
@@ -106,7 +106,7 @@ class 通販補助(core):
 
     def イベント(self):
         # ウィンドウを作成する
-        window = sg.Window('通販登録補助管理', main, resizable=True)
+        window = sg.Window('通販登録補助管理', self.main, resizable=True)
 
         # イベントループを使用してウィンドウを表示し、対話する
         while True:
